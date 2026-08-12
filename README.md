@@ -17,7 +17,7 @@ A free, auto-saving GCSE revision planner designed for Nathan's 2026 revision pl
 
 Open the published website in any modern browser. Your progress is stored on that browser and device. Use **Progress & tools -> Download backup** to move your data to another browser or device.
 
-For a completely offline copy, download `index.html` and open it in a browser. The complete development project is also available as `Nathans_Revision_Tool_Source.zip`.
+For a completely offline copy, download `index.html` and open it in a browser. You can also use GitHub's **Download ZIP** option to download the repository.
 
 ## Updating the website
 
