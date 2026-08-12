@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://defnotsquishy.github.io/nathans-revision-tool/sitemap.xml

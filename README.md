@@ -10,6 +10,13 @@ An open-source, auto-saving GCSE Higher Maths revision planner built around 106 
 - Tuesday tutor preparation and a full-paper day after the chosen finish date
 - Search all 106 topics and open the matching video
 - Focus timer, weak-topic queue, mistakes, paper scores and backup/restore
+- Calm one-topic-at-a-time sessions with a cleaner glass-and-card interface
+- Move a topic to tomorrow without losing it, plus one-tap undo
+- Automatic spaced reviews: red tomorrow, amber in 3 days and green in 14 days
+- Revision streak, 14-day activity history and focused minutes
+- Maths exam countdown with a target grade
+- Installable phone/computer app with offline access to the main planner
+- Friendly backup reminders that can be postponed
 - Device-local auto-save using the stable `gcse-revision-dashboard-v2` storage key
 
 ## Use or download it

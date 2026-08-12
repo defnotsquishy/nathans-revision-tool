@@ -1,0 +1,19 @@
+{
+  "name": "Nathan's Revision Tool",
+  "short_name": "Nathan's Revision",
+  "description": "A calm, auto-saving 106-topic GCSE Higher Maths revision planner.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#f5f5f7",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
