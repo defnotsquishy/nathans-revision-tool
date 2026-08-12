@@ -1,0 +1,1939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="application-name" content="Nathan's Revision Tool">
+<meta name="description" content="A free, easy GCSE revision planner with a 106-topic Higher Maths plan, all-subject trackers, confidence colours, videos, study tools and auto-saved progress.">
+<meta name="keywords" content="Nathan's Revision Tool, GCSE revision planner, GCSE Higher Maths, revision tracker, GCSE study tool, 1st Class Maths">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#111315">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Nathan's Revision Tool | Free GCSE Revision Planner</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads allow-modals" referrerpolicy="no-referrer" title="Nathan's Revision Tool" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Gcse Revision Dashboard&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;gcse-revision-dashboard&quot;&gt;
+  &lt;style&gt;
+    #gcse-revision-dashboard { color: var(--foreground); width: 100%; }
+    #gcse-revision-dashboard * { box-sizing: border-box; }
+    #gcse-revision-dashboard .rev-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-statuses { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+    #gcse-revision-dashboard .rev-title { margin: 0; }
+    #gcse-revision-dashboard .rev-subtitle { margin: 4px 0 0; color: var(--muted-foreground); }
+    #gcse-revision-dashboard .rev-progress { height: 10px; background: var(--muted); overflow: hidden; margin-top: 6px; }
+    #gcse-revision-dashboard .rev-progress &gt; span { display: block; height: 100%; width: 0; background: var(--viz-series-1); transition: width 180ms ease; }
+    #gcse-revision-dashboard .rev-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    #gcse-revision-dashboard .rev-section { display: none; }
+    #gcse-revision-dashboard .rev-section.is-active { display: block; }
+    #gcse-revision-dashboard .rev-section-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    #gcse-revision-dashboard .rev-section-head h2 { margin: 0; }
+    #gcse-revision-dashboard .rev-list { border-top: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-task { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-task-main { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+    #gcse-revision-dashboard .rev-task-main label { min-width: 0; }
+    #gcse-revision-dashboard .rev-task-title { display: block; font-weight: 500; overflow-wrap: anywhere; }
+    #gcse-revision-dashboard .rev-task-meta { display: block; color: var(--muted-foreground); margin-top: 2px; }
+    #gcse-revision-dashboard .rev-task-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+    #gcse-revision-dashboard .rev-task.is-done .rev-task-title { text-decoration: line-through; color: var(--muted-foreground); }
+    #gcse-revision-dashboard .rev-task[data-confidence=&quot;green&quot;] { border-left: 3px solid var(--green); padding-left: 9px; }
+    #gcse-revision-dashboard .rev-task[data-confidence=&quot;amber&quot;] { border-left: 3px solid var(--orange); padding-left: 9px; }
+    #gcse-revision-dashboard .rev-task[data-confidence=&quot;red&quot;] { border-left: 3px solid var(--red); padding-left: 9px; }
+    #gcse-revision-dashboard .rev-empty { padding: 22px 0; color: var(--muted-foreground); }
+    #gcse-revision-dashboard .rev-mini { color: var(--muted-foreground); margin: 7px 0 0; }
+    #gcse-revision-dashboard .rev-unit { margin-top: 18px; }
+    #gcse-revision-dashboard .rev-unit h3 { margin: 0 0 4px; }
+    #gcse-revision-dashboard .rev-notes { margin-top: 16px; }
+    #gcse-revision-dashboard .rev-notes .form-label { display: grid; gap: 6px; }
+    #gcse-revision-dashboard textarea { min-height: 96px; resize: vertical; }
+    #gcse-revision-dashboard .rev-conf { min-width: 92px; }
+    #gcse-revision-dashboard .rev-hidden { display: none !important; }
+    #gcse-revision-dashboard .rev-chat-log { min-height: 260px; max-height: 520px; overflow-y: auto; }
+    #gcse-revision-dashboard .rev-message { padding: 10px 0 10px 12px; border-left: 3px solid var(--border); white-space: pre-wrap; }
+    #gcse-revision-dashboard .rev-message + .rev-message { margin-top: 10px; }
+    #gcse-revision-dashboard .rev-message[data-role=&quot;coach&quot;] { border-left-color: var(--viz-series-1); }
+    #gcse-revision-dashboard .rev-message[data-role=&quot;you&quot;] { border-left-color: var(--viz-series-3); }
+    #gcse-revision-dashboard .rev-message strong { display: block; margin-bottom: 3px; font-weight: 500; }
+    #gcse-revision-dashboard .rev-chat-quick { margin: 12px 0; }
+    #gcse-revision-dashboard .rev-chat-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: end; }
+    #gcse-revision-dashboard .rev-panel { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-panel:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+    #gcse-revision-dashboard .rev-panel h3 { margin: 0 0 8px; }
+    #gcse-revision-dashboard .rev-form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; align-items: end; }
+    #gcse-revision-dashboard .rev-form-grid .rev-wide { grid-column: 1 / -1; }
+    #gcse-revision-dashboard .rev-tools-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+    #gcse-revision-dashboard .rev-tool { min-width: 0; }
+    #gcse-revision-dashboard .rev-record { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-record:last-child { border-bottom: 0; }
+    #gcse-revision-dashboard .rev-record-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+    #gcse-revision-dashboard .rev-record p { margin: 5px 0 0; }
+    #gcse-revision-dashboard .rev-timer { display: flex; flex-direction: column; align-items: flex-start; font-variant-numeric: tabular-nums; }
+    #gcse-revision-dashboard .rev-timer-value { display: block; font-size: clamp(2.25rem,6vw,3.5rem); font-weight: 500; line-height: 1; margin: 8px 0 14px; }
+    #gcse-revision-dashboard .rev-alert { border-left: 3px solid var(--orange); padding: 8px 0 8px 10px; margin: 10px 0; }
+    #gcse-revision-dashboard .rev-success { border-left-color: var(--green); }
+    #gcse-revision-dashboard .rev-danger { border-left-color: var(--red); }
+    #gcse-revision-dashboard .rev-compact-select { max-width: 240px; }
+    @media (max-width: 600px) {
+      #gcse-revision-dashboard .rev-topbar { display: block; }
+      #gcse-revision-dashboard .rev-topbar .viz-badge { margin-top: 10px; }
+      #gcse-revision-dashboard .rev-task { grid-template-columns: 1fr; }
+      #gcse-revision-dashboard .rev-task-actions { justify-content: flex-start; padding-left: 30px; }
+      #gcse-revision-dashboard .rev-chat-form { grid-template-columns: 1fr; }
+      #gcse-revision-dashboard .rev-tools-grid, #gcse-revision-dashboard .rev-form-grid { grid-template-columns: 1fr; }
+      #gcse-revision-dashboard .rev-form-grid .rev-wide { grid-column: auto; }
+    }
+  &lt;/style&gt;
+
+  &lt;header class=&quot;rev-topbar&quot;&gt;
+    &lt;div&gt;
+      &lt;h1 class=&quot;rev-title&quot;&gt;Nathan&#x27;s Revision Tool&lt;/h1&gt;
+      &lt;p class=&quot;rev-subtitle&quot; id=&quot;rev-date-label&quot;&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rev-statuses&quot;&gt;
+      &lt;span class=&quot;viz-badge&quot; id=&quot;rev-holiday-badge&quot;&gt;Normal plan&lt;/span&gt;
+      &lt;span class=&quot;viz-badge&quot; id=&quot;rev-save-status&quot; aria-live=&quot;polite&quot;&gt;Auto-save on&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;div class=&quot;viz-grid&quot; style=&quot;margin-top:16px&quot;&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;Today&lt;/div&gt;
+      &lt;div class=&quot;viz-stat-value&quot; id=&quot;rev-today-stat&quot;&gt;0 / 0&lt;/div&gt;
+      &lt;div class=&quot;rev-progress&quot; aria-label=&quot;Today&#x27;s progress&quot;&gt;&lt;span id=&quot;rev-today-bar&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;Overall&lt;/div&gt;
+      &lt;div class=&quot;viz-stat-value&quot; id=&quot;rev-overall-stat&quot;&gt;0%&lt;/div&gt;
+      &lt;div class=&quot;rev-progress&quot; aria-label=&quot;Overall progress&quot;&gt;&lt;span id=&quot;rev-overall-bar&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;text-muted&quot; id=&quot;rev-confidence-summary&quot;&gt;0 green · 0 amber · 0 red&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;Maths finish&lt;/div&gt;
+      &lt;div class=&quot;viz-stat-value&quot; id=&quot;rev-maths-finish&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;Full paper the following day&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;nav class=&quot;rev-nav&quot; aria-label=&quot;Revision views&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;today&quot; aria-pressed=&quot;true&quot;&gt;&lt;i data-lucide=&quot;calendar-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Today&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;maths&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;calculator&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Maths 106&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;subjects&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;library&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Subjects&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;progress&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;chart-no-axes-column-increasing&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Progress &amp; tools&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;coach&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Study coach&lt;/button&gt;
+  &lt;/nav&gt;
+
+  &lt;section class=&quot;rev-section is-active&quot; data-section=&quot;today&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;h2 id=&quot;rev-today-heading&quot;&gt;Today&lt;/h2&gt;
+      &lt;div class=&quot;viz-controls&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rev-daily-minutes&quot;&gt;Daily limit
+          &lt;select class=&quot;form-select&quot; id=&quot;rev-daily-minutes&quot;&gt;
+            &lt;option value=&quot;20&quot;&gt;20 minutes&lt;/option&gt;&lt;option value=&quot;30&quot;&gt;30 minutes&lt;/option&gt;&lt;option value=&quot;45&quot;&gt;45 minutes&lt;/option&gt;&lt;option value=&quot;60&quot;&gt;60 minutes&lt;/option&gt;&lt;option value=&quot;90&quot;&gt;90 minutes&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;form-check form-switch&quot; for=&quot;rev-catch-up&quot;&gt;
+          &lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; id=&quot;rev-catch-up&quot;&gt;&lt;span class=&quot;form-check-label&quot;&gt;Catch-up mode&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-quiz-today&quot;&gt;&lt;i data-lucide=&quot;messages-square&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Quiz me&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;rev-mini&quot; id=&quot;rev-today-time&quot;&gt;&lt;/p&gt;
+    &lt;div id=&quot;rev-schedule-alert&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;rev-list&quot; id=&quot;rev-today-list&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;viz-grid&quot; style=&quot;margin-top:18px&quot;&gt;
+      &lt;div class=&quot;card rev-timer&quot;&gt;
+        &lt;div class=&quot;text-muted&quot; id=&quot;rev-timer-label&quot;&gt;Focus timer&lt;/div&gt;
+        &lt;div class=&quot;rev-timer-value&quot; id=&quot;rev-timer-value&quot;&gt;25:00&lt;/div&gt;
+        &lt;div class=&quot;viz-controls&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-timer-toggle&quot;&gt;Start&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-timer-reset&quot;&gt;Reset&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-timer-skip&quot;&gt;Start break&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;text-muted&quot;&gt;Random practice&lt;/div&gt;
+        &lt;p id=&quot;rev-random-result&quot;&gt;Pick a red or amber topic first, then any unfinished topic.&lt;/p&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-random-pick&quot;&gt;&lt;i data-lucide=&quot;shuffle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Pick a topic&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rev-notes&quot;&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;rev-today-notes&quot;&gt;Mistakes or tutor questions
+        &lt;textarea class=&quot;form-control&quot; id=&quot;rev-today-notes&quot; placeholder=&quot;Write the method you forgot, the question number, or what to ask your tutor.&quot;&gt;&lt;/textarea&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rev-section&quot; data-section=&quot;maths&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;div&gt;
+        &lt;h2&gt;Maths 106-topic tracker&lt;/h2&gt;
+        &lt;p class=&quot;rev-mini&quot; id=&quot;rev-maths-range&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;viz-controls&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rev-maths-finish-target&quot;&gt;Finish topics by
+          &lt;input class=&quot;form-control&quot; type=&quot;date&quot; id=&quot;rev-maths-finish-target&quot; min=&quot;2026-08-11&quot; value=&quot;2026-09-19&quot;&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rev-maths-filter&quot;&gt;Show
+          &lt;select class=&quot;form-select&quot; id=&quot;rev-maths-filter&quot;&gt;
+            &lt;option value=&quot;all&quot;&gt;All topics&lt;/option&gt;
+            &lt;option value=&quot;todo&quot;&gt;Not finished&lt;/option&gt;
+            &lt;option value=&quot;red&quot;&gt;Red only&lt;/option&gt;
+            &lt;option value=&quot;amber&quot;&gt;Amber only&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;rev-maths-search&quot;&gt;Search topics
+      &lt;input class=&quot;form-control&quot; type=&quot;search&quot; id=&quot;rev-maths-search&quot; placeholder=&quot;Try circles, algebra or topic 15&quot;&gt;
+    &lt;/label&gt;
+    &lt;p class=&quot;rev-mini&quot; id=&quot;rev-search-result&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+    &lt;div class=&quot;rev-list&quot; id=&quot;rev-maths-list&quot;&gt;&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rev-section&quot; data-section=&quot;subjects&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;div&gt;&lt;h2&gt;Subject trackers&lt;/h2&gt;&lt;p class=&quot;rev-mini&quot; id=&quot;rev-subject-start-note&quot;&gt;&lt;/p&gt;&lt;/div&gt;
+      &lt;div class=&quot;viz-controls&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rev-subject-start&quot;&gt;Start other subjects
+          &lt;input class=&quot;form-control&quot; type=&quot;date&quot; id=&quot;rev-subject-start&quot; value=&quot;2026-09-01&quot;&gt;
+        &lt;/label&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rev-subject-select&quot;&gt;Subject
+          &lt;select class=&quot;form-select&quot; id=&quot;rev-subject-select&quot;&gt;&lt;/select&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;rev-subject-search&quot;&gt;Search this subject
+      &lt;input class=&quot;form-control&quot; type=&quot;search&quot; id=&quot;rev-subject-search&quot; placeholder=&quot;Try quotations, electricity or essays&quot;&gt;
+    &lt;/label&gt;
+    &lt;p class=&quot;rev-mini&quot; id=&quot;rev-subject-board&quot;&gt;&lt;/p&gt;
+    &lt;div id=&quot;rev-subject-content&quot;&gt;&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rev-section&quot; data-section=&quot;progress&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;div&gt;&lt;h2&gt;Progress &amp; tools&lt;/h2&gt;&lt;p class=&quot;rev-mini&quot;&gt;Scores, mistakes, weak topics, countdowns and backups in one place.&lt;/p&gt;&lt;/div&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-random-pick-progress&quot;&gt;&lt;i data-lucide=&quot;shuffle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Random practice&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rev-tools-grid&quot;&gt;
+      &lt;div class=&quot;rev-tool&quot;&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;This week&lt;/h3&gt;&lt;div id=&quot;rev-weekly-summary&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Red &amp; amber queue&lt;/h3&gt;&lt;div class=&quot;rev-list&quot; id=&quot;rev-weak-queue&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Past-paper scores&lt;/h3&gt;
+          &lt;form id=&quot;rev-paper-form&quot; class=&quot;rev-form-grid&quot;&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-paper-subject&quot;&gt;Subject&lt;select class=&quot;form-select&quot; id=&quot;rev-paper-subject&quot;&gt;&lt;/select&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-paper-date&quot;&gt;Date&lt;input class=&quot;form-control&quot; type=&quot;date&quot; id=&quot;rev-paper-date&quot;&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-paper-name&quot;&gt;Paper&lt;input class=&quot;form-control&quot; id=&quot;rev-paper-name&quot; required placeholder=&quot;Paper 1 Higher&quot;&gt;&lt;/label&gt;
+            &lt;div class=&quot;viz-controls&quot;&gt;&lt;label class=&quot;form-label&quot; for=&quot;rev-paper-score&quot;&gt;Score&lt;input class=&quot;form-control&quot; type=&quot;number&quot; id=&quot;rev-paper-score&quot; min=&quot;0&quot; required&gt;&lt;/label&gt;&lt;label class=&quot;form-label&quot; for=&quot;rev-paper-outof&quot;&gt;Out of&lt;input class=&quot;form-control&quot; type=&quot;number&quot; id=&quot;rev-paper-outof&quot; min=&quot;1&quot; required&gt;&lt;/label&gt;&lt;/div&gt;
+            &lt;label class=&quot;form-label rev-wide&quot; for=&quot;rev-paper-notes&quot;&gt;What to improve&lt;input class=&quot;form-control&quot; id=&quot;rev-paper-notes&quot; placeholder=&quot;Optional&quot;&gt;&lt;/label&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-paper-save&quot;&gt;Save score&lt;/button&gt;&lt;span class=&quot;text-destructive&quot; id=&quot;rev-paper-error&quot; role=&quot;alert&quot;&gt;&lt;/span&gt;
+          &lt;/form&gt;
+          &lt;div id=&quot;rev-paper-list&quot;&gt;&lt;/div&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rev-tool&quot;&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Mistake tracker&lt;/h3&gt;
+          &lt;form id=&quot;rev-mistake-form&quot; class=&quot;rev-form-grid&quot;&gt;
+            &lt;label class=&quot;form-label rev-wide&quot; for=&quot;rev-mistake-topic&quot;&gt;Topic&lt;select class=&quot;form-select&quot; id=&quot;rev-mistake-topic&quot;&gt;&lt;/select&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label rev-wide&quot; for=&quot;rev-mistake-question&quot;&gt;Question or reference&lt;input class=&quot;form-control&quot; id=&quot;rev-mistake-question&quot; required placeholder=&quot;e.g. Exercise 4, Q7&quot;&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-mistake-what&quot;&gt;What went wrong&lt;textarea class=&quot;form-control&quot; id=&quot;rev-mistake-what&quot; required&gt;&lt;/textarea&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-mistake-method&quot;&gt;Correct method&lt;textarea class=&quot;form-control&quot; id=&quot;rev-mistake-method&quot; required&gt;&lt;/textarea&gt;&lt;/label&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-mistake-save&quot;&gt;Save mistake&lt;/button&gt;
+          &lt;/form&gt;
+          &lt;div id=&quot;rev-mistake-list&quot;&gt;&lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Exam countdown&lt;/h3&gt;
+          &lt;form id=&quot;rev-exam-form&quot; class=&quot;rev-form-grid&quot;&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-exam-subject&quot;&gt;Subject&lt;select class=&quot;form-select&quot; id=&quot;rev-exam-subject&quot;&gt;&lt;/select&gt;&lt;/label&gt;
+            &lt;label class=&quot;form-label&quot; for=&quot;rev-exam-date&quot;&gt;Exam date&lt;input class=&quot;form-control&quot; type=&quot;date&quot; id=&quot;rev-exam-date&quot; required&gt;&lt;/label&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-exam-save&quot;&gt;Save countdown&lt;/button&gt;
+          &lt;/form&gt;
+          &lt;div id=&quot;rev-exam-list&quot;&gt;&lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Backup &amp; restore&lt;/h3&gt;
+          &lt;p class=&quot;rev-mini&quot;&gt;Download everything saved in this app, or restore it on this device later.&lt;/p&gt;
+          &lt;div class=&quot;viz-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-backup-download&quot;&gt;Download backup&lt;/button&gt;&lt;label class=&quot;btn&quot; for=&quot;rev-backup-file&quot;&gt;Choose backup&lt;input class=&quot;rev-hidden&quot; type=&quot;file&quot; id=&quot;rev-backup-file&quot; accept=&quot;application/json,.json&quot;&gt;&lt;/label&gt;&lt;/div&gt;
+          &lt;p class=&quot;rev-mini&quot; id=&quot;rev-backup-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rev-section&quot; data-section=&quot;coach&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;div&gt;
+        &lt;h2&gt;Study coach&lt;/h2&gt;
+        &lt;p class=&quot;rev-mini&quot; id=&quot;rev-gpt-note&quot;&gt;Offline planning, quizzes and mistake support&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;rev-gpt-mode&quot;&gt;Choose GPT
+        &lt;select class=&quot;form-select&quot; id=&quot;rev-gpt-mode&quot;&gt;
+          &lt;option value=&quot;offline&quot;&gt;Offline coach (works in this file)&lt;/option&gt;
+          &lt;option value=&quot;instant&quot;&gt;ChatGPT · Instant&lt;/option&gt;
+          &lt;option value=&quot;thinking&quot;&gt;ChatGPT · Thinking&lt;/option&gt;
+          &lt;option value=&quot;pro&quot;&gt;ChatGPT · Pro&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card rev-chat-log&quot; id=&quot;rev-chat-log&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;viz-controls rev-chat-quick&quot; aria-label=&quot;Coach shortcuts&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;next&quot;&gt;What should I do?&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;quiz&quot;&gt;Quiz me&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;weak&quot;&gt;My weak topics&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;tutor&quot;&gt;Tutor questions&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;clear&quot;&gt;Clear AI history&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;form class=&quot;rev-chat-form&quot; id=&quot;rev-chat-form&quot;&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;rev-chat-input&quot;&gt;Message
+        &lt;input class=&quot;form-control&quot; id=&quot;rev-chat-input&quot; autocomplete=&quot;off&quot; placeholder=&quot;Ask what to revise, request a quiz, or type your answer&quot;&gt;
+      &lt;/label&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;&lt;i data-lucide=&quot;send&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Send&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;div class=&quot;viz-controls&quot; style=&quot;margin-top:10px&quot;&gt;
+      &lt;a class=&quot;btn rev-hidden&quot; id=&quot;rev-open-chatgpt&quot; href=&quot;https://chatgpt.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;i data-lucide=&quot;external-link&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Open ChatGPT&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;gcse-revision-dashboard&#x27;);
+      const storageKey = &#x27;gcse-revision-dashboard-v2&#x27;;
+      const mathTopics = [
+        &#x27;Expand / Factorise&#x27;,&#x27;Prime Factorisation&#x27;,&#x27;Percentage Change / Profit&#x27;,&#x27;Mixed Number Operations&#x27;,&#x27;Changing the Subject&#x27;,&#x27;Inequalities&#x27;,&#x27;Reciprocals + Error Intervals&#x27;,&#x27;Averages from Tables&#x27;,&#x27;Using a Calculator&#x27;,&#x27;Angle Bisectors&#x27;,&#x27;Straight Line Graphs&#x27;,&#x27;Estimation&#x27;,&#x27;Area / Circumference of Circles&#x27;,&#x27;Diagram Sequences&#x27;,&#x27;Reverse Percentages&#x27;,&#x27;Index Laws&#x27;,&#x27;Quadratics: expand, factorise and solve&#x27;,&#x27;Inverse Proportion&#x27;,&#x27;Speed, Distance, Time&#x27;,&#x27;Scatter Diagrams&#x27;,&#x27;Transformations&#x27;,&#x27;Pythagoras&#x27;,&#x27;Interpreting Pie Charts&#x27;,&#x27;Column Vectors&#x27;,&#x27;Recipes&#x27;,&#x27;Standard Form: ordering&#x27;,&#x27;Frequency Polygons&#x27;,&#x27;Venn Diagrams&#x27;,&#x27;Standard Form: conversion and calculation&#x27;,&#x27;Best Buys + Exchange Rate&#x27;,&#x27;Plans and Elevations + Volume of a Prism&#x27;,&#x27;Simultaneous Equations&#x27;,&#x27;Surface Area of a Pyramid&#x27;,&#x27;Distance-Time Graphs&#x27;,&#x27;Angles in Regular Polygons&#x27;,&#x27;Compound Interest&#x27;,&#x27;Trigonometry: SOHCAHTOA&#x27;,&#x27;Trigonometry: SOHCAHTOA practice&#x27;,&#x27;Probability in Tables&#x27;,&#x27;More Angles in Regular Polygons&#x27;,&#x27;Drawing Quadratic Graphs&#x27;,&#x27;Loci + Perpendicular Bisectors&#x27;,&#x27;HCF / LCM&#x27;,&#x27;Volume of a Cone / Sphere&#x27;,&#x27;Similar Triangles + Angles in Parallel Lines&#x27;,&#x27;Equation of a Straight Line&#x27;,&#x27;Forming and Solving Equations + Trapezium Area&#x27;,&#x27;Probability Tree Diagrams&#x27;,&#x27;Midpoints + Congruent Shapes&#x27;,&#x27;Features of Quadratic Graphs&#x27;,&#x27;Direct / Inverse Proportion&#x27;,&#x27;Types of Graphs&#x27;,&#x27;Density, Mass, Volume&#x27;,&#x27;Pressure, Force, Area&#x27;,&#x27;Equations of Parallel Lines&#x27;,&#x27;Fibonacci Sequences + Simultaneous Equations&#x27;,&#x27;Angles in Irregular Polygons&#x27;,&#x27;Pythagoras + Arc Length&#x27;,&#x27;Stem-and-Leaf + Box Plots + Comparing Distributions&#x27;,&#x27;Surface Area of Spheres / Cones&#x27;,&#x27;Expand Triple Brackets&#x27;,&#x27;More Index Laws&#x27;,&#x27;Negative Scale-Factor Enlargements&#x27;,&#x27;Inequality Regions&#x27;,&#x27;Capture-Recapture&#x27;,&#x27;Estimating Powers and Roots&#x27;,&#x27;Product Rule for Counting&#x27;,&#x27;Graphs of Trigonometric Functions&#x27;,&#x27;Cumulative Frequency&#x27;,&#x27;Geometric Sequences + Surds&#x27;,&#x27;Exponential Graphs&#x27;,&#x27;Equation of a Circle + Graphical Simultaneous Equations&#x27;,&#x27;Quadratic Formula&#x27;,&#x27;Quadratic nth Term&#x27;,&#x27;Functions&#x27;,&#x27;Drawing Histograms&#x27;,&#x27;Recurring Decimals to Fractions&#x27;,&#x27;Completing the Square&#x27;,&#x27;Conditional Probability&#x27;,&#x27;Sector Area + Triangle Area using Trig&#x27;,&#x27;Exact Trig Values + Surds and Brackets&#x27;,&#x27;Proportionality&#x27;,&#x27;Equations of Perpendicular Lines&#x27;,&#x27;Iteration&#x27;,&#x27;Interpreting Histograms&#x27;,&#x27;Cosine Rule + Sine Rule for sides&#x27;,&#x27;3D Trigonometry + Pythagoras&#x27;,&#x27;Bounds&#x27;,&#x27;Algebraic Proof&#x27;,&#x27;Solving Quadratic Inequalities&#x27;,&#x27;Similar Areas / Volumes&#x27;,&#x27;Cosine Rule for angles&#x27;,&#x27;Circle Theorems&#x27;,&#x27;Invariant Points&#x27;,&#x27;Equations with Algebraic Fractions&#x27;,&#x27;Bearings + Sine Rule for angles&#x27;,&#x27;Velocity-Time Graphs&#x27;,&#x27;Rationalising the Denominator&#x27;,&#x27;Completing the Square: harder&#x27;,&#x27;Simplifying Algebraic Fractions&#x27;,&#x27;Non-Linear Simultaneous Equations&#x27;,&#x27;Transformations of Graphs&#x27;,&#x27;Equation of a Tangent to a Circle&#x27;,&#x27;Geometric Proof&#x27;,&#x27;General Iterative Processes&#x27;,&#x27;Vectors&#x27;
+      ];
+      const mathVideoRefs = [
+        &#x27;Uu4FJyyXCtM&#x27;,&#x27;KY1LlKcIVvw&#x27;,&#x27;Kh-euMm_6Is&#x27;,&#x27;S0V1nbs1UOg&amp;t=143s&#x27;,&#x27;mYsHbiOEYAc&#x27;,&#x27;saASveF7jlY&#x27;,&#x27;z9t1HGRNpPA&#x27;,&#x27;1k3_cFj4uGY&#x27;,&#x27;dC_BWkcI8C0&amp;t=30s&#x27;,&#x27;3viWgGJmkFo&#x27;,&#x27;rdIO7y4VmEE&#x27;,&#x27;S0V1nbs1UOg&amp;t=530s&#x27;,&#x27;d3qMfo5EBcU&#x27;,&#x27;OThm9OBu4XA&#x27;,&#x27;MzDpBzXqZU8&#x27;,&#x27;S0V1nbs1UOg&amp;t=201s&#x27;,&#x27;Uu4FJyyXCtM&#x27;,&#x27;AWH6wQBbpo0&#x27;,&#x27;dC_BWkcI8C0&amp;t=455s&#x27;,&#x27;1k3_cFj4uGY&#x27;,&#x27;ctVr9NpSiL4&#x27;,&#x27;dC_BWkcI8C0&amp;t=568s&#x27;,&#x27;t4aAOzSNabI&#x27;,&#x27;PxDfkq3FMaw&#x27;,&#x27;ejhYX2cku7o&#x27;,&#x27;y-ybXWmmSs8&#x27;,&#x27;PzBE82c1dfY&#x27;,&#x27;yviq6giZ-nc&#x27;,&#x27;y-ybXWmmSs8&#x27;,&#x27;ejhYX2cku7o&#x27;,&#x27;0FPCoUiJDGE&#x27;,&#x27;kVhABlRQOGc&#x27;,&#x27;S5C2nQQ-gvU&#x27;,&#x27;UsmhVCjfzYQ&#x27;,&#x27;FZw0XTHA2Eo&#x27;,&#x27;JxzhTD50dQg&#x27;,&#x27;lRDHqGqRNwg&#x27;,&#x27;lRDHqGqRNwg&#x27;,&#x27;nIeMiayWVvw&#x27;,&#x27;FZw0XTHA2Eo&#x27;,&#x27;qveAZLu2xFA&#x27;,&#x27;hyC-dmLk3JA&#x27;,&#x27;kHLwbPwvTtw&#x27;,&#x27;crxFsKRGEqk&#x27;,&#x27;u1uOcrjQCh4&#x27;,&#x27;yab-t1qbsQ8&#x27;,&#x27;mYsHbiOEYAc&#x27;,&#x27;Z5BX-LbG7mI&#x27;,&#x27;u1uOcrjQCh4&#x27;,&#x27;qveAZLu2xFA&#x27;,&#x27;AWH6wQBbpo0&#x27;,&#x27;S0V1nbs1UOg&amp;t=1007s&#x27;,&#x27;dC_BWkcI8C0&amp;t=1783s&#x27;,&#x27;AWH6wQBbpo0&#x27;,&#x27;cMevvdGsrtA&#x27;,&#x27;D2bZcm2NnfU&#x27;,&#x27;FZw0XTHA2Eo&#x27;,&#x27;Pyegtuzo5OU&#x27;,&#x27;SUP-mBn2B2E&#x27;,&#x27;JPMiew-11iI&#x27;,&#x27;CaUgHGV-JdI&#x27;,&#x27;s7meFR3BKxs&#x27;,&#x27;0_hclyERGAw&#x27;,&#x27;ChrX2MNLQX8&#x27;,&#x27;nIeMiayWVvw&#x27;,&#x27;S0V1nbs1UOg&amp;t=530s&#x27;,&#x27;dC_BWkcI8C0&amp;t=810s&#x27;,&#x27;fNH5EWWtf7k&#x27;,&#x27;PzBE82c1dfY&#x27;,&#x27;D2bZcm2NnfU&#x27;,&#x27;ctVr9NpSiL4&#x27;,&#x27;12NqSRpfTR4&#x27;,&#x27;522V7v8Y1fQ&#x27;,&#x27;7Isa4P8lISc&#x27;,&#x27;ZRQJGecu1fs&#x27;,&#x27;g7Jnrf0g2tQ&#x27;,&#x27;LhfBLYQ5T7E&#x27;,&#x27;a7WJRrRuSTc&#x27;,&#x27;nIeMiayWVvw&#x27;,&#x27;Pyegtuzo5OU&#x27;,&#x27;WaXSOuFOFsE&#x27;,&#x27;AWH6wQBbpo0&#x27;,&#x27;KZG5ByowCrA&#x27;,&#x27;WHZ2IiKcqeU&#x27;,&#x27;NiAmwLiVGv0&#x27;,&#x27;pfjSlf0yKQY&#x27;,&#x27;99CL-tNyNR0&#x27;,&#x27;38aztTAQJDs&#x27;,&#x27;Ghzp37tHyxA&#x27;,&#x27;BlhUiV10ZCQ&#x27;,&#x27;0U1T_f5xb98&#x27;,&#x27;pfjSlf0yKQY&#x27;,&#x27;dBIlCD_JF9Q&#x27;,&#x27;ctVr9NpSiL4&#x27;,&#x27;b7UT0JoG2o8&#x27;,&#x27;GdKgyXYlNO8&#x27;,&#x27;UsmhVCjfzYQ&#x27;,&#x27;t1Pg0Ar52-k&#x27;,&#x27;abBgTO8eW-c&#x27;,&#x27;2pKrSEVk-Uk&#x27;,&#x27;eEYreNDTvKQ&#x27;,&#x27;ctVr9NpSiL4&#x27;,&#x27;NGnLced4bZY&#x27;,&#x27;CmprPWcLtlk&#x27;,&#x27;WHZ2IiKcqeU&#x27;,&#x27;PxDfkq3FMaw&#x27;
+      ];
+      const subjects = {
+        history: { name:&#x27;History&#x27;, board:&#x27;Edexcel&#x27;, units:{
+          &#x27;Medicine in Britain&#x27;:[&#x27;Medieval medicine&#x27;,&#x27;Renaissance medicine&#x27;,&#x27;Medicine in the 18th and 19th centuries&#x27;,&#x27;Modern medicine&#x27;,&#x27;Western Front case study&#x27;,&#x27;Timed source and 16-mark questions&#x27;],
+          &#x27;Weimar and Nazi Germany&#x27;:[&#x27;Weimar problems and recovery&#x27;,&#x27;Hitler\&#x27;s rise to power&#x27;,&#x27;Nazi control and dictatorship&#x27;,&#x27;Life in Nazi Germany&#x27;,&#x27;Interpretations and 12/16-mark questions&#x27;],
+          &#x27;Cold War&#x27;:[&#x27;Origins, 1941–58&#x27;,&#x27;Crises, 1958–70&#x27;,&#x27;End of the Cold War, 1970–91&#x27;,&#x27;Narrative account and consequence questions&#x27;],
+          &#x27;Henry VIII&#x27;:[&#x27;Wolsey&#x27;,&#x27;Cromwell and the Reformation&#x27;,&#x27;Government and religion&#x27;,&#x27;Foreign policy and society&#x27;,&#x27;Judgement essays&#x27;]
+        }},
+        englishLit: { name:&#x27;English Literature&#x27;, board:&#x27;AQA&#x27;, units:{
+          &#x27;Macbeth&#x27;:[&#x27;Plot and turning points&#x27;,&#x27;Macbeth and Lady Macbeth&#x27;,&#x27;Ambition, guilt and the supernatural&#x27;,&#x27;Learn 15 flexible quotations&#x27;,&#x27;Plan and write one timed essay&#x27;],
+          &#x27;An Inspector Calls&#x27;:[&#x27;Plot and dramatic structure&#x27;,&#x27;Inspector, Sheila and Mr Birling&#x27;,&#x27;Responsibility, class and gender&#x27;,&#x27;Learn 15 flexible quotations&#x27;,&#x27;Plan and write one timed essay&#x27;],
+          &#x27;A Christmas Carol&#x27;:[&#x27;Plot and stave structure&#x27;,&#x27;Scrooge and the Cratchits&#x27;,&#x27;Redemption, poverty and Christmas&#x27;,&#x27;Learn 15 flexible quotations&#x27;,&#x27;Plan and write one timed essay&#x27;],
+          &#x27;Poetry and unseen&#x27;:[&#x27;Confirm your anthology cluster&#x27;,&#x27;Comparison method&#x27;,&#x27;Unseen poetry annotation&#x27;,&#x27;Timed comparison&#x27;]
+        }},
+        englishLang: { name:&#x27;English Language&#x27;, board:&#x27;AQA&#x27;, units:{
+          &#x27;Paper 1&#x27;:[&#x27;Q1 information retrieval&#x27;,&#x27;Q2 language analysis&#x27;,&#x27;Q3 structure&#x27;,&#x27;Q4 evaluation&#x27;,&#x27;Q5 creative writing&#x27;],
+          &#x27;Paper 2&#x27;:[&#x27;Q1 true statements&#x27;,&#x27;Q2 summary and synthesis&#x27;,&#x27;Q3 language analysis&#x27;,&#x27;Q4 comparison&#x27;,&#x27;Q5 viewpoint writing&#x27;],
+          &#x27;Core skills&#x27;:[&#x27;Planning under time pressure&#x27;,&#x27;Paragraph control&#x27;,&#x27;Vocabulary and sentence variety&#x27;,&#x27;Spelling, punctuation and grammar&#x27;]
+        }},
+        science: { name:&#x27;Combined Science Higher&#x27;, board:&#x27;AQA&#x27;, units:{
+          &#x27;Biology&#x27;:[&#x27;Cell biology&#x27;,&#x27;Organisation&#x27;,&#x27;Infection and response&#x27;,&#x27;Bioenergetics&#x27;,&#x27;Homeostasis and response&#x27;,&#x27;Inheritance and evolution&#x27;,&#x27;Ecology&#x27;,&#x27;Required practicals&#x27;],
+          &#x27;Chemistry&#x27;:[&#x27;Atomic structure and periodic table&#x27;,&#x27;Bonding and structure&#x27;,&#x27;Quantitative chemistry&#x27;,&#x27;Chemical changes&#x27;,&#x27;Energy changes&#x27;,&#x27;Rates and equilibrium&#x27;,&#x27;Organic chemistry&#x27;,&#x27;Chemical analysis&#x27;,&#x27;Atmosphere&#x27;,&#x27;Using resources&#x27;,&#x27;Required practicals&#x27;],
+          &#x27;Physics&#x27;:[&#x27;Energy&#x27;,&#x27;Electricity&#x27;,&#x27;Particle model&#x27;,&#x27;Atomic structure&#x27;,&#x27;Forces&#x27;,&#x27;Waves&#x27;,&#x27;Magnetism and electromagnetism&#x27;,&#x27;Required practicals&#x27;]
+        }},
+        geography: { name:&#x27;Geography&#x27;, board:&#x27;AQA&#x27;, units:{
+          &#x27;Physical geography&#x27;:[&#x27;Natural hazards&#x27;,&#x27;The living world&#x27;,&#x27;UK physical landscapes&#x27;,&#x27;Physical case studies&#x27;],
+          &#x27;Human geography&#x27;:[&#x27;Urban issues and challenges&#x27;,&#x27;The changing economic world&#x27;,&#x27;Resource management&#x27;,&#x27;Human case studies&#x27;],
+          &#x27;Applications&#x27;:[&#x27;Issue evaluation&#x27;,&#x27;Fieldwork enquiry&#x27;,&#x27;Geographical skills and maps&#x27;]
+        }},
+        sociology: { name:&#x27;Sociology&#x27;, board:&#x27;AQA&#x27;, units:{
+          &#x27;Paper 1&#x27;:[&#x27;Families&#x27;,&#x27;Education&#x27;,&#x27;Research methods for Paper 1&#x27;],
+          &#x27;Paper 2&#x27;:[&#x27;Crime and deviance&#x27;,&#x27;Social stratification&#x27;,&#x27;Research methods for Paper 2&#x27;],
+          &#x27;Exam skills&#x27;:[&#x27;Key sociologists and studies&#x27;,&#x27;Four-mark questions&#x27;,&#x27;Twelve-mark evaluation essays&#x27;]
+        }},
+        furtherMaths: { name:&#x27;Further Maths&#x27;, board:&#x27;AQA Level 2&#x27;, units:{
+          &#x27;Algebra&#x27;:[&#x27;Algebraic manipulation&#x27;,&#x27;Factor theorem&#x27;,&#x27;Functions&#x27;,&#x27;Sequences&#x27;,&#x27;Binomial expansion&#x27;],
+          &#x27;Geometry&#x27;:[&#x27;Coordinate geometry&#x27;,&#x27;Trigonometry&#x27;,&#x27;Circle geometry&#x27;,&#x27;Matrices and transformations&#x27;],
+          &#x27;Calculus&#x27;:[&#x27;Differentiation&#x27;,&#x27;Tangents and normals&#x27;,&#x27;Stationary points&#x27;,&#x27;Simple integration&#x27;],
+          &#x27;Exam practice&#x27;:[&#x27;Non-calculator paper&#x27;,&#x27;Calculator paper&#x27;,&#x27;Error log and redo&#x27;]
+        }}
+      };
+      const holidayRotation = [&#x27;History: one retrieval grid&#x27;,&#x27;English Literature: five quotations&#x27;,&#x27;Science: one Cognito lesson and questions&#x27;,&#x27;English Language: one timed question&#x27;,&#x27;Geography: one case-study blurting sheet&#x27;,&#x27;Sociology: one 12-mark plan&#x27;,&#x27;Further Maths: one challenge question&#x27;];
+
+      const coachQuestions = [
+        {subject:&#x27;Maths&#x27;,question:&#x27;Factorise x² + 5x + 6.&#x27;,answer:&#x27;(x + 2)(x + 3)&#x27;,keywords:[&#x27;x + 2&#x27;,&#x27;x + 3&#x27;]},
+        {subject:&#x27;Maths&#x27;,question:&#x27;A price rises from £80 to £92. What is the percentage increase?&#x27;,answer:&#x27;15%&#x27;,keywords:[&#x27;15&#x27;]},
+        {subject:&#x27;Biology&#x27;,question:&#x27;Why does increasing temperature eventually stop an enzyme working?&#x27;,answer:&#x27;Its active site changes shape because the enzyme denatures.&#x27;,keywords:[&#x27;active site&#x27;,&#x27;shape&#x27;,&#x27;denature&#x27;]},
+        {subject:&#x27;Chemistry&#x27;,question:&#x27;State the test for hydrogen gas.&#x27;,answer:&#x27;A lit splint gives a squeaky pop.&#x27;,keywords:[&#x27;lit splint&#x27;,&#x27;squeaky pop&#x27;]},
+        {subject:&#x27;Physics&#x27;,question:&#x27;Write the equation linking force, mass and acceleration.&#x27;,answer:&#x27;F = ma.&#x27;,keywords:[&#x27;f&#x27;,&#x27;m&#x27;,&#x27;a&#x27;]},
+        {subject:&#x27;History&#x27;,question:&#x27;Give one reason Hitler became Chancellor in January 1933.&#x27;,answer:&#x27;Examples include political deal-making by Papen, Nazi electoral support, or elite belief that Hitler could be controlled.&#x27;,keywords:[&#x27;papen&#x27;,&#x27;support&#x27;,&#x27;controlled&#x27;]},
+        {subject:&#x27;Macbeth&#x27;,question:&#x27;Give one quotation showing Macbeth’s ambition.&#x27;,answer:&#x27;For example: “I have no spur ... but only vaulting ambition.”&#x27;,keywords:[&#x27;vaulting ambition&#x27;]},
+        {subject:&#x27;English Language&#x27;,question:&#x27;What should an AQA Paper 1 Question 2 paragraph analyse?&#x27;,answer:&#x27;A language method, a short quotation, its effects and meanings, linked to the question.&#x27;,keywords:[&#x27;method&#x27;,&#x27;quotation&#x27;,&#x27;effect&#x27;]},
+        {subject:&#x27;Geography&#x27;,question:&#x27;Name one primary effect and one secondary effect of an earthquake.&#x27;,answer:&#x27;Primary effects happen directly, such as deaths or collapsed buildings; secondary effects follow, such as fires, homelessness or disease.&#x27;,keywords:[&#x27;primary&#x27;,&#x27;secondary&#x27;]},
+        {subject:&#x27;Sociology&#x27;,question:&#x27;What is one strength of using questionnaires in sociological research?&#x27;,answer:&#x27;They can collect standardised data from many people quickly and are easier to compare.&#x27;,keywords:[&#x27;many&#x27;,&#x27;quick&#x27;,&#x27;compare&#x27;]},
+        {subject:&#x27;Further Maths&#x27;,question:&#x27;Differentiate y = 3x² − 4x + 7.&#x27;,answer:&#x27;dy/dx = 6x − 4.&#x27;,keywords:[&#x27;6x&#x27;,&#x27;4&#x27;]}
+      ];
+      const mathStartIso = &#x27;2026-08-11&#x27;;
+      const defaultState = { schemaVersion:3, done:{}, confidence:{}, notes:{}, completedAt:{}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:true, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, chat:[], activeQuiz:null, gptMode:&#x27;offline&#x27;, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;history&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
+      let state = Object.assign({},defaultState);
+      let storageWorks = true;
+      try { state = Object.assign(state, JSON.parse(localStorage.getItem(storageKey) || &#x27;{}&#x27;)); } catch (_) { storageWorks=false; }
+      state.done = state.done &amp;&amp; typeof state.done===&#x27;object&#x27; ? state.done : {};
+      state.confidence = state.confidence &amp;&amp; typeof state.confidence===&#x27;object&#x27; ? state.confidence : {};
+      state.notes = state.notes &amp;&amp; typeof state.notes===&#x27;object&#x27; ? state.notes : {};
+      state.completedAt = state.completedAt &amp;&amp; typeof state.completedAt===&#x27;object&#x27; ? state.completedAt : {};
+      state.dayPlans = state.dayPlans &amp;&amp; typeof state.dayPlans===&#x27;object&#x27; ? state.dayPlans : {};
+      state.paperScores = Array.isArray(state.paperScores) ? state.paperScores : [];
+      state.mistakes = Array.isArray(state.mistakes) ? state.mistakes : [];
+      state.examDates = state.examDates &amp;&amp; typeof state.examDates===&#x27;object&#x27; ? state.examDates : {};
+      state.timer = state.timer &amp;&amp; typeof state.timer===&#x27;object&#x27; ? Object.assign({},defaultState.timer,state.timer) : Object.assign({},defaultState.timer);
+      state.dailyMinutes = [20,30,45,60,90].includes(Number(state.dailyMinutes)) ? Number(state.dailyMinutes) : 60;
+      state.catchUpEnabled = state.catchUpEnabled!==false;
+      if(typeof state.mathFinishTarget!==&#x27;string&#x27;||!/^\d{4}-\d{2}-\d{2}$/.test(state.mathFinishTarget)||state.mathFinishTarget&lt;mathStartIso) state.mathFinishTarget=&#x27;2026-09-19&#x27;;
+      if(typeof state.subjectStartDate!==&#x27;string&#x27;||!/^\d{4}-\d{2}-\d{2}$/.test(state.subjectStartDate)) state.subjectStartDate=&#x27;2026-09-01&#x27;;
+      if(![&#x27;focus&#x27;,&#x27;break&#x27;].includes(state.timer.mode)) state.timer.mode=&#x27;focus&#x27;;
+      if(!Number.isFinite(Number(state.timer.remainingSeconds))||Number(state.timer.remainingSeconds)&lt;0) state.timer.remainingSeconds=state.timer.mode===&#x27;focus&#x27;?1500:300;
+      if(state.timer.running &amp;&amp; (!state.timer.endAt || Number.isNaN(new Date(state.timer.endAt).getTime()))) { state.timer.running=false; state.timer.endAt=null; }
+      const updateSaveStatus = () =&gt; {
+        const el=root.querySelector(&#x27;#rev-save-status&#x27;); if(!el)return;
+        if(!storageWorks){ el.textContent=&#x27;Save unavailable&#x27;; return; }
+        if(!state.savedAt){ el.textContent=&#x27;Auto-save on&#x27;; return; }
+        const when=new Date(state.savedAt); el.textContent=`Saved ${when.toLocaleTimeString(&#x27;en-GB&#x27;,{hour:&#x27;2-digit&#x27;,minute:&#x27;2-digit&#x27;})}`;
+      };
+      const save = () =&gt; {
+        state.savedAt=new Date().toISOString();
+        try { localStorage.setItem(storageKey, JSON.stringify(state)); storageWorks=true; } catch (_) { storageWorks=false; }
+        updateSaveStatus(); return storageWorks;
+      };
+      const lineBreak = String.fromCharCode(10);
+      const iso = d =&gt; {
+        const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,&#x27;0&#x27;), day=String(d.getDate()).padStart(2,&#x27;0&#x27;);
+        return `${y}-${m}-${day}`;
+      };
+      const fromIso = s =&gt; { const [y,m,d]=s.split(&#x27;-&#x27;).map(Number); return new Date(y,m-1,d); };
+      const fmt = d =&gt; new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;short&#x27;,day:&#x27;numeric&#x27;,month:&#x27;short&#x27;}).format(d);
+      const isHoliday = d =&gt; iso(d) &gt;= state.holidayStart &amp;&amp; iso(d) &lt;= state.holidayEnd;
+      const mathVideo = index =&gt; `https://www.youtube.com/watch?v=${mathVideoRefs[index]}`;
+      const gptModes = { offline:&#x27;Offline coach&#x27;, instant:&#x27;Instant&#x27;, thinking:&#x27;Thinking&#x27;, pro:&#x27;Pro&#x27; };
+      if(!(state.gptMode in gptModes)) state.gptMode=&#x27;offline&#x27;;
+      const taskKey = (type,id) =&gt; `${type}:${id}`;
+      let taskRowSerial = 0;
+      const setDone = (key,value) =&gt; {
+        state.done[key]=value;
+        if(value &amp;&amp; !state.completedAt[key]) state.completedAt[key]=new Date().toISOString();
+        if(!value) delete state.completedAt[key];
+        save(); renderAll();
+      };
+      const setConfidence = (key,value) =&gt; { if(value) state.confidence[key]=value; else delete state.confidence[key]; save(); renderProgress(); updateProgress(); };
+
+      function coachMessage(role,text) {
+        state.chat = Array.isArray(state.chat) ? state.chat : [];
+        state.chat.push({role,text});
+        if(state.chat.length&gt;30) state.chat=state.chat.slice(-30);
+        save(); renderCoach();
+      }
+      function copyText(text) {
+        const fallback = () =&gt; {
+          const area=document.createElement(&#x27;textarea&#x27;); area.value=text; area.setAttribute(&#x27;readonly&#x27;,&#x27;&#x27;); area.style.position=&#x27;absolute&#x27;; area.style.left=&#x27;-9999px&#x27;;
+          root.append(area); area.select(); let copied=false;
+          try { copied=document.execCommand(&#x27;copy&#x27;); } catch (_) {}
+          area.remove(); return copied;
+        };
+        if(navigator.clipboard &amp;&amp; navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(()=&gt;true).catch(fallback);
+        return Promise.resolve(fallback());
+      }
+      function liveCoachPrompt(text) {
+        const next=unfinishedMath();
+        const context=next?`My next unfinished maths topic is ${next.index+1}: ${next.name}.`:&#x27;I have finished the 106-topic maths tracker.&#x27;;
+        return `Act as my GCSE revision coach using ${gptModes[state.gptMode]} mode. I study Edexcel Higher Maths and have a maths tutor on Tuesdays. My holiday light plan is ${state.holidayStart} to ${state.holidayEnd}. ${context} Keep the answer clear, encouraging and practical. My request: ${text}`;
+      }
+      function sendToSelectedCoach(raw) {
+        const text=raw.trim(); if(!text)return;
+        if(state.gptMode===&#x27;offline&#x27;) { coachReply(text); return; }
+        const popup=window.open(&#x27;https://chatgpt.com/&#x27;,&#x27;_blank&#x27;); if(popup) popup.opener=null;
+        coachMessage(&#x27;you&#x27;,text);
+        copyText(liveCoachPrompt(text)).then(copied=&gt;coachMessage(&#x27;coach&#x27;,`${gptModes[state.gptMode]} selected. ${popup?&#x27;ChatGPT opened in a new tab.&#x27;:&#x27;Your browser blocked the new tab; use the Open ChatGPT button below.&#x27;}${lineBreak}${copied?&#x27;Your revision prompt is copied — paste it into ChatGPT, then choose the same option in its model picker.&#x27;:&#x27;Open ChatGPT and paste your request there.&#x27;}`));
+      }
+      function unfinishedMath() {
+        const index=mathTopics.findIndex((_,i)=&gt;!state.done[taskKey(&#x27;math&#x27;,i)]);
+        return index&lt;0?null:{index,name:mathTopics[index]};
+      }
+      function makeTopicCatalogue() {
+        const maths=mathTopics.map((name,index)=&gt;({key:taskKey(&#x27;math&#x27;,index),type:&#x27;math&#x27;,subjectId:&#x27;math&#x27;,subjectName:&#x27;Maths&#x27;,title:`Maths ${index+1}. ${name}`,shortTitle:`${index+1}. ${name}`,meta:&#x27;GCSE Higher Maths&#x27;,minutes:15,index,url:mathVideo(index)}));
+        const bySubject=Object.entries(subjects).map(([subjectId,s])=&gt;{
+          const entries=[];
+          Object.entries(s.units).forEach(([unit,items])=&gt;items.forEach((title,index)=&gt;entries.push({key:taskKey(subjectId,`${unit}-${index}`),type:&#x27;subject&#x27;,subjectId,subjectName:s.name,title:`${s.name} · ${title}`,shortTitle:title,unit,meta:`${unit} · Learn → recall → exam question → mark`,minutes:15})));
+          return entries;
+        });
+        const rotation=[]; const longest=Math.max(...bySubject.map(items=&gt;items.length));
+        for(let i=0;i&lt;longest;i++) bySubject.forEach(items=&gt;{if(items[i])rotation.push(items[i]);});
+        return {maths,subjects:rotation,all:maths.concat(rotation)};
+      }
+      const topicCatalogue=makeTopicCatalogue();
+      const topicLookup=new Map(topicCatalogue.all.map(task=&gt;[task.key,task]));
+      const subjectName = id =&gt; id===&#x27;math&#x27;?&#x27;Maths&#x27;:subjects[id]?.name||id;
+      const subjectOptions = () =&gt; [{id:&#x27;math&#x27;,name:&#x27;Maths&#x27;},...Object.entries(subjects).map(([id,s])=&gt;({id,name:s.name}))];
+      function resolveTask(key) {
+        const found=topicLookup.get(key); if(found)return Object.assign({},found);
+        if(key===&#x27;math:full-paper&#x27;) return {key,title:&#x27;GCSE Higher Maths · full-paper day&#x27;,shortTitle:&#x27;Full Higher paper&#x27;,subjectId:&#x27;math&#x27;,subjectName:&#x27;Maths&#x27;,meta:&#x27;Timed paper → mark it → record every mistake&#x27;,minutes:90,noConfidence:true,trackable:false};
+        if(key.startsWith(&#x27;tutor:&#x27;)) return {key,title:&#x27;Tuesday tutor prep&#x27;,shortTitle:&#x27;Tuesday tutor prep&#x27;,subjectId:&#x27;math&#x27;,subjectName:&#x27;Maths&#x27;,meta:&#x27;Take your red and amber topics plus today’s mistakes&#x27;,minutes:10,noConfidence:true,trackable:false};
+        return null;
+      }
+      function weakList() {
+        return topicCatalogue.all.filter(task=&gt;state.confidence[task.key]===&#x27;red&#x27;||state.confidence[task.key]===&#x27;amber&#x27;)
+          .sort((a,b)=&gt;(state.confidence[a.key]===&#x27;red&#x27;?0:1)-(state.confidence[b.key]===&#x27;red&#x27;?0:1))
+          .slice(0,6).map(task=&gt;`${state.confidence[task.key]===&#x27;red&#x27;?&#x27;✗&#x27;:&#x27;△&#x27;} ${task.title}`);
+      }
+      function startQuiz() {
+        const redMath=Object.entries(state.confidence).find(([k,v])=&gt;k.startsWith(&#x27;math:&#x27;)&amp;&amp;v===&#x27;red&#x27;);
+        let index;
+        if(redMath) index=Number(redMath[0].split(&#x27;:&#x27;)[1])%coachQuestions.length;
+        else index=(new Date().getDate()+state.chat.length)%coachQuestions.length;
+        state.activeQuiz=index; save();
+        const q=coachQuestions[index]; coachMessage(&#x27;coach&#x27;,`${q.subject} question:${lineBreak}${q.question}`);
+      }
+      function coachReply(raw) {
+        const text=raw.trim(); if(!text)return;
+        coachMessage(&#x27;you&#x27;,text);
+        if(state.activeQuiz!==null &amp;&amp; state.activeQuiz!==undefined) {
+          const q=coachQuestions[state.activeQuiz]; const lower=text.toLowerCase(); const hits=q.keywords.filter(k=&gt;lower.includes(k.toLowerCase())).length;
+          state.activeQuiz=null; save();
+          coachMessage(&#x27;coach&#x27;,`${hits&gt;=Math.max(1,Math.ceil(q.keywords.length/2))?&#x27;Good answer.&#x27;:&#x27;Not quite yet.&#x27;}${lineBreak}Model answer: ${q.answer}${lineBreak}${lineBreak}Say “quiz me” for another question.`);
+          return;
+        }
+        const lower=text.toLowerCase();
+        if(lower.includes(&#x27;quiz&#x27;)) { startQuiz(); return; }
+        if(lower.includes(&#x27;weak&#x27;)||lower.includes(&#x27;red&#x27;)||lower.includes(&#x27;amber&#x27;)) {
+          const weak=weakList(); coachMessage(&#x27;coach&#x27;,weak.length?`Start with these:${lineBreak}${weak.join(lineBreak)}`:&#x27;You have not marked any red or amber topics yet. Use the confidence menus after each task.&#x27;); return;
+        }
+        if(lower.includes(&#x27;tutor&#x27;)) {
+          const weak=weakList(); coachMessage(&#x27;coach&#x27;,weak.length?`Take these to your Tuesday tutor:${lineBreak}${weak.slice(0,3).join(lineBreak)}${lineBreak}Ask: “Can you show me the fastest reliable method, then give me one question to try alone?”`:&#x27;Before your tutor session, mark today’s hardest topics amber or red. I will turn them into tutor questions here.&#x27;); return;
+        }
+        if(lower.includes(&#x27;holiday&#x27;)) {
+          coachMessage(&#x27;coach&#x27;,`Holiday light mode is ${state.holidayStart} to ${state.holidayEnd}. Maths keeps going at a lighter pace. Your other subjects begin ${fmt(fromIso(state.subjectStartDate))}, unless you change that date in Subjects.`); return;
+        }
+        if(lower.includes(&#x27;what&#x27;)||lower.includes(&#x27;next&#x27;)||lower.includes(&#x27;revise&#x27;)||lower.includes(&#x27;plan&#x27;)) {
+          const today=todayTasks(new Date()).filter(t=&gt;!state.done[t.key]); const next=unfinishedMath();
+          if(today.length) coachMessage(&#x27;coach&#x27;,`Do this next:${lineBreak}1. ${today[0].title}${lineBreak}2. Mark it immediately${lineBreak}3. Set ✓, △ or ✗${lineBreak}Then return and ask for a quiz.`);
+          else if(next) coachMessage(&#x27;coach&#x27;,`Today is clear. If you want extra work, do Maths ${next.index+1}: ${next.name}. Keep it to 20 minutes if you are on holiday.`);
+          else coachMessage(&#x27;coach&#x27;,&#x27;Your Maths tracker is complete. Use the full paper and work from red topics first.&#x27;);
+          return;
+        }
+        coachMessage(&#x27;coach&#x27;,&#x27;I work best with: “What should I do?”, “Quiz me”, “Show my weak topics”, “Tutor questions”, or “Explain holiday mode”.&#x27;);
+      }
+
+      function mathSchedule() {
+        const start=fromIso(mathStartIso), finish=fromIso(state.mathFinishTarget); const days=[];
+        for(let cursor=new Date(start);cursor&lt;=finish;cursor.setDate(cursor.getDate()+1)){
+          const holiday=isHoliday(cursor), weight=holiday?Math.max(1,Number(state.holidayPace)||1):3;
+          days.push({date:new Date(cursor),holiday,weight});
+        }
+        const totalWeight=days.reduce((sum,day)=&gt;sum+day.weight,0)||1; const out=[]; let topic=0, cumulativeWeight=0;
+        days.forEach((day,index)=&gt;{
+          cumulativeWeight+=day.weight;
+          const plannedThrough=index===days.length-1?mathTopics.length:Math.floor(mathTopics.length*cumulativeWeight/totalWeight);
+          const assigned=[]; while(topic&lt;plannedThrough&amp;&amp;topic&lt;mathTopics.length) assigned.push(topic++);
+          out.push({date:day.date,topics:assigned,holiday:day.holiday});
+        });
+        return out;
+      }
+      function topicDateMap(){ const map={}; mathSchedule().forEach(day=&gt;day.topics.forEach(n=&gt;map[n]=day.date)); return map; }
+      function fullPaperDate(){ const schedule=mathSchedule(), last=schedule[schedule.length-1]?.date; if(!last)return null; const d=new Date(last); d.setDate(d.getDate()+1); return d; }
+      function subjectSchedule() {
+        const output=[], mathDays=new Map(mathSchedule().map(day=&gt;[iso(day.date),day]));
+        const paperDate=fullPaperDate(); let cursor=0, day=fromIso(state.subjectStartDate), guard=0;
+        while(cursor&lt;topicCatalogue.subjects.length &amp;&amp; guard&lt;500){
+          const key=iso(day), mathCount=mathDays.get(key)?.topics.length||0;
+          let committed=mathCount*15;
+          if(paperDate&amp;&amp;iso(paperDate)===key)committed+=90;
+          if(day.getDay()===2&amp;&amp;!isHoliday(day))committed+=10;
+          const capacity=Math.min(3,Math.max(0,Math.floor((state.dailyMinutes-committed)/15)));
+          const tasks=topicCatalogue.subjects.slice(cursor,cursor+capacity); cursor+=tasks.length;
+          output.push({date:new Date(day),tasks,committed,capacity});
+          day.setDate(day.getDate()+1); guard++;
+        }
+        return output;
+      }
+      function subjectDateMap(){ const map={}; subjectSchedule().forEach(day=&gt;day.tasks.forEach(task=&gt;map[task.key]=day.date)); return map; }
+      function baseTasksForDate(d) {
+        const tasks=[];
+        const schedule=mathSchedule();
+        const day=schedule.find(x=&gt;iso(x.date)===iso(d));
+        if(day) day.topics.forEach(n=&gt;tasks.push(Object.assign(resolveTask(taskKey(&#x27;math&#x27;,n)),{meta:`Auto-adjusted Maths plan · ${day.topics.length} topic${day.topics.length===1?&#x27;&#x27;:&#x27;s&#x27;} today`})));
+        const paperDay=fullPaperDate(); if(paperDay&amp;&amp;iso(paperDay)===iso(d))tasks.push(resolveTask(&#x27;math:full-paper&#x27;));
+        if(d.getDay()===2 &amp;&amp; !isHoliday(d)) tasks.push(resolveTask(taskKey(&#x27;tutor&#x27;,iso(d))));
+        const subjectDay=subjectSchedule().find(x=&gt;iso(x.date)===iso(d));
+        if(subjectDay)subjectDay.tasks.forEach(task=&gt;tasks.push(Object.assign({},task,{meta:`Scheduled from ${fmt(fromIso(state.subjectStartDate))} · ${task.meta}`})));
+        return tasks;
+      }
+      function overdueTasks(beforeDate) {
+        const earliest=fromIso(mathStartIso)&lt;fromIso(state.subjectStartDate)?fromIso(mathStartIso):fromIso(state.subjectStartDate);
+        const cutoff=fromIso(iso(beforeDate)); const output=[], seen=new Set(); const cursor=new Date(earliest); let guard=0;
+        while(cursor&lt;cutoff&amp;&amp;guard&lt;500){
+          baseTasksForDate(cursor).forEach(task=&gt;{
+            if(task&amp;&amp;task.trackable!==false&amp;&amp;!state.done[task.key]&amp;&amp;!seen.has(task.key)){seen.add(task.key);output.push({task,sourceDate:iso(cursor)});}
+          });
+          cursor.setDate(cursor.getDate()+1); guard++;
+        }
+        return output;
+      }
+      function planSignature(){return `${state.mathFinishTarget}|${state.subjectStartDate}|${state.dailyMinutes}|${state.catchUpEnabled?&#x27;catch&#x27;:&#x27;plain&#x27;}`;}
+      function clearFuturePlans(){const today=iso(new Date());Object.keys(state.dayPlans).forEach(key=&gt;{if(key&gt;=today)delete state.dayPlans[key];});}
+      function todayTasks(d) {
+        const dateKey=iso(d), actualToday=iso(new Date());
+        if(dateKey!==actualToday)return baseTasksForDate(d);
+        let plan=state.dayPlans[dateKey]; const signature=planSignature();
+        if(!plan||plan.signature!==signature||!Array.isArray(plan.items)){
+          const base=baseTasksForDate(d).filter(Boolean), items=base.map(task=&gt;({key:task.key,sourceDate:dateKey,catchUp:false}));
+          if(state.catchUpEnabled){
+            let remaining=Math.max(0,state.dailyMinutes-base.reduce((sum,task)=&gt;sum+(task.minutes||15),0)); let added=0;
+            const present=new Set(items.map(item=&gt;item.key));
+            for(const overdue of overdueTasks(d)){
+              const minutes=overdue.task.minutes||15;
+              if(!present.has(overdue.task.key)&amp;&amp;minutes&lt;=remaining&amp;&amp;added&lt;2){items.unshift({key:overdue.task.key,sourceDate:overdue.sourceDate,catchUp:true});present.add(overdue.task.key);remaining-=minutes;added++;}
+              if(added&gt;=2)break;
+            }
+          }
+          plan={signature,items}; state.dayPlans[dateKey]=plan; save();
+        }
+        return plan.items.map(item=&gt;{
+          const task=resolveTask(item.key); if(!task)return null;
+          if(item.catchUp)task.meta=`Catch-up · originally ${fmt(fromIso(item.sourceDate))} · ${task.meta}`;
+          return task;
+        }).filter(Boolean);
+      }
+      function taskRow(task, options={}) {
+        const row=document.createElement(&#x27;div&#x27;); row.className=&#x27;rev-task&#x27;+(state.done[task.key]?&#x27; is-done&#x27;:&#x27;&#x27;); row.dataset.key=task.key;
+        row.dataset.confidence=state.confidence[task.key]||&#x27;&#x27;;
+        const main=document.createElement(&#x27;div&#x27;); main.className=&#x27;rev-task-main&#x27;;
+        const wrap=document.createElement(&#x27;div&#x27;); wrap.className=&#x27;form-check&#x27;;
+        const cb=document.createElement(&#x27;input&#x27;); cb.type=&#x27;checkbox&#x27;; cb.className=&#x27;form-check-input&#x27;; cb.id=`cb-${task.key.replace(/[^a-z0-9]/gi,&#x27;-&#x27;)}-${++taskRowSerial}`; cb.checked=!!state.done[task.key];
+        const label=document.createElement(&#x27;label&#x27;); label.className=&#x27;form-check-label&#x27;; label.htmlFor=cb.id;
+        const title=document.createElement(&#x27;span&#x27;); title.className=&#x27;rev-task-title&#x27;; title.textContent=task.title;
+        const meta=document.createElement(&#x27;span&#x27;); meta.className=&#x27;rev-task-meta&#x27;; meta.textContent=task.meta||&#x27;&#x27;;
+        label.append(title,meta); wrap.append(cb,label); main.append(wrap); row.append(main);
+        cb.addEventListener(&#x27;change&#x27;,()=&gt;setDone(task.key,cb.checked));
+        const actions=document.createElement(&#x27;div&#x27;); actions.className=&#x27;rev-task-actions&#x27;;
+        if(task.url){ const a=document.createElement(&#x27;a&#x27;); a.className=&#x27;btn&#x27;; a.href=task.url; a.target=&#x27;_blank&#x27;; a.rel=&#x27;noopener noreferrer&#x27;; a.textContent=&#x27;Watch video ↗&#x27;; a.setAttribute(&#x27;aria-label&#x27;,`Watch 1st Class Maths video for ${task.title}`); actions.append(a); }
+        if(!task.noConfidence){
+          const conf=document.createElement(&#x27;select&#x27;); conf.className=&#x27;form-select rev-conf&#x27;; conf.setAttribute(&#x27;aria-label&#x27;,`Confidence for ${task.title}`);
+          [[&#x27;&#x27;,&#x27;Confidence&#x27;],[&#x27;green&#x27;,&#x27;✓ Green&#x27;],[&#x27;amber&#x27;,&#x27;△ Amber&#x27;],[&#x27;red&#x27;,&#x27;✗ Red&#x27;]].forEach(([v,t])=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=v;o.textContent=t;conf.append(o);});
+          conf.value=state.confidence[task.key]||&#x27;&#x27;; conf.addEventListener(&#x27;change&#x27;,()=&gt;{row.dataset.confidence=conf.value;setConfidence(task.key,conf.value);}); actions.append(conf);
+        }
+        if(task.trackable!==false &amp;&amp; topicLookup.has(task.key)){
+          const mistake=document.createElement(&#x27;button&#x27;); mistake.type=&#x27;button&#x27;; mistake.className=&#x27;btn btn-ghost&#x27;; mistake.textContent=&#x27;Record mistake&#x27;; mistake.addEventListener(&#x27;click&#x27;,()=&gt;openMistakeFor(task.key)); actions.append(mistake);
+        }
+        row.append(actions); return row;
+      }
+      function renderToday(){
+        const now=new Date(); const tasks=todayTasks(now); const list=root.querySelector(&#x27;#rev-today-list&#x27;); list.innerHTML=&#x27;&#x27;;
+        root.querySelector(&#x27;#rev-today-heading&#x27;).textContent=`Today · ${fmt(now)}`;
+        if(!tasks.length){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-empty&#x27;;p.textContent=&#x27;No scheduled work today. Use the free day or choose a subject tracker.&#x27;;list.append(p);} else tasks.forEach(t=&gt;list.append(taskRow(t)));
+        const estimated=tasks.reduce((sum,task)=&gt;sum+(task.minutes||15),0), overdue=overdueTasks(now), catchUps=tasks.filter(task=&gt;task.meta?.startsWith(&#x27;Catch-up&#x27;)).length;
+        root.querySelector(&#x27;#rev-daily-minutes&#x27;).value=String(state.dailyMinutes); root.querySelector(&#x27;#rev-catch-up&#x27;).checked=state.catchUpEnabled;
+        root.querySelector(&#x27;#rev-today-time&#x27;).textContent=`About ${estimated} minutes planned · your limit is ${state.dailyMinutes} minutes${iso(now)&lt;state.subjectStartDate?` · other subjects start ${fmt(fromIso(state.subjectStartDate))}`:&#x27;&#x27;}`;
+        const alert=root.querySelector(&#x27;#rev-schedule-alert&#x27;); alert.innerHTML=&#x27;&#x27;;
+        if(estimated&gt;state.dailyMinutes){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert rev-danger&#x27;;p.textContent=`Today needs about ${estimated} minutes because required Maths work stays in the plan. Extend the Maths finish date or raise the daily limit if this is too much.`;alert.append(p);}
+        else if(overdue.length){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert&#x27;;p.textContent=state.catchUpEnabled?(catchUps?`${catchUps} catch-up task${catchUps===1?&#x27; is&#x27;:&#x27;s are&#x27;} included today. ${Math.max(0,overdue.length-catchUps)} still waiting.`:`${overdue.length} overdue task${overdue.length===1?&#x27; is&#x27;:&#x27;s are&#x27;} waiting for space in your daily limit.`):`${overdue.length} overdue task${overdue.length===1?&#x27;&#x27;:&#x27;s&#x27;} saved. Turn on Catch-up mode when you want them added to Today.`;alert.append(p);}
+        const notes=root.querySelector(&#x27;#rev-today-notes&#x27;); notes.value=state.notes[iso(now)]||&#x27;&#x27;;
+        notes.oninput=()=&gt;{state.notes[iso(now)]=notes.value;save();};
+        const h=isHoliday(now); root.querySelector(&#x27;#rev-holiday-badge&#x27;).textContent=h?&#x27;Holiday light mode&#x27;:&#x27;Normal plan&#x27;;
+        const random=state.randomPick?resolveTask(state.randomPick):null; root.querySelector(&#x27;#rev-random-result&#x27;).textContent=random?random.title:&#x27;Pick a red or amber topic first, then any unfinished topic.&#x27;;
+        updateTimerDisplay();
+      }
+      function renderMath(){
+        const list=root.querySelector(&#x27;#rev-maths-list&#x27;); list.innerHTML=&#x27;&#x27;; const map=topicDateMap(); const filterEl=root.querySelector(&#x27;#rev-maths-filter&#x27;);
+        const finishInput=root.querySelector(&#x27;#rev-maths-finish-target&#x27;); finishInput.value=state.mathFinishTarget;
+        filterEl.value=[&#x27;all&#x27;,&#x27;todo&#x27;,&#x27;red&#x27;,&#x27;amber&#x27;].includes(state.mathFilter)?state.mathFilter:&#x27;all&#x27;; const filter=filterEl.value;
+        const searchEl=root.querySelector(&#x27;#rev-maths-search&#x27;); searchEl.value=state.mathSearch||&#x27;&#x27;; const search=searchEl.value.trim().toLowerCase(); let shown=0;
+        mathTopics.forEach((name,i)=&gt;{
+          const key=taskKey(&#x27;math&#x27;,i), conf=state.confidence[key]||&#x27;&#x27;;
+          if(filter===&#x27;todo&#x27;&amp;&amp;state.done[key])return; if(filter===&#x27;red&#x27;&amp;&amp;conf!==&#x27;red&#x27;)return; if(filter===&#x27;amber&#x27;&amp;&amp;conf!==&#x27;amber&#x27;)return;
+          const searchable=`${i+1} topic ${i+1} ${name}`.toLowerCase(); if(search&amp;&amp;!searchable.includes(search))return;
+          list.append(taskRow({key,title:`${i+1}. ${name}`,meta:`Scheduled ${fmt(map[i])}`,url:mathVideo(i)})); shown++;
+        });
+        const result=root.querySelector(&#x27;#rev-search-result&#x27;); result.textContent=search||filter!==&#x27;all&#x27;?`${shown} topic${shown===1?&#x27;&#x27;:&#x27;s&#x27;} found`:&#x27;&#x27;;
+        if(!shown){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-empty&#x27;;p.textContent=&#x27;No matching topics. Try a shorter word or choose All topics.&#x27;;list.append(p);}
+        const schedule=mathSchedule(), finish=schedule[schedule.length-1]?.date, counts=schedule.map(day=&gt;day.topics.length), min=Math.min(...counts), max=Math.max(...counts);
+        const paper=finish?new Date(finish):null; if(paper)paper.setDate(paper.getDate()+1);
+        root.querySelector(&#x27;#rev-maths-range&#x27;).textContent=`Starts Tue 11 Aug · ${schedule.length} days · ${min===max?min:`${min}–${max}`} topics a day · Full paper ${paper?fmt(paper):&#x27;next day&#x27;}`;
+        root.querySelector(&#x27;#rev-maths-finish&#x27;).textContent=finish?fmt(finish):&#x27;—&#x27;;
+      }
+      function renderSubjects(){
+        const select=root.querySelector(&#x27;#rev-subject-select&#x27;); if(!select.options.length) Object.entries(subjects).forEach(([id,s])=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=id;o.textContent=s.name;select.append(o);});
+        select.value=subjects[state.subjectId]?state.subjectId:&#x27;history&#x27;; const id=select.value, s=subjects[id];
+        const startInput=root.querySelector(&#x27;#rev-subject-start&#x27;); startInput.value=state.subjectStartDate;
+        const active=iso(new Date())&gt;=state.subjectStartDate; root.querySelector(&#x27;#rev-subject-start-note&#x27;).textContent=`${active?&#x27;Active now&#x27;:&#x27;Starts&#x27;} ${fmt(fromIso(state.subjectStartDate))}. Change this date whenever you want to begin earlier or later.`;
+        const subjectKeys=topicCatalogue.subjects.filter(task=&gt;task.subjectId===id).map(task=&gt;task.key), complete=subjectKeys.filter(key=&gt;state.done[key]).length;
+        root.querySelector(&#x27;#rev-subject-board&#x27;).textContent=`${s.board} · ${complete} / ${subjectKeys.length} complete · tick after retrieval, an exam question and marking`;
+        const searchEl=root.querySelector(&#x27;#rev-subject-search&#x27;); searchEl.value=state.subjectSearch||&#x27;&#x27;; const query=searchEl.value.trim().toLowerCase(), dates=subjectDateMap();
+        const content=root.querySelector(&#x27;#rev-subject-content&#x27;); content.innerHTML=&#x27;&#x27;; let shown=0;
+        Object.entries(s.units).forEach(([unit,items])=&gt;{
+          const matching=items.map((item,i)=&gt;({item,i})).filter(entry=&gt;!query||`${unit} ${entry.item}`.toLowerCase().includes(query)); if(!matching.length)return;
+          const sec=document.createElement(&#x27;section&#x27;);sec.className=&#x27;rev-unit&#x27;;const h=document.createElement(&#x27;h3&#x27;);h.textContent=unit;sec.append(h);const list=document.createElement(&#x27;div&#x27;);list.className=&#x27;rev-list&#x27;;
+          matching.forEach(({item,i})=&gt;{const key=taskKey(id,`${unit}-${i}`), date=dates[key]; list.append(taskRow({key,title:item,meta:`${date?`Scheduled ${fmt(date)} · `:&#x27;&#x27;}Learn → recall → exam question → mark`,subjectId:id}));shown++;});sec.append(list);content.append(sec);
+        });
+        if(!shown){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-empty&#x27;;p.textContent=&#x27;No matching topics in this subject.&#x27;;content.append(p);}
+      }
+      const addText = (parent,tag,text,className=&#x27;&#x27;) =&gt; {const el=document.createElement(tag);if(className)el.className=className;el.textContent=text;parent.append(el);return el;};
+      const uid = prefix =&gt; `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
+      function fillSubjectSelect(select,includeMath=true){
+        if(select.options.length)return; subjectOptions().filter(option=&gt;includeMath||option.id!==&#x27;math&#x27;).forEach(option=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=option.id;o.textContent=option.name;select.append(o);});
+      }
+      function weeklyBounds(now=new Date()){
+        const start=new Date(now); const day=(start.getDay()+6)%7; start.setDate(start.getDate()-day); start.setHours(0,0,0,0);
+        const end=new Date(start); end.setDate(end.getDate()+7); return {start,end};
+      }
+      function renderWeeklySummary(){
+        const box=root.querySelector(&#x27;#rev-weekly-summary&#x27;); box.innerHTML=&#x27;&#x27;; const {start,end}=weeklyBounds();
+        const completed=Object.entries(state.completedAt).filter(([,stamp])=&gt;{const d=new Date(stamp);return !Number.isNaN(d.getTime())&amp;&amp;d&gt;=start&amp;&amp;d&lt;end;});
+        addText(box,&#x27;p&#x27;,`${fmt(start)}–${fmt(new Date(end.getTime()-86400000))} · ${completed.length} task${completed.length===1?&#x27;&#x27;:&#x27;s&#x27;} completed.`);
+        const counts={}; completed.forEach(([key])=&gt;{const task=resolveTask(key);const name=task?.subjectName||&#x27;Other&#x27;;counts[name]=(counts[name]||0)+1;});
+        if(Object.keys(counts).length)addText(box,&#x27;p&#x27;,Object.entries(counts).map(([name,count])=&gt;`${name} ${count}`).join(&#x27; · &#x27;),&#x27;rev-mini&#x27;);
+        const priorities=topicCatalogue.maths.filter(task=&gt;state.confidence[task.key]===&#x27;red&#x27;||state.confidence[task.key]===&#x27;amber&#x27;).slice(0,3);
+        const greens=topicCatalogue.all.filter(task=&gt;state.confidence[task.key]===&#x27;green&#x27;).length, weak=topicCatalogue.all.filter(task=&gt;[&#x27;red&#x27;,&#x27;amber&#x27;].includes(state.confidence[task.key])).length;
+        addText(box,&#x27;p&#x27;,`${greens} green strength${greens===1?&#x27;&#x27;:&#x27;s&#x27;} · ${weak} red/amber priorit${weak===1?&#x27;y&#x27;:&#x27;ies&#x27;}.`,&#x27;rev-mini&#x27;);
+        addText(box,&#x27;p&#x27;,priorities.length?`Tuesday tutor: ${priorities.map(task=&gt;task.shortTitle).join(&#x27; · &#x27;)}`:&#x27;Tuesday tutor: mark difficult Maths topics amber or red and they will appear here.&#x27;,&#x27;rev-mini&#x27;);
+      }
+      function renderWeakQueue(){
+        const list=root.querySelector(&#x27;#rev-weak-queue&#x27;); list.innerHTML=&#x27;&#x27;;
+        const weak=topicCatalogue.all.filter(task=&gt;[&#x27;red&#x27;,&#x27;amber&#x27;].includes(state.confidence[task.key])).sort((a,b)=&gt;{const rank={red:0,amber:1};return rank[state.confidence[a.key]]-rank[state.confidence[b.key]];});
+        if(!weak.length){addText(list,&#x27;p&#x27;,&#x27;No red or amber topics yet. Set confidence after marking your work.&#x27;,&#x27;rev-empty&#x27;);return;}
+        weak.slice(0,20).forEach(task=&gt;list.append(taskRow(task))); if(weak.length&gt;20)addText(list,&#x27;p&#x27;,`${weak.length-20} more priorities are saved. Use the Maths or Subjects filters to work through them.`,&#x27;rev-mini&#x27;);
+      }
+      function renderPaperScores(){
+        const subject=root.querySelector(&#x27;#rev-paper-subject&#x27;); fillSubjectSelect(subject); if(!root.querySelector(&#x27;#rev-paper-date&#x27;).value)root.querySelector(&#x27;#rev-paper-date&#x27;).value=iso(new Date());
+        const list=root.querySelector(&#x27;#rev-paper-list&#x27;); list.innerHTML=&#x27;&#x27;; const scores=state.paperScores.slice().sort((a,b)=&gt;`${b.date||&#x27;&#x27;}${b.createdAt||&#x27;&#x27;}`.localeCompare(`${a.date||&#x27;&#x27;}${a.createdAt||&#x27;&#x27;}`));
+        if(!scores.length){addText(list,&#x27;p&#x27;,&#x27;No scores saved yet. Add your next marked paper here.&#x27;,&#x27;rev-empty&#x27;);return;}
+        scores.forEach(score=&gt;{
+          const record=document.createElement(&#x27;div&#x27;);record.className=&#x27;rev-record&#x27;;const head=document.createElement(&#x27;div&#x27;);head.className=&#x27;rev-record-head&#x27;;
+          const percent=Math.round(Number(score.score)/Number(score.outOf)*100); const title=document.createElement(&#x27;strong&#x27;);title.textContent=`${subjectName(score.subjectId)} · ${score.paper}`;
+          const remove=document.createElement(&#x27;button&#x27;);remove.type=&#x27;button&#x27;;remove.className=&#x27;btn btn-ghost&#x27;;remove.textContent=&#x27;Delete&#x27;;remove.addEventListener(&#x27;click&#x27;,()=&gt;{state.paperScores=state.paperScores.filter(item=&gt;item.id!==score.id);save();renderPaperScores();});head.append(title,remove);record.append(head);
+          const chronological=state.paperScores.filter(item=&gt;item.subjectId===score.subjectId).sort((a,b)=&gt;(a.date||&#x27;&#x27;).localeCompare(b.date||&#x27;&#x27;));const pos=chronological.findIndex(item=&gt;item.id===score.id);let delta=&#x27;&#x27;;if(pos&gt;0){const prior=chronological[pos-1], priorPct=Math.round(Number(prior.score)/Number(prior.outOf)*100), diff=percent-priorPct;delta=` · ${diff&gt;=0?&#x27;+&#x27;:&#x27;&#x27;}${diff} points from previous`;}
+          addText(record,&#x27;p&#x27;,`${score.date?fmt(fromIso(score.date)):&#x27;No date&#x27;} · ${score.score}/${score.outOf} · ${percent}%${delta}`,&#x27;rev-mini&#x27;); if(score.notes)addText(record,&#x27;p&#x27;,score.notes,&#x27;rev-mini&#x27;);list.append(record);
+        });
+      }
+      function populateMistakeTopics(){
+        const select=root.querySelector(&#x27;#rev-mistake-topic&#x27;); if(select.options.length)return;
+        subjectOptions().forEach(group=&gt;{const optgroup=document.createElement(&#x27;optgroup&#x27;);optgroup.label=group.name;topicCatalogue.all.filter(task=&gt;task.subjectId===group.id).forEach(task=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=task.key;o.textContent=task.shortTitle;optgroup.append(o);});select.append(optgroup);});
+      }
+      function renderMistakes(){
+        populateMistakeTopics(); const list=root.querySelector(&#x27;#rev-mistake-list&#x27;);list.innerHTML=&#x27;&#x27;;const mistakes=state.mistakes.slice().sort((a,b)=&gt;(Number(a.resolved)-Number(b.resolved))||String(b.createdAt).localeCompare(String(a.createdAt)));
+        if(!mistakes.length){addText(list,&#x27;p&#x27;,&#x27;No mistakes recorded yet. Use “Record mistake” beside any topic.&#x27;,&#x27;rev-empty&#x27;);return;}
+        mistakes.forEach(item=&gt;{const task=resolveTask(item.taskKey);const record=document.createElement(&#x27;div&#x27;);record.className=&#x27;rev-record&#x27;;const head=document.createElement(&#x27;div&#x27;);head.className=&#x27;rev-record-head&#x27;;addText(head,&#x27;strong&#x27;,`${item.resolved?&#x27;Resolved · &#x27;:&#x27;&#x27;}${task?.title||&#x27;Saved topic&#x27;}`);const actions=document.createElement(&#x27;div&#x27;);actions.className=&#x27;viz-controls&#x27;;const toggle=document.createElement(&#x27;button&#x27;);toggle.type=&#x27;button&#x27;;toggle.className=&#x27;btn btn-ghost&#x27;;toggle.textContent=item.resolved?&#x27;Reopen&#x27;:&#x27;Resolve&#x27;;toggle.addEventListener(&#x27;click&#x27;,()=&gt;{item.resolved=!item.resolved;item.resolvedAt=item.resolved?new Date().toISOString():null;save();renderProgress();});const remove=document.createElement(&#x27;button&#x27;);remove.type=&#x27;button&#x27;;remove.className=&#x27;btn btn-ghost&#x27;;remove.textContent=&#x27;Delete&#x27;;remove.addEventListener(&#x27;click&#x27;,()=&gt;{state.mistakes=state.mistakes.filter(m=&gt;m.id!==item.id);save();renderProgress();});actions.append(toggle,remove);head.append(actions);record.append(head);addText(record,&#x27;p&#x27;,item.question);addText(record,&#x27;p&#x27;,`Mistake: ${item.mistake}`,&#x27;rev-mini&#x27;);addText(record,&#x27;p&#x27;,`Correct method: ${item.correctMethod}`,&#x27;rev-mini&#x27;);list.append(record);});
+      }
+      function subjectCompletion(id){const tasks=topicCatalogue.all.filter(task=&gt;task.subjectId===id);return {done:tasks.filter(task=&gt;state.done[task.key]).length,total:tasks.length};}
+      function renderExams(){
+        const select=root.querySelector(&#x27;#rev-exam-subject&#x27;);fillSubjectSelect(select);const chosen=select.value;root.querySelector(&#x27;#rev-exam-date&#x27;).value=state.examDates[chosen]||&#x27;&#x27;;
+        const list=root.querySelector(&#x27;#rev-exam-list&#x27;);list.innerHTML=&#x27;&#x27;;const today=fromIso(iso(new Date()));const entries=Object.entries(state.examDates).filter(([,date])=&gt;/^\d{4}-\d{2}-\d{2}$/.test(date)).sort((a,b)=&gt;a[1].localeCompare(b[1]));
+        if(!entries.length){addText(list,&#x27;p&#x27;,&#x27;Add the dates from your official exam timetable when you have them.&#x27;,&#x27;rev-empty&#x27;);return;}
+        entries.forEach(([id,date])=&gt;{const exam=fromIso(date),days=Math.ceil((exam-today)/86400000),progress=subjectCompletion(id),pct=progress.total?Math.round(progress.done/progress.total*100):0;const start=fromIso(id===&#x27;math&#x27;?mathStartIso:state.subjectStartDate);const totalSpan=Math.max(1,exam-start),elapsed=Math.max(0,Math.min(totalSpan,today-start)),expected=Math.round(elapsed/totalSpan*100),pace=pct&gt;=expected?&#x27;on pace&#x27;:`${expected-pct} points behind pace`;const record=document.createElement(&#x27;div&#x27;);record.className=&#x27;rev-record&#x27;;const head=document.createElement(&#x27;div&#x27;);head.className=&#x27;rev-record-head&#x27;;addText(head,&#x27;strong&#x27;,subjectName(id));const remove=document.createElement(&#x27;button&#x27;);remove.type=&#x27;button&#x27;;remove.className=&#x27;btn btn-ghost&#x27;;remove.textContent=&#x27;Remove&#x27;;remove.addEventListener(&#x27;click&#x27;,()=&gt;{delete state.examDates[id];save();renderExams();});head.append(remove);record.append(head);addText(record,&#x27;p&#x27;,days&lt;0?`${fmt(exam)} · finished ${Math.abs(days)} day${Math.abs(days)===1?&#x27;&#x27;:&#x27;s&#x27;} ago`:days===0?`${fmt(exam)} · today`:`${fmt(exam)} · ${days} day${days===1?&#x27;&#x27;:&#x27;s&#x27;} left`);addText(record,&#x27;p&#x27;,`${pct}% of this tracker complete · ${pace}`,&#x27;rev-mini&#x27;);list.append(record);});
+      }
+      function renderProgress(){renderWeeklySummary();renderWeakQueue();renderPaperScores();renderMistakes();renderExams();}
+      function openMistakeFor(key){showView(&#x27;progress&#x27;);renderProgress();const select=root.querySelector(&#x27;#rev-mistake-topic&#x27;);if(topicLookup.has(key))select.value=key;root.querySelector(&#x27;#rev-mistake-question&#x27;).focus();}
+      function randomPractice(){
+        const allowSubjects=iso(new Date())&gt;=state.subjectStartDate,eligible=topicCatalogue.all.filter(task=&gt;allowSubjects||task.subjectId===&#x27;math&#x27;);
+        const red=eligible.filter(task=&gt;state.confidence[task.key]===&#x27;red&#x27;),amber=eligible.filter(task=&gt;state.confidence[task.key]===&#x27;amber&#x27;),unfinished=eligible.filter(task=&gt;!state.done[task.key]);const pool=red.length?red:amber.length?amber:unfinished;
+        if(!pool.length){state.randomPick=null;save();root.querySelector(&#x27;#rev-random-result&#x27;).textContent=&#x27;Everything available is complete and no weak topics are marked.&#x27;;return;}
+        const chosen=pool[Math.floor(Math.random()*pool.length)];state.randomPick=chosen.key;save();root.querySelector(&#x27;#rev-random-result&#x27;).textContent=`${state.done[chosen.key]?&#x27;Retry · &#x27;:&#x27;&#x27;}${chosen.title}`;
+      }
+      function timerSeconds(){if(!state.timer.running)return Number(state.timer.remainingSeconds);return Math.max(0,Math.ceil((new Date(state.timer.endAt).getTime()-Date.now())/1000));}
+      function updateTimerDisplay(){
+        const value=root.querySelector(&#x27;#rev-timer-value&#x27;);if(!value)return;let seconds=timerSeconds();
+        if(state.timer.running&amp;&amp;seconds&lt;=0){state.timer.mode=state.timer.mode===&#x27;focus&#x27;?&#x27;break&#x27;:&#x27;focus&#x27;;state.timer.remainingSeconds=state.timer.mode===&#x27;focus&#x27;?1500:300;state.timer.running=false;state.timer.endAt=null;save();seconds=state.timer.remainingSeconds;}
+        value.textContent=`${String(Math.floor(seconds/60)).padStart(2,&#x27;0&#x27;)}:${String(seconds%60).padStart(2,&#x27;0&#x27;)}`;root.querySelector(&#x27;#rev-timer-label&#x27;).textContent=state.timer.mode===&#x27;focus&#x27;?&#x27;Focus timer&#x27;:&#x27;Break timer&#x27;;root.querySelector(&#x27;#rev-timer-toggle&#x27;).textContent=state.timer.running?&#x27;Pause&#x27;:&#x27;Start&#x27;;root.querySelector(&#x27;#rev-timer-skip&#x27;).textContent=state.timer.mode===&#x27;focus&#x27;?&#x27;Start break&#x27;:&#x27;Back to focus&#x27;;
+      }
+      function toggleTimer(){if(state.timer.running){state.timer.remainingSeconds=timerSeconds();state.timer.running=false;state.timer.endAt=null;}else{state.timer.running=true;state.timer.endAt=new Date(Date.now()+Number(state.timer.remainingSeconds)*1000).toISOString();}save();updateTimerDisplay();}
+      function resetTimer(){state.timer.remainingSeconds=state.timer.mode===&#x27;focus&#x27;?1500:300;state.timer.running=false;state.timer.endAt=null;save();updateTimerDisplay();}
+      function skipTimer(){state.timer.mode=state.timer.mode===&#x27;focus&#x27;?&#x27;break&#x27;:&#x27;focus&#x27;;state.timer.remainingSeconds=state.timer.mode===&#x27;focus&#x27;?1500:300;state.timer.running=false;state.timer.endAt=null;save();updateTimerDisplay();}
+      function downloadBackup(){const payload={app:&#x27;GCSE Revision Dashboard&#x27;,schemaVersion:3,exportedAt:new Date().toISOString(),state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:&#x27;application/json&#x27;}),url=URL.createObjectURL(blob),a=document.createElement(&#x27;a&#x27;);a.href=url;a.download=`gcse-revision-backup-${iso(new Date())}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=&gt;URL.revokeObjectURL(url),1000);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup downloaded.&#x27;;}
+      function restoreBackup(file){
+        const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Replace the progress in this app with this backup?&#x27;))return;const allowed=[&#x27;schemaVersion&#x27;,&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;holidayStart&#x27;,&#x27;holidayEnd&#x27;,&#x27;holidayPace&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;subjectStartDate&#x27;,&#x27;dailyMinutes&#x27;,&#x27;catchUpEnabled&#x27;,&#x27;dayPlans&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;chat&#x27;,&#x27;activeQuiz&#x27;,&#x27;gptMode&#x27;,&#x27;activeView&#x27;,&#x27;mathFilter&#x27;,&#x27;mathSearch&#x27;,&#x27;subjectId&#x27;,&#x27;subjectSearch&#x27;,&#x27;randomPick&#x27;,&#x27;timer&#x27;,&#x27;savedAt&#x27;];const safe={};allowed.forEach(key=&gt;{if(Object.prototype.hasOwnProperty.call(raw,key))safe[key]=raw[key];});state=Object.assign({},defaultState,safe);state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);if(!/^\d{4}-\d{2}-\d{2}$/.test(state.subjectStartDate||&#x27;&#x27;))state.subjectStartDate=&#x27;2026-09-01&#x27;;if(!/^\d{4}-\d{2}-\d{2}$/.test(state.mathFinishTarget||&#x27;&#x27;)||state.mathFinishTarget&lt;mathStartIso)state.mathFinishTarget=&#x27;2026-09-19&#x27;;save();renderAll();showView(state.activeView||&#x27;today&#x27;,false);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup restored successfully.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
+      }
+      function renderCoach(){
+        const log=root.querySelector(&#x27;#rev-chat-log&#x27;); log.innerHTML=&#x27;&#x27;;
+        if(!Array.isArray(state.chat)||!state.chat.length) state.chat=[{role:&#x27;coach&#x27;,text:&#x27;Hi — I’m your built-in revision coach. I can choose your next task, quiz you, find red and amber topics, and prepare questions for your Tuesday tutor.&#x27;}];
+        state.chat.forEach(msg=&gt;{const item=document.createElement(&#x27;div&#x27;);item.className=&#x27;rev-message&#x27;;item.dataset.role=msg.role;const who=document.createElement(&#x27;strong&#x27;);who.textContent=msg.role===&#x27;you&#x27;?&#x27;You&#x27;:&#x27;Coach&#x27;;const body=document.createElement(&#x27;span&#x27;);body.textContent=msg.text;item.append(who,body);log.append(item);});
+        const mode=root.querySelector(&#x27;#rev-gpt-mode&#x27;); mode.value=state.gptMode in gptModes?state.gptMode:&#x27;offline&#x27;;
+        const live=mode.value!==&#x27;offline&#x27;; root.querySelector(&#x27;#rev-gpt-note&#x27;).textContent=live?&#x27;Your message opens ChatGPT and copies a ready-made revision prompt. Choose the matching option in ChatGPT.&#x27;:&#x27;Offline planning, quizzes and mistake support — no sign-in needed.&#x27;;
+        root.querySelector(&#x27;#rev-open-chatgpt&#x27;).classList.toggle(&#x27;rev-hidden&#x27;,!live);
+        log.scrollTop=log.scrollHeight;
+      }
+      function updateProgress(){
+        const now=new Date(), today=todayTasks(now), doneToday=today.filter(t=&gt;state.done[t.key]).length;
+        root.querySelector(&#x27;#rev-today-stat&#x27;).textContent=`${doneToday} / ${today.length}`; root.querySelector(&#x27;#rev-today-bar&#x27;).style.width=`${today.length?doneToday/today.length*100:0}%`;
+        const keys=topicCatalogue.all.map(task=&gt;task.key);
+        const complete=keys.filter(k=&gt;state.done[k]).length, pct=Math.round(complete/keys.length*100); root.querySelector(&#x27;#rev-overall-stat&#x27;).textContent=`${pct}%`; root.querySelector(&#x27;#rev-overall-bar&#x27;).style.width=`${pct}%`;
+        const confidenceValues=Object.values(state.confidence); const greens=confidenceValues.filter(v=&gt;v===&#x27;green&#x27;).length, ambers=confidenceValues.filter(v=&gt;v===&#x27;amber&#x27;).length, reds=confidenceValues.filter(v=&gt;v===&#x27;red&#x27;).length;
+        root.querySelector(&#x27;#rev-confidence-summary&#x27;).textContent=`${greens} green · ${ambers} amber · ${reds} red`;
+        updateSaveStatus();
+      }
+      function renderAll(){ renderToday(); renderMath(); renderSubjects(); renderProgress(); renderCoach(); updateProgress(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
+      function showView(name,shouldSave=true){
+        const valid=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;subjects&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;]; if(!valid.includes(name))name=&#x27;today&#x27;;
+        root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(b=&gt;{const active=b.dataset.view===name;b.setAttribute(&#x27;aria-pressed&#x27;,active);b.classList.toggle(&#x27;btn-primary&#x27;,active);});
+        root.querySelectorAll(&#x27;[data-section]&#x27;).forEach(s=&gt;s.classList.toggle(&#x27;is-active&#x27;,s.dataset.section===name));
+        state.activeView=name; if(shouldSave)save();
+      }
+      root.querySelector(&#x27;#rev-date-label&#x27;).textContent=new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;long&#x27;,day:&#x27;numeric&#x27;,month:&#x27;long&#x27;,year:&#x27;numeric&#x27;}).format(new Date());
+      root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;showView(btn.dataset.view)));
+      root.querySelector(&#x27;#rev-daily-minutes&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.dailyMinutes=Number(e.target.value);clearFuturePlans();save();renderAll();});
+      root.querySelector(&#x27;#rev-catch-up&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.catchUpEnabled=e.target.checked;clearFuturePlans();save();renderAll();});
+      root.querySelector(&#x27;#rev-maths-filter&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.mathFilter=e.target.value;save();renderMath();});
+      root.querySelector(&#x27;#rev-maths-search&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.mathSearch=e.target.value;save();renderMath();});
+      root.querySelector(&#x27;#rev-maths-finish-target&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const value=e.target.value&amp;&amp;e.target.value&gt;=mathStartIso?e.target.value:mathStartIso;state.mathFinishTarget=value;e.target.value=value;clearFuturePlans();save();renderAll();});
+      root.querySelector(&#x27;#rev-subject-start&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const value=/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)?e.target.value:&#x27;2026-09-01&#x27;;state.subjectStartDate=value;e.target.value=value;clearFuturePlans();save();renderAll();});
+      root.querySelector(&#x27;#rev-subject-select&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.subjectId=e.target.value;save();renderSubjects();});
+      root.querySelector(&#x27;#rev-subject-search&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.subjectSearch=e.target.value;save();renderSubjects();});
+      root.querySelector(&#x27;#rev-gpt-mode&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.gptMode=e.target.value;save();renderCoach();});
+      root.querySelector(&#x27;#rev-quiz-today&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{showView(&#x27;coach&#x27;); if(state.gptMode===&#x27;offline&#x27;) startQuiz(); else sendToSelectedCoach(&#x27;Quiz me on today’s GCSE revision topics, one question at a time.&#x27;);});
+      root.querySelector(&#x27;#rev-random-pick&#x27;).addEventListener(&#x27;click&#x27;,randomPractice);
+      root.querySelector(&#x27;#rev-random-pick-progress&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{randomPractice();showView(&#x27;today&#x27;);});
+      root.querySelector(&#x27;#rev-timer-toggle&#x27;).addEventListener(&#x27;click&#x27;,toggleTimer);
+      root.querySelector(&#x27;#rev-timer-reset&#x27;).addEventListener(&#x27;click&#x27;,resetTimer);
+      root.querySelector(&#x27;#rev-timer-skip&#x27;).addEventListener(&#x27;click&#x27;,skipTimer);
+      const savePaperScore=e=&gt;{e.preventDefault();const form=root.querySelector(&#x27;#rev-paper-form&#x27;),score=Number(root.querySelector(&#x27;#rev-paper-score&#x27;).value),outOf=Number(root.querySelector(&#x27;#rev-paper-outof&#x27;).value),paper=root.querySelector(&#x27;#rev-paper-name&#x27;).value.trim(),error=root.querySelector(&#x27;#rev-paper-error&#x27;);if(!paper){error.textContent=&#x27;Add the paper name.&#x27;;return;}if(!Number.isFinite(score)||!Number.isFinite(outOf)||outOf&lt;=0||score&lt;0||score&gt;outOf){error.textContent=&#x27;Score must be between 0 and the total.&#x27;;return;}error.textContent=&#x27;&#x27;;state.paperScores.push({id:uid(&#x27;paper&#x27;),subjectId:root.querySelector(&#x27;#rev-paper-subject&#x27;).value,paper,date:root.querySelector(&#x27;#rev-paper-date&#x27;).value||iso(new Date()),score,outOf,notes:root.querySelector(&#x27;#rev-paper-notes&#x27;).value.trim(),createdAt:new Date().toISOString()});save();form.reset();root.querySelector(&#x27;#rev-paper-date&#x27;).value=iso(new Date());renderPaperScores();};
+      root.querySelector(&#x27;#rev-paper-form&#x27;).addEventListener(&#x27;submit&#x27;,savePaperScore);root.querySelector(&#x27;#rev-paper-save&#x27;).addEventListener(&#x27;click&#x27;,savePaperScore);
+      const saveMistake=e=&gt;{e.preventDefault();const form=root.querySelector(&#x27;#rev-mistake-form&#x27;),topic=root.querySelector(&#x27;#rev-mistake-topic&#x27;).value,question=root.querySelector(&#x27;#rev-mistake-question&#x27;).value.trim(),mistake=root.querySelector(&#x27;#rev-mistake-what&#x27;).value.trim(),correctMethod=root.querySelector(&#x27;#rev-mistake-method&#x27;).value.trim();if(!topic||!question||!mistake||!correctMethod)return;state.mistakes.push({id:uid(&#x27;mistake&#x27;),taskKey:topic,subjectId:resolveTask(topic)?.subjectId||&#x27;math&#x27;,question,mistake,correctMethod,createdAt:new Date().toISOString(),resolved:false,resolvedAt:null});if(!state.confidence[topic])state.confidence[topic]=&#x27;red&#x27;;save();form.reset();renderProgress();updateProgress();};
+      root.querySelector(&#x27;#rev-mistake-form&#x27;).addEventListener(&#x27;submit&#x27;,saveMistake);root.querySelector(&#x27;#rev-mistake-save&#x27;).addEventListener(&#x27;click&#x27;,saveMistake);
+      root.querySelector(&#x27;#rev-exam-subject&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{root.querySelector(&#x27;#rev-exam-date&#x27;).value=state.examDates[e.target.value]||&#x27;&#x27;;});
+      const saveExam=e=&gt;{e.preventDefault();const subject=root.querySelector(&#x27;#rev-exam-subject&#x27;).value,date=root.querySelector(&#x27;#rev-exam-date&#x27;).value;if(!subject||!/^\d{4}-\d{2}-\d{2}$/.test(date))return;state.examDates[subject]=date;save();renderExams();};
+      root.querySelector(&#x27;#rev-exam-form&#x27;).addEventListener(&#x27;submit&#x27;,saveExam);root.querySelector(&#x27;#rev-exam-save&#x27;).addEventListener(&#x27;click&#x27;,saveExam);
+      root.querySelector(&#x27;#rev-backup-download&#x27;).addEventListener(&#x27;click&#x27;,downloadBackup);
+      root.querySelector(&#x27;#rev-backup-file&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const file=e.target.files&amp;&amp;e.target.files[0];if(file)restoreBackup(file);});
+      root.querySelectorAll(&#x27;[data-coach-action]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;{
+        const action=btn.dataset.coachAction;
+        if(action===&#x27;quiz&#x27; &amp;&amp; state.gptMode===&#x27;offline&#x27;) startQuiz();
+        else if(action===&#x27;quiz&#x27;) sendToSelectedCoach(&#x27;Quiz me on my next GCSE revision topic, one question at a time.&#x27;);
+        else if(action===&#x27;next&#x27;) sendToSelectedCoach(&#x27;What should I do next?&#x27;);
+        else if(action===&#x27;weak&#x27;) sendToSelectedCoach(&#x27;Show my weak topics and make a short plan.&#x27;);
+        else if(action===&#x27;tutor&#x27;) sendToSelectedCoach(&#x27;Prepare questions for my Tuesday maths tutor.&#x27;);
+        else if(action===&#x27;clear&#x27;) {
+          if(btn.dataset.armed===&#x27;true&#x27;) {
+            btn.dataset.armed=&#x27;false&#x27;; btn.textContent=&#x27;History cleared&#x27;; state.chat=[]; state.activeQuiz=null; save(); renderCoach();
+            window.setTimeout(()=&gt;{btn.textContent=&#x27;Clear AI history&#x27;;},1800);
+          } else {
+            btn.dataset.armed=&#x27;true&#x27;; btn.textContent=&#x27;Click again to clear&#x27;;
+            window.setTimeout(()=&gt;{if(btn.dataset.armed===&#x27;true&#x27;){btn.dataset.armed=&#x27;false&#x27;;btn.textContent=&#x27;Clear AI history&#x27;;}},5000);
+          }
+        }
+      }));
+      const sendCoachMessage = () =&gt; { const input=root.querySelector(&#x27;#rev-chat-input&#x27;); const value=input.value; input.value=&#x27;&#x27;; sendToSelectedCoach(value); };
+      root.querySelector(&#x27;#rev-chat-form&#x27;).addEventListener(&#x27;submit&#x27;,e=&gt;e.preventDefault());
+      root.querySelector(&#x27;#rev-chat-form button[type=&quot;submit&quot;]&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();sendCoachMessage();});
+      root.querySelector(&#x27;#rev-chat-input&#x27;).addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();sendCoachMessage();}});
+      window.addEventListener(&#x27;pagehide&#x27;,save);
+      renderAll(); showView(state.activeView||&#x27;today&#x27;,false);
+      window.setInterval(updateTimerDisplay,1000);
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
