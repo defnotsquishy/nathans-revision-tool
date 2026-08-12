@@ -14,7 +14,10 @@ An open-source, auto-saving GCSE Higher Maths revision planner built around 106 
 
 ## Use or download it
 
-Open the published website in a modern browser. To download an offline copy, save `standalone/Nathans_Revision_Tool.html`, or use GitHub's **Code -> Download ZIP** option.
+Open the published website in a modern browser. To use it offline, download
+`Nathans_Revision_Tool.html` from the public repository. In a full source checkout,
+the same file is also stored under `standalone/`. You can also use GitHub's
+**Code -> Download ZIP** option.
 
 ## Update the dashboard
 
