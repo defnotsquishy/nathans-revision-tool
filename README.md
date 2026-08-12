@@ -1,32 +1,25 @@
 # Nathan's Revision Tool
 
-A free, auto-saving GCSE revision planner designed for Nathan's 2026 revision plan.
+An open-source, auto-saving GCSE Higher Maths revision planner built around 106 linked 1st Class Maths topics.
 
-## What it includes
+## Features
 
-- 106-topic GCSE Higher Maths schedule with 1st Class Maths video links
-- Maths continuing from August, with an adjustable finish date
-- Other subjects starting 1 September by default, with an editable start date
-- Daily time limits, catch-up mode and Tuesday tutor preparation
-- Ticks, green/amber/red confidence, notes and automatic browser saving
-- Topic search, mistake tracker, paper scores and exam countdowns
-- 25/5 focus timer, random practice, weekly summary and backup/restore
-- Built-in offline study coach with optional ChatGPT handoff
+- Change the target finish date from the home screen or Maths tracker
+- Automatically redistribute unfinished topics across the days remaining
+- Keep completed topics, confidence ratings, notes and scores when the plan changes
+- Tuesday tutor preparation and a full-paper day after the chosen finish date
+- Search all 106 topics and open the matching video
+- Focus timer, weak-topic queue, mistakes, paper scores and backup/restore
+- Device-local auto-save using the stable `gcse-revision-dashboard-v2` storage key
 
-## Use it
+## Use or download it
 
-Open the published website in any modern browser. Your progress is stored on that browser and device. Use **Progress & tools -> Download backup** to move your data to another browser or device.
+Open the published website in a modern browser. To download an offline copy, save `standalone/Nathans_Revision_Tool.html`, or use GitHub's **Code -> Download ZIP** option.
 
-For a completely offline copy, download `index.html` and open it in a browser. You can also use GitHub's **Download ZIP** option to download the repository.
+## Update the dashboard
 
-## Updating the website
-
-Update `index.html` on the `main` branch. Visitors only need to refresh the same website address to get the new version. Their saved progress remains because the local-storage key is kept stable.
-
-## Search visibility
-
-The site includes a descriptive title, search description, keywords and crawler rules for "Nathan's Revision Tool." Search engines decide when to discover and rank a new website, so appearing in Google results is not instant or guaranteed.
+Edit `source/gcse-revision-dashboard.html`, run `npm run sync:dashboard`, then build and publish. The permanent website address stays the same and existing browser progress remains available.
 
 ## Licence
 
-MIT. Video content remains the property of its respective creators; this project only links to external videos.
+MIT. Video content remains the property of its creators; this project only links to external videos.
