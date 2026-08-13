@@ -1443,6 +1443,12 @@ html&gt;body{padding:0}&lt;/style&gt;
         state.confidence[key]=confidence;scheduleReview(key,confidence);state.reviewHistory.push({key,confidence,completedAt:new Date().toISOString()});
         if(state.reviewHistory.length&gt;500)state.reviewHistory=state.reviewHistory.slice(-500);save();renderAll();
       }
+      function reviewTopicToday(key){
+        captureUndo(&#x27;Review added to Today&#x27;);
+        const confidence=state.confidence[key]||&#x27;amber&#x27;,existing=state.reviews[key]&amp;&amp;typeof state.reviews[key]===&#x27;object&#x27;?state.reviews[key]:{};
+        state.reviews[key]=Object.assign({},existing,{due:iso(new Date()),intervalDays:Number(existing.intervalDays)||({red:1,amber:3,green:14}[confidence]||3),confidence,updatedAt:new Date().toISOString()});
+        save();renderAll();showView(&#x27;today&#x27;,false);showUndo(&#x27;Review added to Today&#x27;);
+      }
       function moveTaskToTomorrow(task,withUndo=true){
         if(withUndo)captureUndo(&#x27;Moved to tomorrow&#x27;);const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);const date=iso(tomorrow);
         const key=task.baseKey||task.key;
@@ -1565,6 +1571,9 @@ html&gt;body{padding:0}&lt;/style&gt;
           [[&#x27;&#x27;,task.reviewMode?&#x27;Review result&#x27;:&#x27;Confidence&#x27;],[&#x27;green&#x27;,&#x27;✓ Green&#x27;],[&#x27;amber&#x27;,&#x27;△ Amber&#x27;],[&#x27;red&#x27;,&#x27;✗ Red&#x27;]].forEach(([v,t])=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=v;o.textContent=t;conf.append(o);});
           conf.value=task.reviewMode?&#x27;&#x27;:(state.confidence[stateKey]||&#x27;&#x27;); conf.addEventListener(&#x27;change&#x27;,()=&gt;{if(!conf.value)return;row.dataset.confidence=conf.value;if(task.reviewMode)completeReview(stateKey,conf.value);else setConfidence(stateKey,conf.value);}); actions.append(conf);
         }
+        if(options.allowReviewToday&amp;&amp;!task.reviewMode&amp;&amp;state.done[stateKey]&amp;&amp;[&#x27;red&#x27;,&#x27;amber&#x27;].includes(state.confidence[stateKey])){
+          const review=document.createElement(&#x27;button&#x27;);review.type=&#x27;button&#x27;;review.className=&#x27;btn btn-primary&#x27;;review.textContent=&#x27;Review today&#x27;;review.addEventListener(&#x27;click&#x27;,()=&gt;reviewTopicToday(stateKey));actions.append(review);
+        }
         if(options.allowDefer&amp;&amp;(task.reviewMode||task.trackable!==false)){
           const later=document.createElement(&#x27;button&#x27;);later.type=&#x27;button&#x27;;later.className=&#x27;btn btn-ghost&#x27;;later.textContent=&#x27;Tomorrow&#x27;;later.addEventListener(&#x27;click&#x27;,()=&gt;moveTaskToTomorrow(task));actions.append(later);
         }
@@ -1641,7 +1650,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           const completedDate=state.completedAt[key]?new Date(state.completedAt[key]):null;
           const completedLabel=completedDate&amp;&amp;!Number.isNaN(completedDate.getTime())?` · ${fmt(completedDate)}`:&#x27;&#x27;;
           const meta=state.done[key]?`Completed${completedLabel}`:(map[i]?`Scheduled ${fmt(map[i])}`:&#x27;Not scheduled&#x27;);
-          list.append(taskRow({key,title:`${i+1}. ${name}`,meta,url:mathVideo(i)})); shown++;
+          list.append(taskRow({key,title:`${i+1}. ${name}`,meta,url:mathVideo(i)},{allowReviewToday:true})); shown++;
         });
         const result=root.querySelector(&#x27;#rev-search-result&#x27;); result.textContent=search||filter!==&#x27;all&#x27;?`${shown} topic${shown===1?&#x27;&#x27;:&#x27;s&#x27;} found`:&#x27;&#x27;;
         if(!shown){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-empty&#x27;;p.textContent=&#x27;No matching topics. Try a shorter word or choose All topics.&#x27;;list.append(p);}
