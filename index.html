@@ -1314,7 +1314,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         }}
       };
       const mathStartIso = &#x27;2026-08-11&#x27;;
-      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, recoveryMath7ReviewFixed:false, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
+      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, recoveryMath7ReviewFixed:false, math7RecoveryReviewCompleted:false, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
       const safetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-ai-removal&#x27;;
       const removeRetiredAiState = target =&gt; { delete target.chat; delete target.activeQuiz; delete target.gptMode; return target; };
       let state = Object.assign({},defaultState);
@@ -1384,7 +1384,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       let undoSnapshot = null;
       let undoLabel = &#x27;&#x27;;
       let undoTimer = null;
-      const undoFields=[&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;dayPlans&#x27;];
+      const undoFields=[&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;dayPlans&#x27;,&#x27;math7RecoveryReviewCompleted&#x27;];
       const copyValue=value=&gt;JSON.parse(JSON.stringify(value));
       function captureUndo(label){undoSnapshot={};undoFields.forEach(key=&gt;undoSnapshot[key]=copyValue(state[key]));undoLabel=label;showUndo(label);}
       function showUndo(label){
@@ -1423,7 +1423,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       const topicCatalogue=makeTopicCatalogue();
       const topicLookup=new Map(topicCatalogue.all.map(task=&gt;[task.key,task]));
       function repairRecoveredMathsSevenReview(){
-        if(state.recoveryMath7ReviewFixed)return false;
+        if(state.math7RecoveryReviewCompleted)return false;
         const expected=[&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;],completed=Object.keys(state.done).filter(key=&gt;state.done[key]&amp;&amp;topicLookup.has(key));
         if(completed.length!==7||!expected.every((confidence,index)=&gt;state.done[`math:${index}`]&amp;&amp;state.confidence[`math:${index}`]===confidence))return false;
         const today=new Date(),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
@@ -1638,7 +1638,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       function completeSessionTask(confidence){
         const task=currentSessionTask();if(!task)return;captureUndo(task.reviewMode?&#x27;Review completed&#x27;:&#x27;Topic completed&#x27;);const key=task.baseKey||task.key;
         state.confidence[key]=confidence;
-        if(task.reviewMode){scheduleReview(key,confidence);state.reviewHistory.push({key,confidence,completedAt:new Date().toISOString()});state.activeSession.reviews=Number(state.activeSession.reviews||0)+1;}
+        if(task.reviewMode){scheduleReview(key,confidence);state.reviewHistory.push({key,confidence,completedAt:new Date().toISOString()});if(key===&#x27;math:6&#x27;)state.math7RecoveryReviewCompleted=true;state.activeSession.reviews=Number(state.activeSession.reviews||0)+1;}
         else {state.done[key]=true;if(!state.completedAt[key])state.completedAt[key]=new Date().toISOString();delete state.deferred[key];scheduleReview(key,confidence);state.activeSession.completed=Number(state.activeSession.completed||0)+1;}
         state.activeSession.currentKey=null;state.activeSession.currentReview=false;save();renderAll();renderSession();
       }
