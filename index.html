@@ -927,12 +927,12 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-section-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
     #gcse-revision-dashboard .rev-section-head h2 { margin: 0; }
     #gcse-revision-dashboard .rev-list { border-top: 1px solid var(--border); }
-    #gcse-revision-dashboard .rev-task { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    #gcse-revision-dashboard .rev-task { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; min-width: 0; padding: 12px 0; border-bottom: 1px solid var(--border); }
     #gcse-revision-dashboard .rev-task-main { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
     #gcse-revision-dashboard .rev-task-main label { min-width: 0; }
     #gcse-revision-dashboard .rev-task-title { display: block; font-weight: 500; overflow-wrap: anywhere; }
     #gcse-revision-dashboard .rev-task-meta { display: block; color: var(--muted-foreground); margin-top: 2px; }
-    #gcse-revision-dashboard .rev-task-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+    #gcse-revision-dashboard .rev-task-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; flex-wrap: wrap; }
     #gcse-revision-dashboard .rev-task.is-done .rev-task-title { text-decoration: line-through; color: var(--muted-foreground); }
     #gcse-revision-dashboard .rev-task[data-confidence=&quot;green&quot;] { border-left: 3px solid var(--green); padding-left: 9px; }
     #gcse-revision-dashboard .rev-task[data-confidence=&quot;amber&quot;] { border-left: 3px solid var(--orange); padding-left: 9px; }
@@ -1042,11 +1042,13 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-toast { display: none; position: fixed; left: 50%; bottom: 22px; z-index: 1100; transform: translateX(-50%); align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 28px); padding: 10px 12px 10px 16px; border-radius: 999px; color: white; background: rgb(28 28 30 / 94%); box-shadow: 0 12px 40px rgb(0 0 0 / 28%); }
     #gcse-revision-dashboard .rev-toast.is-visible { display: flex; }
     #gcse-revision-dashboard .rev-install-status { margin-top: 7px; }
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
       #gcse-revision-dashboard .rev-topbar { display: block; }
       #gcse-revision-dashboard .rev-topbar .viz-badge { margin-top: 10px; }
       #gcse-revision-dashboard .rev-task { grid-template-columns: 1fr; }
-      #gcse-revision-dashboard .rev-task-actions { justify-content: flex-start; padding-left: 30px; }
+      #gcse-revision-dashboard .rev-task-actions { width: 100%; justify-content: flex-start; padding-left: 30px; }
+      #gcse-revision-dashboard .rev-task-actions .btn,
+      #gcse-revision-dashboard .rev-task-actions .form-select { flex: 1 1 150px; min-width: 0; }
       #gcse-revision-dashboard .rev-tools-grid, #gcse-revision-dashboard .rev-form-grid { grid-template-columns: 1fr; }
       #gcse-revision-dashboard .rev-form-grid .rev-wide { grid-column: auto; }
       #gcse-revision-dashboard { padding: 12px; border-radius: 0; }
@@ -1056,6 +1058,11 @@ html&gt;body{padding:0}&lt;/style&gt;
       #gcse-revision-dashboard .rev-session-feedback { grid-template-columns: 1fr; }
       #gcse-revision-dashboard .rev-calendar { gap: 4px; }
       #gcse-revision-dashboard .rev-day { min-height: 48px; border-radius: 10px; }
+    }
+    @media (max-width: 420px) {
+      #gcse-revision-dashboard .rev-task-actions { padding-left: 0; }
+      #gcse-revision-dashboard .rev-task-actions .btn,
+      #gcse-revision-dashboard .rev-task-actions .form-select { flex-basis: 100%; width: 100%; }
     }
   &lt;/style&gt;
 
