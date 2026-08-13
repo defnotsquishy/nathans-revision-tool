@@ -941,19 +941,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-mini { color: var(--muted-foreground); margin: 7px 0 0; }
     #gcse-revision-dashboard .rev-unit { margin-top: 18px; }
     #gcse-revision-dashboard .rev-unit h3 { margin: 0 0 4px; }
-    #gcse-revision-dashboard .rev-notes { margin-top: 16px; }
-    #gcse-revision-dashboard .rev-notes .form-label { display: grid; gap: 6px; }
     #gcse-revision-dashboard textarea { min-height: 96px; resize: vertical; }
     #gcse-revision-dashboard .rev-conf { min-width: 92px; }
     #gcse-revision-dashboard .rev-hidden { display: none !important; }
-    #gcse-revision-dashboard .rev-chat-log { min-height: 260px; max-height: 520px; overflow-y: auto; }
-    #gcse-revision-dashboard .rev-message { padding: 10px 0 10px 12px; border-left: 3px solid var(--border); white-space: pre-wrap; }
-    #gcse-revision-dashboard .rev-message + .rev-message { margin-top: 10px; }
-    #gcse-revision-dashboard .rev-message[data-role=&quot;coach&quot;] { border-left-color: var(--viz-series-1); }
-    #gcse-revision-dashboard .rev-message[data-role=&quot;you&quot;] { border-left-color: var(--viz-series-3); }
-    #gcse-revision-dashboard .rev-message strong { display: block; margin-bottom: 3px; font-weight: 500; }
-    #gcse-revision-dashboard .rev-chat-quick { margin: 12px 0; }
-    #gcse-revision-dashboard .rev-chat-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: end; }
     #gcse-revision-dashboard .rev-panel { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
     #gcse-revision-dashboard .rev-panel:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
     #gcse-revision-dashboard .rev-panel h3 { margin: 0 0 8px; }
@@ -990,7 +980,6 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-subtitle { font-size: 1rem; }
     #gcse-revision-dashboard .card,
     #gcse-revision-dashboard .rev-task,
-    #gcse-revision-dashboard .rev-message,
     #gcse-revision-dashboard .rev-record {
       background: var(--rev-glass);
       border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
@@ -1058,7 +1047,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       #gcse-revision-dashboard .rev-topbar .viz-badge { margin-top: 10px; }
       #gcse-revision-dashboard .rev-task { grid-template-columns: 1fr; }
       #gcse-revision-dashboard .rev-task-actions { justify-content: flex-start; padding-left: 30px; }
-      #gcse-revision-dashboard .rev-chat-form { grid-template-columns: 1fr; }
       #gcse-revision-dashboard .rev-tools-grid, #gcse-revision-dashboard .rev-form-grid { grid-template-columns: 1fr; }
       #gcse-revision-dashboard .rev-form-grid .rev-wide { grid-column: auto; }
       #gcse-revision-dashboard { padding: 12px; border-radius: 0; }
@@ -1107,7 +1095,6 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;today&quot; aria-pressed=&quot;true&quot;&gt;&lt;i data-lucide=&quot;calendar-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Today&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;maths&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;calculator&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Maths 106&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;progress&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;chart-no-axes-column-increasing&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Progress &amp; tools&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;coach&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Study coach&lt;/button&gt;
   &lt;/nav&gt;
 
   &lt;section class=&quot;rev-section is-active&quot; data-section=&quot;today&quot;&gt;
@@ -1135,7 +1122,6 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;/select&gt;
         &lt;/label&gt;
         &lt;input class=&quot;rev-hidden&quot; type=&quot;checkbox&quot; id=&quot;rev-catch-up&quot; aria-hidden=&quot;true&quot;&gt;
-        &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-quiz-today&quot;&gt;&lt;i data-lucide=&quot;messages-square&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Quiz me&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;p class=&quot;rev-mini&quot; id=&quot;rev-today-time&quot;&gt;&lt;/p&gt;
@@ -1156,11 +1142,6 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;p id=&quot;rev-random-result&quot;&gt;Pick a red or amber topic first, then any unfinished topic.&lt;/p&gt;
         &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-random-pick&quot;&gt;&lt;i data-lucide=&quot;shuffle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Pick a topic&lt;/button&gt;
       &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;rev-notes&quot;&gt;
-      &lt;label class=&quot;form-label&quot; for=&quot;rev-today-notes&quot;&gt;Mistakes or tutor questions
-        &lt;textarea class=&quot;form-control&quot; id=&quot;rev-today-notes&quot; placeholder=&quot;Write the method you forgot, the question number, or what to ask your tutor.&quot;&gt;&lt;/textarea&gt;
-      &lt;/label&gt;
     &lt;/div&gt;
   &lt;/section&gt;
 
@@ -1275,40 +1256,6 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;/div&gt;
   &lt;div class=&quot;rev-toast&quot; id=&quot;rev-toast&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;span id=&quot;rev-toast-copy&quot;&gt;Change saved&lt;/span&gt;&lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;rev-toast-undo&quot;&gt;Undo&lt;/button&gt;&lt;/div&gt;
 
-  &lt;section class=&quot;rev-section&quot; data-section=&quot;coach&quot;&gt;
-    &lt;div class=&quot;rev-section-head&quot;&gt;
-      &lt;div&gt;
-        &lt;h2&gt;Study coach&lt;/h2&gt;
-        &lt;p class=&quot;rev-mini&quot; id=&quot;rev-gpt-note&quot;&gt;Offline planning, quizzes and mistake support&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;label class=&quot;form-label&quot; for=&quot;rev-gpt-mode&quot;&gt;Choose GPT
-        &lt;select class=&quot;form-select&quot; id=&quot;rev-gpt-mode&quot;&gt;
-          &lt;option value=&quot;offline&quot;&gt;Offline coach (works in this file)&lt;/option&gt;
-          &lt;option value=&quot;instant&quot;&gt;ChatGPT · Instant&lt;/option&gt;
-          &lt;option value=&quot;thinking&quot;&gt;ChatGPT · Thinking&lt;/option&gt;
-          &lt;option value=&quot;pro&quot;&gt;ChatGPT · Pro&lt;/option&gt;
-        &lt;/select&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;card rev-chat-log&quot; id=&quot;rev-chat-log&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
-    &lt;div class=&quot;viz-controls rev-chat-quick&quot; aria-label=&quot;Coach shortcuts&quot;&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;next&quot;&gt;What should I do?&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;quiz&quot;&gt;Quiz me&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;weak&quot;&gt;My weak topics&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;tutor&quot;&gt;Tutor questions&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-coach-action=&quot;clear&quot;&gt;Clear AI history&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;form class=&quot;rev-chat-form&quot; id=&quot;rev-chat-form&quot;&gt;
-      &lt;label class=&quot;form-label&quot; for=&quot;rev-chat-input&quot;&gt;Message
-        &lt;input class=&quot;form-control&quot; id=&quot;rev-chat-input&quot; autocomplete=&quot;off&quot; placeholder=&quot;Ask what to revise, request a quiz, or type your answer&quot;&gt;
-      &lt;/label&gt;
-      &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;&lt;i data-lucide=&quot;send&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Send&lt;/button&gt;
-    &lt;/form&gt;
-    &lt;div class=&quot;viz-controls&quot; style=&quot;margin-top:10px&quot;&gt;
-      &lt;a class=&quot;btn rev-hidden&quot; id=&quot;rev-open-chatgpt&quot; href=&quot;https://chatgpt.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;i data-lucide=&quot;external-link&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Open ChatGPT&lt;/a&gt;
-    &lt;/div&gt;
-  &lt;/section&gt;
-
   &lt;script&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;gcse-revision-dashboard&#x27;);
@@ -1359,24 +1306,21 @@ html&gt;body{padding:0}&lt;/style&gt;
           &#x27;Exam practice&#x27;:[&#x27;Non-calculator paper&#x27;,&#x27;Calculator paper&#x27;,&#x27;Error log and redo&#x27;]
         }}
       };
-      const coachQuestions = [
-        {subject:&#x27;Maths&#x27;,question:&#x27;Factorise x² + 5x + 6.&#x27;,answer:&#x27;(x + 2)(x + 3)&#x27;,keywords:[&#x27;x + 2&#x27;,&#x27;x + 3&#x27;]},
-        {subject:&#x27;Maths&#x27;,question:&#x27;A price rises from £80 to £92. What is the percentage increase?&#x27;,answer:&#x27;15%&#x27;,keywords:[&#x27;15&#x27;]},
-        {subject:&#x27;Biology&#x27;,question:&#x27;Why does increasing temperature eventually stop an enzyme working?&#x27;,answer:&#x27;Its active site changes shape because the enzyme denatures.&#x27;,keywords:[&#x27;active site&#x27;,&#x27;shape&#x27;,&#x27;denature&#x27;]},
-        {subject:&#x27;Chemistry&#x27;,question:&#x27;State the test for hydrogen gas.&#x27;,answer:&#x27;A lit splint gives a squeaky pop.&#x27;,keywords:[&#x27;lit splint&#x27;,&#x27;squeaky pop&#x27;]},
-        {subject:&#x27;Physics&#x27;,question:&#x27;Write the equation linking force, mass and acceleration.&#x27;,answer:&#x27;F = ma.&#x27;,keywords:[&#x27;f&#x27;,&#x27;m&#x27;,&#x27;a&#x27;]},
-        {subject:&#x27;History&#x27;,question:&#x27;Give one reason Hitler became Chancellor in January 1933.&#x27;,answer:&#x27;Examples include political deal-making by Papen, Nazi electoral support, or elite belief that Hitler could be controlled.&#x27;,keywords:[&#x27;papen&#x27;,&#x27;support&#x27;,&#x27;controlled&#x27;]},
-        {subject:&#x27;Macbeth&#x27;,question:&#x27;Give one quotation showing Macbeth’s ambition.&#x27;,answer:&#x27;For example: “I have no spur ... but only vaulting ambition.”&#x27;,keywords:[&#x27;vaulting ambition&#x27;]},
-        {subject:&#x27;English Language&#x27;,question:&#x27;What should an AQA Paper 1 Question 2 paragraph analyse?&#x27;,answer:&#x27;A language method, a short quotation, its effects and meanings, linked to the question.&#x27;,keywords:[&#x27;method&#x27;,&#x27;quotation&#x27;,&#x27;effect&#x27;]},
-        {subject:&#x27;Geography&#x27;,question:&#x27;Name one primary effect and one secondary effect of an earthquake.&#x27;,answer:&#x27;Primary effects happen directly, such as deaths or collapsed buildings; secondary effects follow, such as fires, homelessness or disease.&#x27;,keywords:[&#x27;primary&#x27;,&#x27;secondary&#x27;]},
-        {subject:&#x27;Sociology&#x27;,question:&#x27;What is one strength of using questionnaires in sociological research?&#x27;,answer:&#x27;They can collect standardised data from many people quickly and are easier to compare.&#x27;,keywords:[&#x27;many&#x27;,&#x27;quick&#x27;,&#x27;compare&#x27;]},
-        {subject:&#x27;Further Maths&#x27;,question:&#x27;Differentiate y = 3x² − 4x + 7.&#x27;,answer:&#x27;dy/dx = 6x − 4.&#x27;,keywords:[&#x27;6x&#x27;,&#x27;4&#x27;]}
-      ].filter(item=&gt;item.subject===&#x27;Maths&#x27;);
       const mathStartIso = &#x27;2026-08-11&#x27;;
-      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, chat:[], activeQuiz:null, gptMode:&#x27;offline&#x27;, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
+      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
+      const safetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-ai-removal&#x27;;
+      const removeRetiredAiState = target =&gt; { delete target.chat; delete target.activeQuiz; delete target.gptMode; return target; };
       let state = Object.assign({},defaultState);
       let storageWorks = true;
-      try { state = Object.assign(state, JSON.parse(localStorage.getItem(storageKey) || &#x27;{}&#x27;)); } catch (_) { storageWorks=false; }
+      try {
+        const savedText=localStorage.getItem(storageKey), safetyText=localStorage.getItem(safetyStorageKey);
+        let loaded={};
+        try { loaded=JSON.parse(savedText||safetyText||&#x27;{}&#x27;); }
+        catch (_) { loaded=JSON.parse(safetyText||&#x27;{}&#x27;); }
+        state=Object.assign(state,loaded);
+        if(savedText&amp;&amp;!safetyText){try{localStorage.setItem(safetyStorageKey,savedText);}catch(_){}}
+      } catch (_) { storageWorks=false; }
+      removeRetiredAiState(state);
       state.done = state.done &amp;&amp; typeof state.done===&#x27;object&#x27; ? state.done : {};
       state.confidence = state.confidence &amp;&amp; typeof state.confidence===&#x27;object&#x27; ? state.confidence : {};
       state.notes = state.notes &amp;&amp; typeof state.notes===&#x27;object&#x27; ? state.notes : {};
@@ -1395,7 +1339,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       state.schemaVersion=5;
       state.targetGrade=/^[4-9]$/.test(String(state.targetGrade||&#x27;&#x27;))?String(state.targetGrade):&#x27;7&#x27;;
       state.catchUpEnabled = false;
-      state.activeView=state.activeView===&#x27;subjects&#x27;?&#x27;today&#x27;:state.activeView;
+      state.activeView=[&#x27;subjects&#x27;,&#x27;coach&#x27;].includes(state.activeView)?&#x27;today&#x27;:state.activeView;
       const initialToday=new Date();
       const initialTodayIso=`${initialToday.getFullYear()}-${String(initialToday.getMonth()+1).padStart(2,&#x27;0&#x27;)}-${String(initialToday.getDate()).padStart(2,&#x27;0&#x27;)}`;
       const initialPlanningStart=initialTodayIso&gt;mathStartIso?initialTodayIso:mathStartIso;
@@ -1417,10 +1361,9 @@ html&gt;body{padding:0}&lt;/style&gt;
       };
       const resumeFromSavedState = raw =&gt; {
         if(!raw||typeof raw!==&#x27;object&#x27;||!raw.savedAt||String(raw.savedAt)&lt;=String(state.savedAt||&#x27;&#x27;))return false;
-        state=Object.assign({},defaultState,state,raw);state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
+        state=removeRetiredAiState(Object.assign({},defaultState,state,raw));state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
       };
       const checkForNewerSavedState = () =&gt; {try{return resumeFromSavedState(JSON.parse(localStorage.getItem(storageKey)||&#x27;null&#x27;));}catch(_){return false;}};
-      const lineBreak = String.fromCharCode(10);
       const iso = d =&gt; {
         const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,&#x27;0&#x27;), day=String(d.getDate()).padStart(2,&#x27;0&#x27;);
         return `${y}-${m}-${day}`;
@@ -1429,8 +1372,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       const fmt = d =&gt; new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;short&#x27;,day:&#x27;numeric&#x27;,month:&#x27;short&#x27;}).format(d);
       const isHoliday = d =&gt; iso(d) &gt;= state.holidayStart &amp;&amp; iso(d) &lt;= state.holidayEnd;
       const mathVideo = index =&gt; `https://www.youtube.com/watch?v=${mathVideoRefs[index]}`;
-      const gptModes = { offline:&#x27;Offline coach&#x27;, instant:&#x27;Instant&#x27;, thinking:&#x27;Thinking&#x27;, pro:&#x27;Pro&#x27; };
-      if(!(state.gptMode in gptModes)) state.gptMode=&#x27;offline&#x27;;
       const taskKey = (type,id) =&gt; `${type}:${id}`;
       let taskRowSerial = 0;
       let undoSnapshot = null;
@@ -1464,34 +1405,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       };
       const setConfidence = (key,value) =&gt; { captureUndo(&#x27;Confidence changed&#x27;);if(value){state.confidence[key]=value;if(state.done[key])scheduleReview(key,value);}else{delete state.confidence[key];delete state.reviews[key];}save();renderAll(); };
 
-      function coachMessage(role,text) {
-        state.chat = Array.isArray(state.chat) ? state.chat : [];
-        state.chat.push({role,text});
-        if(state.chat.length&gt;30) state.chat=state.chat.slice(-30);
-        save(); renderCoach();
-      }
-      function copyText(text) {
-        const fallback = () =&gt; {
-          const area=document.createElement(&#x27;textarea&#x27;); area.value=text; area.setAttribute(&#x27;readonly&#x27;,&#x27;&#x27;); area.style.position=&#x27;absolute&#x27;; area.style.left=&#x27;-9999px&#x27;;
-          root.append(area); area.select(); let copied=false;
-          try { copied=document.execCommand(&#x27;copy&#x27;); } catch (_) {}
-          area.remove(); return copied;
-        };
-        if(navigator.clipboard &amp;&amp; navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(()=&gt;true).catch(fallback);
-        return Promise.resolve(fallback());
-      }
-      function liveCoachPrompt(text) {
-        const next=unfinishedMath();
-        const context=next?`My next unfinished maths topic is ${next.index+1}: ${next.name}.`:&#x27;I have finished the 106-topic maths tracker.&#x27;;
-        return `Act as my GCSE revision coach using ${gptModes[state.gptMode]} mode. I study Edexcel Higher Maths and have a maths tutor on Tuesdays. My holiday light plan is ${state.holidayStart} to ${state.holidayEnd}. ${context} Keep the answer clear, encouraging and practical. My request: ${text}`;
-      }
-      function sendToSelectedCoach(raw) {
-        const text=raw.trim(); if(!text)return;
-        if(state.gptMode===&#x27;offline&#x27;) { coachReply(text); return; }
-        const popup=window.open(&#x27;https://chatgpt.com/&#x27;,&#x27;_blank&#x27;); if(popup) popup.opener=null;
-        coachMessage(&#x27;you&#x27;,text);
-        copyText(liveCoachPrompt(text)).then(copied=&gt;coachMessage(&#x27;coach&#x27;,`${gptModes[state.gptMode]} selected. ${popup?&#x27;ChatGPT opened in a new tab.&#x27;:&#x27;Your browser blocked the new tab; use the Open ChatGPT button below.&#x27;}${lineBreak}${copied?&#x27;Your revision prompt is copied — paste it into ChatGPT, then choose the same option in its model picker.&#x27;:&#x27;Open ChatGPT and paste your request there.&#x27;}`));
-      }
       function unfinishedMath() {
         const index=mathTopics.findIndex((_,i)=&gt;!state.done[taskKey(&#x27;math&#x27;,i)]);
         return index&lt;0?null:{index,name:mathTopics[index]};
@@ -1536,49 +1449,6 @@ html&gt;body{padding:0}&lt;/style&gt;
         Object.entries(state.deferred).forEach(([key,due])=&gt;{if(due&gt;dateKey||state.done[key]||seen.has(key))return;const task=resolveTask(key);if(task){task.meta=`Moved here for a calmer day · ${task.meta}`;output.push(task);seen.add(key);}});
         return output;
       }
-      function weakList() {
-        return topicCatalogue.all.filter(task=&gt;state.confidence[task.key]===&#x27;red&#x27;||state.confidence[task.key]===&#x27;amber&#x27;)
-          .sort((a,b)=&gt;(state.confidence[a.key]===&#x27;red&#x27;?0:1)-(state.confidence[b.key]===&#x27;red&#x27;?0:1))
-          .slice(0,6).map(task=&gt;`${state.confidence[task.key]===&#x27;red&#x27;?&#x27;✗&#x27;:&#x27;△&#x27;} ${task.title}`);
-      }
-      function startQuiz() {
-        const redMath=Object.entries(state.confidence).find(([k,v])=&gt;k.startsWith(&#x27;math:&#x27;)&amp;&amp;v===&#x27;red&#x27;);
-        let index;
-        if(redMath) index=Number(redMath[0].split(&#x27;:&#x27;)[1])%coachQuestions.length;
-        else index=(new Date().getDate()+state.chat.length)%coachQuestions.length;
-        state.activeQuiz=index; save();
-        const q=coachQuestions[index]; coachMessage(&#x27;coach&#x27;,`${q.subject} question:${lineBreak}${q.question}`);
-      }
-      function coachReply(raw) {
-        const text=raw.trim(); if(!text)return;
-        coachMessage(&#x27;you&#x27;,text);
-        if(state.activeQuiz!==null &amp;&amp; state.activeQuiz!==undefined) {
-          const q=coachQuestions[state.activeQuiz]; const lower=text.toLowerCase(); const hits=q.keywords.filter(k=&gt;lower.includes(k.toLowerCase())).length;
-          state.activeQuiz=null; save();
-          coachMessage(&#x27;coach&#x27;,`${hits&gt;=Math.max(1,Math.ceil(q.keywords.length/2))?&#x27;Good answer.&#x27;:&#x27;Not quite yet.&#x27;}${lineBreak}Model answer: ${q.answer}${lineBreak}${lineBreak}Say “quiz me” for another question.`);
-          return;
-        }
-        const lower=text.toLowerCase();
-        if(lower.includes(&#x27;quiz&#x27;)) { startQuiz(); return; }
-        if(lower.includes(&#x27;weak&#x27;)||lower.includes(&#x27;red&#x27;)||lower.includes(&#x27;amber&#x27;)) {
-          const weak=weakList(); coachMessage(&#x27;coach&#x27;,weak.length?`Start with these:${lineBreak}${weak.join(lineBreak)}`:&#x27;You have not marked any red or amber topics yet. Use the confidence menus after each task.&#x27;); return;
-        }
-        if(lower.includes(&#x27;tutor&#x27;)) {
-          const weak=weakList(); coachMessage(&#x27;coach&#x27;,weak.length?`Take these to your Tuesday tutor:${lineBreak}${weak.slice(0,3).join(lineBreak)}${lineBreak}Ask: “Can you show me the fastest reliable method, then give me one question to try alone?”`:&#x27;Before your tutor session, mark today’s hardest topics amber or red. I will turn them into tutor questions here.&#x27;); return;
-        }
-        if(lower.includes(&#x27;holiday&#x27;)) {
-          coachMessage(&#x27;coach&#x27;,`Holiday light mode is ${state.holidayStart} to ${state.holidayEnd}. Maths keeps going at a lighter pace, and unfinished topics are spread across the days left before your chosen finish date.`); return;
-        }
-        if(lower.includes(&#x27;what&#x27;)||lower.includes(&#x27;next&#x27;)||lower.includes(&#x27;revise&#x27;)||lower.includes(&#x27;plan&#x27;)) {
-          const today=todayTasks(new Date()).filter(t=&gt;!state.done[t.key]); const next=unfinishedMath();
-          if(today.length) coachMessage(&#x27;coach&#x27;,`Do this next:${lineBreak}1. ${today[0].title}${lineBreak}2. Mark it immediately${lineBreak}3. Set ✓, △ or ✗${lineBreak}Then return and ask for a quiz.`);
-          else if(next) coachMessage(&#x27;coach&#x27;,`Today is clear. If you want extra work, do Maths ${next.index+1}: ${next.name}. Keep it to 20 minutes if you are on holiday.`);
-          else coachMessage(&#x27;coach&#x27;,&#x27;Your Maths tracker is complete. Use the full paper and work from red topics first.&#x27;);
-          return;
-        }
-        coachMessage(&#x27;coach&#x27;,&#x27;I work best with: “What should I do?”, “Quiz me”, “Show my weak topics”, “Tutor questions”, or “Explain holiday mode”.&#x27;);
-      }
-
       function planningStartDate() {
         const courseStart=fromIso(mathStartIso), today=fromIso(iso(new Date()));
         return today&gt;courseStart?today:courseStart;
@@ -1706,8 +1576,6 @@ html&gt;body{padding:0}&lt;/style&gt;
         const alert=root.querySelector(&#x27;#rev-schedule-alert&#x27;); alert.innerHTML=&#x27;&#x27;;
         if(estimated&gt;state.dailyMinutes){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert rev-danger&#x27;;p.textContent=`Today needs about ${estimated} minutes because required Maths work stays in the plan. Extend the Maths finish date or raise the daily limit if this is too much.`;alert.append(p);}
         else if(overdue.length){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert&#x27;;p.textContent=state.catchUpEnabled?(catchUps?`${catchUps} catch-up task${catchUps===1?&#x27; is&#x27;:&#x27;s are&#x27;} included today. ${Math.max(0,overdue.length-catchUps)} still waiting.`:`${overdue.length} overdue task${overdue.length===1?&#x27; is&#x27;:&#x27;s are&#x27;} waiting for space in your daily limit.`):`${overdue.length} overdue task${overdue.length===1?&#x27;&#x27;:&#x27;s&#x27;} saved. Turn on Catch-up mode when you want them added to Today.`;alert.append(p);}
-        const notes=root.querySelector(&#x27;#rev-today-notes&#x27;); notes.value=state.notes[iso(now)]||&#x27;&#x27;;
-        notes.oninput=()=&gt;{state.notes[iso(now)]=notes.value;save();};
         const h=isHoliday(now); root.querySelector(&#x27;#rev-holiday-badge&#x27;).textContent=h?&#x27;Holiday light mode&#x27;:&#x27;Normal plan&#x27;;
         const random=state.randomPick?resolveTask(state.randomPick):null; root.querySelector(&#x27;#rev-random-result&#x27;).textContent=random?random.title:&#x27;Pick a red or amber topic first, then any unfinished topic.&#x27;;
         const queue=sessionQueue(),active=!!state.activeSession.active,start=root.querySelector(&#x27;#rev-session-start&#x27;);
@@ -1912,22 +1780,13 @@ html&gt;body{padding:0}&lt;/style&gt;
         const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{const parsed=decodeTransferPayload(token),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);if(!window.confirm(&#x27;We found progress from your old downloaded revision file. Merge its ticks, colours, notes and history into this website?&#x27;)){status.textContent=&#x27;Old progress was not imported. Nothing was changed.&#x27;;return;}const added=mergeTransferredProgress(raw);status.textContent=`Old progress restored — ${added.topics} topic${added.topics===1?&#x27;&#x27;:&#x27;s&#x27;} and ${added.colours} confidence rating${added.colours===1?&#x27;&#x27;:&#x27;s&#x27;} added. Everything is now auto-saved on this website.`;}catch(_){status.textContent=&#x27;That old-progress transfer was not valid. Nothing was changed.&#x27;;}
       }
       function restoreBackup(file){
-        const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Replace the progress in this app with this backup?&#x27;))return;const allowed=[&#x27;schemaVersion&#x27;,&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;holidayStart&#x27;,&#x27;holidayEnd&#x27;,&#x27;holidayPace&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;subjectStartDate&#x27;,&#x27;dailyMinutes&#x27;,&#x27;catchUpEnabled&#x27;,&#x27;dayPlans&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;lastBackupAt&#x27;,&#x27;backupReminderDismissedUntil&#x27;,&#x27;chat&#x27;,&#x27;activeQuiz&#x27;,&#x27;gptMode&#x27;,&#x27;activeView&#x27;,&#x27;mathFilter&#x27;,&#x27;mathSearch&#x27;,&#x27;subjectId&#x27;,&#x27;subjectSearch&#x27;,&#x27;randomPick&#x27;,&#x27;timer&#x27;,&#x27;savedAt&#x27;];const safe={};allowed.forEach(key=&gt;{if(Object.prototype.hasOwnProperty.call(raw,key))safe[key]=raw[key];});state=Object.assign({},defaultState,safe);state.schemaVersion=5;state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.targetGrade=/^[4-9]$/.test(String(state.targetGrade||&#x27;&#x27;))?String(state.targetGrade):&#x27;7&#x27;;state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.catchUpEnabled=false;state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;const minimum=minimumFinishIso();if(!/^\d{4}-\d{2}-\d{2}$/.test(state.mathFinishTarget||&#x27;&#x27;)||state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;clearFuturePlans();save();renderAll();showView(state.activeView||&#x27;today&#x27;,false);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup restored successfully.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
+        const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Replace the progress in this app with this backup?&#x27;))return;const allowed=[&#x27;schemaVersion&#x27;,&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;holidayStart&#x27;,&#x27;holidayEnd&#x27;,&#x27;holidayPace&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;subjectStartDate&#x27;,&#x27;dailyMinutes&#x27;,&#x27;catchUpEnabled&#x27;,&#x27;dayPlans&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;lastBackupAt&#x27;,&#x27;backupReminderDismissedUntil&#x27;,&#x27;activeView&#x27;,&#x27;mathFilter&#x27;,&#x27;mathSearch&#x27;,&#x27;subjectId&#x27;,&#x27;subjectSearch&#x27;,&#x27;randomPick&#x27;,&#x27;timer&#x27;,&#x27;savedAt&#x27;];const safe={};allowed.forEach(key=&gt;{if(Object.prototype.hasOwnProperty.call(raw,key))safe[key]=raw[key];});state=Object.assign({},defaultState,safe);state.schemaVersion=5;state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.targetGrade=/^[4-9]$/.test(String(state.targetGrade||&#x27;&#x27;))?String(state.targetGrade):&#x27;7&#x27;;state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.catchUpEnabled=false;state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;const minimum=minimumFinishIso();if(!/^\d{4}-\d{2}-\d{2}$/.test(state.mathFinishTarget||&#x27;&#x27;)||state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;clearFuturePlans();save();renderAll();showView(state.activeView||&#x27;today&#x27;,false);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup restored successfully.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
       }
       function requestInstall(){
         const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=&#x27;Opening the install option…&#x27;;
         if(window.parent&amp;&amp;window.parent!==window)window.parent.postMessage({type:&#x27;REVISION_INSTALL&#x27;},&#x27;*&#x27;);
         else if(status)status.textContent=&#x27;Use your browser menu and choose “Add to Home Screen” or “Install app”.&#x27;;
         window.setTimeout(()=&gt;{if(status&amp;&amp;status.textContent===&#x27;Opening the install option…&#x27;)status.textContent=&#x27;On iPhone: tap Share, then Add to Home Screen. On Android or computer: open the browser menu and choose Install app.&#x27;;},1200);
-      }
-      function renderCoach(){
-        const log=root.querySelector(&#x27;#rev-chat-log&#x27;); log.innerHTML=&#x27;&#x27;;
-        if(!Array.isArray(state.chat)||!state.chat.length) state.chat=[{role:&#x27;coach&#x27;,text:&#x27;Hi — I’m your built-in revision coach. I can choose your next task, quiz you, find red and amber topics, and prepare questions for your Tuesday tutor.&#x27;}];
-        state.chat.forEach(msg=&gt;{const item=document.createElement(&#x27;div&#x27;);item.className=&#x27;rev-message&#x27;;item.dataset.role=msg.role;const who=document.createElement(&#x27;strong&#x27;);who.textContent=msg.role===&#x27;you&#x27;?&#x27;You&#x27;:&#x27;Coach&#x27;;const body=document.createElement(&#x27;span&#x27;);body.textContent=msg.text;item.append(who,body);log.append(item);});
-        const mode=root.querySelector(&#x27;#rev-gpt-mode&#x27;); mode.value=state.gptMode in gptModes?state.gptMode:&#x27;offline&#x27;;
-        const live=mode.value!==&#x27;offline&#x27;; root.querySelector(&#x27;#rev-gpt-note&#x27;).textContent=live?&#x27;Your message opens ChatGPT and copies a ready-made revision prompt. Choose the matching option in ChatGPT.&#x27;:&#x27;Offline planning, quizzes and mistake support — no sign-in needed.&#x27;;
-        root.querySelector(&#x27;#rev-open-chatgpt&#x27;).classList.toggle(&#x27;rev-hidden&#x27;,!live);
-        log.scrollTop=log.scrollHeight;
       }
       function updateProgress(){
         const now=new Date(), today=todayTasks(now).filter(task=&gt;task.reviewMode||task.trackable!==false), doneToday=today.filter(t=&gt;!t.reviewMode&amp;&amp;state.done[t.key]).length;
@@ -1938,9 +1797,9 @@ html&gt;body{padding:0}&lt;/style&gt;
         root.querySelector(&#x27;#rev-confidence-summary&#x27;).textContent=`${greens} green · ${ambers} amber · ${reds} red`;
         updateSaveStatus();
       }
-      function renderAll(){ renderToday(); renderMath(); renderProgress(); renderCoach(); updateProgress(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
+      function renderAll(){ renderToday(); renderMath(); renderProgress(); updateProgress(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
       function showView(name,shouldSave=true){
-        const valid=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;]; if(!valid.includes(name))name=&#x27;today&#x27;;
+        const valid=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;]; if(!valid.includes(name))name=&#x27;today&#x27;;
         root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(b=&gt;{const active=b.dataset.view===name;b.setAttribute(&#x27;aria-pressed&#x27;,active);b.classList.toggle(&#x27;btn-primary&#x27;,active);});
         root.querySelectorAll(&#x27;[data-section]&#x27;).forEach(s=&gt;s.classList.toggle(&#x27;is-active&#x27;,s.dataset.section===name));
         state.activeView=name; if(shouldSave)save();
@@ -1954,7 +1813,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       const changeMathFinish=e=&gt;{const minimum=minimumFinishIso(), value=/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)&amp;&amp;e.target.value&gt;=minimum?e.target.value:minimum;if(value===state.mathFinishTarget)return;captureUndo(&#x27;Finish date changed&#x27;);state.mathFinishTarget=value;clearFuturePlans();save();renderAll();};
       root.querySelector(&#x27;#rev-maths-finish-target&#x27;).addEventListener(&#x27;change&#x27;,changeMathFinish);
       root.querySelector(&#x27;#rev-maths-finish-card&#x27;).addEventListener(&#x27;change&#x27;,changeMathFinish);
-      root.querySelector(&#x27;#rev-gpt-mode&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.gptMode=e.target.value;save();renderCoach();});
       root.querySelector(&#x27;#rev-session-start&#x27;).addEventListener(&#x27;click&#x27;,startSession);
       root.querySelector(&#x27;#rev-session-close&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;endSession(false));
       root.querySelectorAll(&#x27;[data-session-confidence]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;completeSessionTask(btn.dataset.sessionConfidence)));
@@ -1962,7 +1820,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#rev-session-mistake&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{const task=currentSessionTask();if(!task)return;const key=task.baseKey||task.key;endSession(false);openMistakeFor(key);});
       root.querySelector(&#x27;#rev-undo-main&#x27;).addEventListener(&#x27;click&#x27;,performUndo);
       root.querySelector(&#x27;#rev-toast-undo&#x27;).addEventListener(&#x27;click&#x27;,performUndo);
-      root.querySelector(&#x27;#rev-quiz-today&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{showView(&#x27;coach&#x27;); if(state.gptMode===&#x27;offline&#x27;) startQuiz(); else sendToSelectedCoach(&#x27;Quiz me on today’s GCSE revision topics, one question at a time.&#x27;);});
       root.querySelector(&#x27;#rev-random-pick&#x27;).addEventListener(&#x27;click&#x27;,randomPractice);
       root.querySelector(&#x27;#rev-random-pick-progress&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{randomPractice();showView(&#x27;today&#x27;);});
       root.querySelector(&#x27;#rev-timer-toggle&#x27;).addEventListener(&#x27;click&#x27;,toggleTimer);
@@ -1982,27 +1839,6 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#rev-transfer-progress&#x27;).addEventListener(&#x27;click&#x27;,transferProgressToWebsite);
       root.querySelector(&#x27;#rev-install-app&#x27;).addEventListener(&#x27;click&#x27;,requestInstall);
       window.addEventListener(&#x27;message&#x27;,event=&gt;{if(!event.data||event.source!==window.parent)return;if(event.data.type===&#x27;REVISION_INSTALL_RESULT&#x27;){const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=event.data.message||&#x27;Install option checked.&#x27;;}else if(event.data.type===&#x27;REVISION_IMPORT&#x27;)importTransferredProgress(event.data.payload);});
-      root.querySelectorAll(&#x27;[data-coach-action]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;{
-        const action=btn.dataset.coachAction;
-        if(action===&#x27;quiz&#x27; &amp;&amp; state.gptMode===&#x27;offline&#x27;) startQuiz();
-        else if(action===&#x27;quiz&#x27;) sendToSelectedCoach(&#x27;Quiz me on my next GCSE revision topic, one question at a time.&#x27;);
-        else if(action===&#x27;next&#x27;) sendToSelectedCoach(&#x27;What should I do next?&#x27;);
-        else if(action===&#x27;weak&#x27;) sendToSelectedCoach(&#x27;Show my weak topics and make a short plan.&#x27;);
-        else if(action===&#x27;tutor&#x27;) sendToSelectedCoach(&#x27;Prepare questions for my Tuesday maths tutor.&#x27;);
-        else if(action===&#x27;clear&#x27;) {
-          if(btn.dataset.armed===&#x27;true&#x27;) {
-            btn.dataset.armed=&#x27;false&#x27;; btn.textContent=&#x27;History cleared&#x27;; state.chat=[]; state.activeQuiz=null; save(); renderCoach();
-            window.setTimeout(()=&gt;{btn.textContent=&#x27;Clear AI history&#x27;;},1800);
-          } else {
-            btn.dataset.armed=&#x27;true&#x27;; btn.textContent=&#x27;Click again to clear&#x27;;
-            window.setTimeout(()=&gt;{if(btn.dataset.armed===&#x27;true&#x27;){btn.dataset.armed=&#x27;false&#x27;;btn.textContent=&#x27;Clear AI history&#x27;;}},5000);
-          }
-        }
-      }));
-      const sendCoachMessage = () =&gt; { const input=root.querySelector(&#x27;#rev-chat-input&#x27;); const value=input.value; input.value=&#x27;&#x27;; sendToSelectedCoach(value); };
-      root.querySelector(&#x27;#rev-chat-form&#x27;).addEventListener(&#x27;submit&#x27;,e=&gt;e.preventDefault());
-      root.querySelector(&#x27;#rev-chat-form button[type=&quot;submit&quot;]&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();sendCoachMessage();});
-      root.querySelector(&#x27;#rev-chat-input&#x27;).addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();sendCoachMessage();}});
       window.addEventListener(&#x27;pagehide&#x27;,save);
       window.addEventListener(&#x27;pageshow&#x27;,checkForNewerSavedState);
       window.addEventListener(&#x27;storage&#x27;,event=&gt;{if(event.key!==storageKey||!event.newValue)return;try{resumeFromSavedState(JSON.parse(event.newValue));}catch(_){}});
