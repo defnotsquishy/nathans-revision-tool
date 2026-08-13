@@ -1314,7 +1314,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         }}
       };
       const mathStartIso = &#x27;2026-08-11&#x27;;
-      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
+      const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, recoveryMath7ReviewFixed:false, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
       const safetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-ai-removal&#x27;;
       const removeRetiredAiState = target =&gt; { delete target.chat; delete target.activeQuiz; delete target.gptMode; return target; };
       let state = Object.assign({},defaultState);
@@ -1422,7 +1422,17 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       const topicCatalogue=makeTopicCatalogue();
       const topicLookup=new Map(topicCatalogue.all.map(task=&gt;[task.key,task]));
-      let migratedReviews=false;Object.keys(state.done).forEach(key=&gt;{if(state.done[key]&amp;&amp;state.confidence[key]&amp;&amp;!state.reviews[key]&amp;&amp;topicLookup.has(key)){const anchor=state.completedAt[key]?new Date(state.completedAt[key]):new Date();scheduleReview(key,state.confidence[key],Number.isNaN(anchor.getTime())?new Date():anchor);migratedReviews=true;}});if(migratedReviews)save();
+      function repairRecoveredMathsSevenReview(){
+        if(state.recoveryMath7ReviewFixed)return false;
+        const expected=[&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;],completed=Object.keys(state.done).filter(key=&gt;state.done[key]&amp;&amp;topicLookup.has(key));
+        if(completed.length!==7||!expected.every((confidence,index)=&gt;state.done[`math:${index}`]&amp;&amp;state.confidence[`math:${index}`]===confidence))return false;
+        const today=new Date(),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
+        const oldReview=state.reviews[&#x27;math:0&#x27;]&amp;&amp;typeof state.reviews[&#x27;math:0&#x27;]===&#x27;object&#x27;?state.reviews[&#x27;math:0&#x27;]:{};
+        state.reviews[&#x27;math:0&#x27;]=Object.assign({},oldReview,{due:iso(tomorrow),intervalDays:3,confidence:&#x27;amber&#x27;,updatedAt:new Date().toISOString()});
+        state.reviews[&#x27;math:6&#x27;]={due:iso(today),intervalDays:14,confidence:&#x27;green&#x27;,updatedAt:new Date().toISOString()};
+        state.recoveryMath7ReviewFixed=true;return true;
+      }
+      let migratedReviews=false;Object.entries(state.reviews).forEach(([key,review])=&gt;{if(typeof review===&#x27;string&#x27;&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(review)){state.reviews[key]={due:review,intervalDays:({red:1,amber:3,green:14}[state.confidence[key]]||3),confidence:state.confidence[key]||&#x27;amber&#x27;,updatedAt:new Date().toISOString()};migratedReviews=true;}});Object.keys(state.done).forEach(key=&gt;{if(state.done[key]&amp;&amp;state.confidence[key]&amp;&amp;!state.reviews[key]&amp;&amp;topicLookup.has(key)){const anchor=state.completedAt[key]?new Date(state.completedAt[key]):new Date();scheduleReview(key,state.confidence[key],Number.isNaN(anchor.getTime())?new Date():anchor);migratedReviews=true;}});if(repairRecoveredMathsSevenReview())migratedReviews=true;if(migratedReviews)save();
       const subjectName = () =&gt; &#x27;Maths&#x27;;
       const subjectOptions = () =&gt; [{id:&#x27;math&#x27;,name:&#x27;Maths&#x27;}];
       function resolveTask(key) {
@@ -1571,7 +1581,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           [[&#x27;&#x27;,task.reviewMode?&#x27;Review result&#x27;:&#x27;Confidence&#x27;],[&#x27;green&#x27;,&#x27;✓ Green&#x27;],[&#x27;amber&#x27;,&#x27;△ Amber&#x27;],[&#x27;red&#x27;,&#x27;✗ Red&#x27;]].forEach(([v,t])=&gt;{const o=document.createElement(&#x27;option&#x27;);o.value=v;o.textContent=t;conf.append(o);});
           conf.value=task.reviewMode?&#x27;&#x27;:(state.confidence[stateKey]||&#x27;&#x27;); conf.addEventListener(&#x27;change&#x27;,()=&gt;{if(!conf.value)return;row.dataset.confidence=conf.value;if(task.reviewMode)completeReview(stateKey,conf.value);else setConfidence(stateKey,conf.value);}); actions.append(conf);
         }
-        if(options.allowReviewToday&amp;&amp;!task.reviewMode&amp;&amp;state.done[stateKey]&amp;&amp;[&#x27;red&#x27;,&#x27;amber&#x27;].includes(state.confidence[stateKey])){
+        if(options.allowReviewToday&amp;&amp;!task.reviewMode&amp;&amp;state.done[stateKey]){
           const review=document.createElement(&#x27;button&#x27;);review.type=&#x27;button&#x27;;review.className=&#x27;btn btn-primary&#x27;;review.textContent=&#x27;Review today&#x27;;review.addEventListener(&#x27;click&#x27;,()=&gt;reviewTopicToday(stateKey));actions.append(review);
         }
         if(options.allowDefer&amp;&amp;(task.reviewMode||task.trackable!==false)){
@@ -1789,7 +1799,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         for(const field of [&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;])if(raw[field]&amp;&amp;typeof raw[field]===&#x27;object&#x27;)state[field]=Object.assign({},raw[field],state[field]);
         state.reviewHistory=mergeUniqueRecords(state.reviewHistory,raw.reviewHistory);state.sessionHistory=mergeUniqueRecords(state.sessionHistory,raw.sessionHistory);state.paperScores=mergeUniqueRecords(state.paperScores,raw.paperScores);state.mistakes=mergeUniqueRecords(state.mistakes,raw.mistakes);
         if(raw.examDates&amp;&amp;typeof raw.examDates===&#x27;object&#x27;)state.examDates=Object.assign({},raw.examDates,state.examDates);if(state.targetGrade===&#x27;7&#x27;&amp;&amp;/^[4-9]$/.test(String(raw.targetGrade||&#x27;&#x27;)))state.targetGrade=String(raw.targetGrade);
-        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;clearFuturePlans();save();renderAll();showView(&#x27;progress&#x27;,false);
+        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;repairRecoveredMathsSevenReview();clearFuturePlans();save();renderAll();showView(&#x27;progress&#x27;,false);
         return {topics:Object.values(state.done).filter(Boolean).length-beforeDone,colours:Object.keys(state.confidence).length-beforeColours};
       }
       function importTransferredProgress(token){
