@@ -7,7 +7,6 @@ An open-source, auto-saving GCSE Higher Maths revision planner built around 106 
 - Change the target finish date from the home screen or Maths tracker
 - Automatically redistribute unfinished topics across the days remaining
 - Keep completed topics, confidence ratings, notes and scores when the plan changes
-- Tuesday tutor preparation and a full-paper day after the chosen finish date
 - Search all 106 topics and open the matching video
 - Focus timer, weak-topic queue, mistakes, paper scores and backup/restore
 - Calm one-topic-at-a-time sessions with a cleaner glass-and-card interface
