@@ -1241,7 +1241,8 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;/section&gt;
         &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Backup &amp; restore&lt;/h3&gt;
           &lt;p class=&quot;rev-mini&quot;&gt;Download everything saved in this app, or restore it on this device later.&lt;/p&gt;
-          &lt;div class=&quot;viz-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-backup-download&quot;&gt;Download backup&lt;/button&gt;&lt;label class=&quot;btn&quot; for=&quot;rev-backup-file&quot;&gt;Choose backup&lt;input class=&quot;rev-hidden&quot; type=&quot;file&quot; id=&quot;rev-backup-file&quot; accept=&quot;application/json,.json&quot;&gt;&lt;/label&gt;&lt;/div&gt;
+          &lt;div class=&quot;viz-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-backup-download&quot;&gt;Download backup&lt;/button&gt;&lt;label class=&quot;btn&quot; for=&quot;rev-backup-file&quot;&gt;Choose backup&lt;input class=&quot;rev-hidden&quot; type=&quot;file&quot; id=&quot;rev-backup-file&quot; accept=&quot;application/json,.json&quot;&gt;&lt;/label&gt;&lt;button type=&quot;button&quot; class=&quot;btn rev-hidden&quot; id=&quot;rev-transfer-progress&quot;&gt;Move old progress to website&lt;/button&gt;&lt;/div&gt;
+          &lt;p class=&quot;rev-mini&quot; id=&quot;rev-transfer-help&quot;&gt;Used the old downloaded file? Open it, go to Progress &amp;amp; tools, then press “Move old progress to website”. Your ticks, colours, notes and history will be merged safely.&lt;/p&gt;
           &lt;p class=&quot;rev-mini&quot; id=&quot;rev-backup-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
         &lt;/section&gt;
       &lt;/div&gt;
@@ -1406,14 +1407,19 @@ html&gt;body{padding:0}&lt;/style&gt;
       const updateSaveStatus = () =&gt; {
         const el=root.querySelector(&#x27;#rev-save-status&#x27;); if(!el)return;
         if(!storageWorks){ el.textContent=&#x27;Save unavailable&#x27;; return; }
-        if(!state.savedAt){ el.textContent=&#x27;Auto-save on&#x27;; return; }
-        const when=new Date(state.savedAt); el.textContent=`Saved ${when.toLocaleTimeString(&#x27;en-GB&#x27;,{hour:&#x27;2-digit&#x27;,minute:&#x27;2-digit&#x27;})}`;
+        if(!state.savedAt){ el.textContent=&#x27;Auto-save on this device&#x27;; return; }
+        const when=new Date(state.savedAt); el.textContent=`Saved on this device · ${when.toLocaleTimeString(&#x27;en-GB&#x27;,{hour:&#x27;2-digit&#x27;,minute:&#x27;2-digit&#x27;})}`;
       };
       const save = () =&gt; {
         state.savedAt=new Date().toISOString();
         try { localStorage.setItem(storageKey, JSON.stringify(state)); storageWorks=true; } catch (_) { storageWorks=false; }
         updateSaveStatus(); return storageWorks;
       };
+      const resumeFromSavedState = raw =&gt; {
+        if(!raw||typeof raw!==&#x27;object&#x27;||!raw.savedAt||String(raw.savedAt)&lt;=String(state.savedAt||&#x27;&#x27;))return false;
+        state=Object.assign({},defaultState,state,raw);state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
+      };
+      const checkForNewerSavedState = () =&gt; {try{return resumeFromSavedState(JSON.parse(localStorage.getItem(storageKey)||&#x27;null&#x27;));}catch(_){return false;}};
       const lineBreak = String.fromCharCode(10);
       const iso = d =&gt; {
         const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,&#x27;0&#x27;), day=String(d.getDate()).padStart(2,&#x27;0&#x27;);
@@ -1507,7 +1513,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       function dueReviewTasks(d=new Date()){
         const dateKey=iso(d);
-        return Object.entries(state.reviews).filter(([key,review])=&gt;state.done[key]&amp;&amp;review&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(review.due||&#x27;&#x27;)&amp;&amp;review.due&lt;=dateKey).map(([key,review])=&gt;{
+        return Object.entries(state.reviews).filter(([key,review])=&gt;state.done[key]&amp;&amp;review&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(review.due||&#x27;&#x27;)&amp;&amp;review.due&lt;=dateKey).sort((a,b)=&gt;a[1].due.localeCompare(b[1].due)).slice(0,2).map(([key,review])=&gt;{
           const base=resolveTask(key);if(!base)return null;
           return Object.assign({},base,{key:`review|${key}|${review.due}`,baseKey:key,reviewMode:true,title:`Review · ${base.title}`,meta:`Quick spaced review · ${review.confidence===&#x27;red&#x27;?&#x27;needed help&#x27;:review.confidence===&#x27;amber&#x27;?&#x27;nearly there&#x27;:&#x27;keep it strong&#x27;}`,minutes:10});
         }).filter(Boolean);
@@ -1879,8 +1885,32 @@ html&gt;body{padding:0}&lt;/style&gt;
       function renderBackupReminder(){
         const reminder=root.querySelector(&#x27;#rev-backup-reminder&#x27;);if(!reminder)return;const hasProgress=Object.values(state.done).some(Boolean)||state.mistakes.length||state.paperScores.length;const last=state.lastBackupAt?new Date(state.lastBackupAt):null,dismissed=state.backupReminderDismissedUntil?new Date(state.backupReminderDismissedUntil):null;const due=!last||Date.now()-last.getTime()&gt;14*86400000;const visible=hasProgress&amp;&amp;due&amp;&amp;(!dismissed||dismissed&lt;Date.now());reminder.classList.toggle(&#x27;is-visible&#x27;,visible);if(visible)root.querySelector(&#x27;#rev-backup-reminder-copy&#x27;).textContent=last?`Your last backup was ${fmt(last)}. A fresh copy takes one tap.`:&#x27;You have saved progress but no downloaded backup yet.&#x27;;
       }
-      function renderBackupStatus(){const status=root.querySelector(&#x27;#rev-backup-status&#x27;);if(status&amp;&amp;!status.textContent)status.textContent=state.lastBackupAt?`Last backup ${fmt(new Date(state.lastBackupAt))}.`:&#x27;No backup downloaded yet.&#x27;;}
+      function isOldDownloadedCopy(){try{return (window.parent&amp;&amp;window.parent!==window?window.parent.location.protocol:window.location.protocol)===&#x27;file:&#x27;;}catch(_){return false;}}
+      function renderTransferOption(){
+        const button=root.querySelector(&#x27;#rev-transfer-progress&#x27;),help=root.querySelector(&#x27;#rev-transfer-help&#x27;);if(!button||!help)return;const oldCopy=isOldDownloadedCopy();button.classList.toggle(&#x27;rev-hidden&#x27;,!oldCopy);
+        help.textContent=oldCopy?&#x27;Your old ticks and amber/green ratings are still in this downloaded copy. Press the button to merge them into the public website.&#x27;:&#x27;Used the old downloaded file? Open it, go to Progress &amp; tools, then press “Move old progress to website”. Your ticks, colours, notes and history will be merged safely.&#x27;;
+      }
+      function renderBackupStatus(){const status=root.querySelector(&#x27;#rev-backup-status&#x27;);if(status&amp;&amp;!status.textContent)status.textContent=state.lastBackupAt?`Last backup ${fmt(new Date(state.lastBackupAt))}.`:&#x27;Auto-save is on for this browser.&#x27;;renderTransferOption();}
       function downloadBackup(){state.lastBackupAt=new Date().toISOString();state.backupReminderDismissedUntil=null;save();const payload={app:&#x27;Nathan Math Revision Tool&#x27;,schemaVersion:5,exportedAt:new Date().toISOString(),state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:&#x27;application/json&#x27;}),url=URL.createObjectURL(blob),a=document.createElement(&#x27;a&#x27;);a.href=url;a.download=`maths-revision-backup-${iso(new Date())}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=&gt;URL.revokeObjectURL(url),1000);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup downloaded and progress protected.&#x27;;renderBackupReminder();}
+      function encodeTransferPayload(value){const bytes=new TextEncoder().encode(JSON.stringify(value));let binary=&#x27;&#x27;;for(let i=0;i&lt;bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(binary).replace(/\+/g,&#x27;-&#x27;).replace(/\//g,&#x27;_&#x27;).replace(/=+$/,&#x27;&#x27;);}
+      function decodeTransferPayload(token){const normal=String(token||&#x27;&#x27;).replace(/-/g,&#x27;+&#x27;).replace(/_/g,&#x27;/&#x27;),padded=normal+&#x27;=&#x27;.repeat((4-normal.length%4)%4),binary=atob(padded),bytes=Uint8Array.from(binary,char=&gt;char.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
+      function transferProgressToWebsite(){
+        const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{save();const token=encodeTransferPayload({app:&#x27;Nathan Math Revision Tool&#x27;,schemaVersion:5,state});if(token.length&gt;120000){downloadBackup();status.textContent=&#x27;Your save is large, so a backup was downloaded. On the website, choose that backup to restore it.&#x27;;return;}const url=`https://defnotsquishy.github.io/nathans-revision-tool/#import=${token}`,a=document.createElement(&#x27;a&#x27;);a.href=url;a.target=&#x27;_blank&#x27;;a.rel=&#x27;noopener noreferrer&#x27;;document.body.append(a);a.click();a.remove();status.textContent=&#x27;The website is opening. Confirm the import there and your old progress will be merged.&#x27;;}catch(_){status.textContent=&#x27;The transfer could not start. Download a backup here, then choose that backup on the website.&#x27;;}
+      }
+      function mergeUniqueRecords(current,imported){const seen=new Set();return [...(Array.isArray(current)?current:[]),...(Array.isArray(imported)?imported:[])].filter(item=&gt;{const marker=item&amp;&amp;item.id?`id:${item.id}`:JSON.stringify(item);if(seen.has(marker))return false;seen.add(marker);return true;});}
+      function mergeTransferredProgress(raw){
+        if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);const beforeDone=Object.values(state.done).filter(Boolean).length,beforeColours=Object.keys(state.confidence).length;
+        Object.entries(raw.done).forEach(([key,value])=&gt;{if(value)state.done[key]=true;});
+        if(raw.confidence&amp;&amp;typeof raw.confidence===&#x27;object&#x27;)Object.entries(raw.confidence).forEach(([key,value])=&gt;{if(!state.confidence[key]&amp;&amp;[&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;red&#x27;].includes(value))state.confidence[key]=value;});
+        for(const field of [&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;])if(raw[field]&amp;&amp;typeof raw[field]===&#x27;object&#x27;)state[field]=Object.assign({},raw[field],state[field]);
+        state.reviewHistory=mergeUniqueRecords(state.reviewHistory,raw.reviewHistory);state.sessionHistory=mergeUniqueRecords(state.sessionHistory,raw.sessionHistory);state.paperScores=mergeUniqueRecords(state.paperScores,raw.paperScores);state.mistakes=mergeUniqueRecords(state.mistakes,raw.mistakes);
+        if(raw.examDates&amp;&amp;typeof raw.examDates===&#x27;object&#x27;)state.examDates=Object.assign({},raw.examDates,state.examDates);if(state.targetGrade===&#x27;7&#x27;&amp;&amp;/^[4-9]$/.test(String(raw.targetGrade||&#x27;&#x27;)))state.targetGrade=String(raw.targetGrade);
+        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;clearFuturePlans();save();renderAll();showView(&#x27;progress&#x27;,false);
+        return {topics:Object.values(state.done).filter(Boolean).length-beforeDone,colours:Object.keys(state.confidence).length-beforeColours};
+      }
+      function importTransferredProgress(token){
+        const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{const parsed=decodeTransferPayload(token),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);if(!window.confirm(&#x27;We found progress from your old downloaded revision file. Merge its ticks, colours, notes and history into this website?&#x27;)){status.textContent=&#x27;Old progress was not imported. Nothing was changed.&#x27;;return;}const added=mergeTransferredProgress(raw);status.textContent=`Old progress restored — ${added.topics} topic${added.topics===1?&#x27;&#x27;:&#x27;s&#x27;} and ${added.colours} confidence rating${added.colours===1?&#x27;&#x27;:&#x27;s&#x27;} added. Everything is now auto-saved on this website.`;}catch(_){status.textContent=&#x27;That old-progress transfer was not valid. Nothing was changed.&#x27;;}
+      }
       function restoreBackup(file){
         const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Replace the progress in this app with this backup?&#x27;))return;const allowed=[&#x27;schemaVersion&#x27;,&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;holidayStart&#x27;,&#x27;holidayEnd&#x27;,&#x27;holidayPace&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;subjectStartDate&#x27;,&#x27;dailyMinutes&#x27;,&#x27;catchUpEnabled&#x27;,&#x27;dayPlans&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;lastBackupAt&#x27;,&#x27;backupReminderDismissedUntil&#x27;,&#x27;chat&#x27;,&#x27;activeQuiz&#x27;,&#x27;gptMode&#x27;,&#x27;activeView&#x27;,&#x27;mathFilter&#x27;,&#x27;mathSearch&#x27;,&#x27;subjectId&#x27;,&#x27;subjectSearch&#x27;,&#x27;randomPick&#x27;,&#x27;timer&#x27;,&#x27;savedAt&#x27;];const safe={};allowed.forEach(key=&gt;{if(Object.prototype.hasOwnProperty.call(raw,key))safe[key]=raw[key];});state=Object.assign({},defaultState,safe);state.schemaVersion=5;state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.targetGrade=/^[4-9]$/.test(String(state.targetGrade||&#x27;&#x27;))?String(state.targetGrade):&#x27;7&#x27;;state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.catchUpEnabled=false;state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;coach&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;const minimum=minimumFinishIso();if(!/^\d{4}-\d{2}-\d{2}$/.test(state.mathFinishTarget||&#x27;&#x27;)||state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;clearFuturePlans();save();renderAll();showView(state.activeView||&#x27;today&#x27;,false);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup restored successfully.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
       }
@@ -1949,8 +1979,9 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#rev-backup-now&#x27;).addEventListener(&#x27;click&#x27;,downloadBackup);
       root.querySelector(&#x27;#rev-backup-later&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{const later=new Date();later.setDate(later.getDate()+7);state.backupReminderDismissedUntil=later.toISOString();save();renderBackupReminder();});
       root.querySelector(&#x27;#rev-backup-file&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const file=e.target.files&amp;&amp;e.target.files[0];if(file)restoreBackup(file);});
+      root.querySelector(&#x27;#rev-transfer-progress&#x27;).addEventListener(&#x27;click&#x27;,transferProgressToWebsite);
       root.querySelector(&#x27;#rev-install-app&#x27;).addEventListener(&#x27;click&#x27;,requestInstall);
-      window.addEventListener(&#x27;message&#x27;,event=&gt;{if(!event.data||event.data.type!==&#x27;REVISION_INSTALL_RESULT&#x27;)return;const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=event.data.message||&#x27;Install option checked.&#x27;;});
+      window.addEventListener(&#x27;message&#x27;,event=&gt;{if(!event.data||event.source!==window.parent)return;if(event.data.type===&#x27;REVISION_INSTALL_RESULT&#x27;){const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=event.data.message||&#x27;Install option checked.&#x27;;}else if(event.data.type===&#x27;REVISION_IMPORT&#x27;)importTransferredProgress(event.data.payload);});
       root.querySelectorAll(&#x27;[data-coach-action]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;{
         const action=btn.dataset.coachAction;
         if(action===&#x27;quiz&#x27; &amp;&amp; state.gptMode===&#x27;offline&#x27;) startQuiz();
@@ -1973,7 +2004,11 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#rev-chat-form button[type=&quot;submit&quot;]&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();sendCoachMessage();});
       root.querySelector(&#x27;#rev-chat-input&#x27;).addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();sendCoachMessage();}});
       window.addEventListener(&#x27;pagehide&#x27;,save);
-      renderAll(); showView(state.activeView||&#x27;today&#x27;,false);
+      window.addEventListener(&#x27;pageshow&#x27;,checkForNewerSavedState);
+      window.addEventListener(&#x27;storage&#x27;,event=&gt;{if(event.key!==storageKey||!event.newValue)return;try{resumeFromSavedState(JSON.parse(event.newValue));}catch(_){}});
+      document.addEventListener(&#x27;visibilitychange&#x27;,()=&gt;{if(document.hidden)save();else checkForNewerSavedState();});
+      if(navigator.storage&amp;&amp;typeof navigator.storage.persist===&#x27;function&#x27;)navigator.storage.persist().catch(()=&gt;{});
+      renderAll(); showView(state.activeView||&#x27;today&#x27;,false); save();
       window.setInterval(updateTimerDisplay,1000);
     })();
   &lt;/script&gt;
@@ -1997,5 +2032,15 @@ html&gt;body{padding:0}&lt;/style&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
+<script>
+const revisionImportFrame = document.querySelector('iframe');
+const revisionImportToken = new URLSearchParams(location.hash.slice(1)).get('import');
+if (revisionImportFrame && revisionImportToken) {
+  history.replaceState(null, '', location.pathname + location.search);
+  const sendRevisionImport = () => revisionImportFrame.contentWindow?.postMessage({ type: 'REVISION_IMPORT', payload: revisionImportToken }, '*');
+  revisionImportFrame.addEventListener('load', sendRevisionImport, { once: true });
+  window.setTimeout(sendRevisionImport, 250);
+}
+</script>
 </body>
 </html>
