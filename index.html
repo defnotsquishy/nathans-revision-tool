@@ -1053,6 +1053,10 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-article-body h4 { margin: 0 0 7px; font-size: 1.05rem; }
     #gcse-revision-dashboard .rev-article-body p { margin: 0; color: var(--muted-foreground); line-height: 1.72; }
     #gcse-revision-dashboard .rev-article-note { padding: 18px; border-radius: 18px; background: color-mix(in srgb, var(--primary) 9%, transparent); }
+    #gcse-revision-dashboard .rev-article-feedback { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 30px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent); }
+    #gcse-revision-dashboard .rev-article-feedback p { width: 100%; margin: 0 0 2px; font-weight: 700; }
+    #gcse-revision-dashboard .rev-reaction[aria-pressed=&quot;true&quot;] { border-color: color-mix(in srgb, var(--primary) 60%, transparent); color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
+    #gcse-revision-dashboard .rev-reaction-status { min-height: 1.2em; }
     #gcse-revision-dashboard .rev-footer { margin-top: 20px; text-align: center; font-size: 0.72rem; color: var(--muted-foreground); }
     @media (max-width: 900px) {
       #gcse-revision-dashboard .rev-topbar { display: block; }
@@ -1279,6 +1283,12 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;p&gt;I will keep improving the tool with small, useful updates. New features, important fixes and project news will be explained here so everyone can see what changed and why.&lt;/p&gt;
           &lt;/section&gt;
         &lt;/div&gt;
+        &lt;footer class=&quot;rev-article-feedback&quot; aria-labelledby=&quot;rev-article-feedback-title&quot;&gt;
+          &lt;p id=&quot;rev-article-feedback-title&quot;&gt;Was this update helpful?&lt;/p&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn rev-reaction&quot; id=&quot;rev-article-like&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;thumbs-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Like&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn rev-reaction&quot; id=&quot;rev-article-dislike&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;thumbs-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Dislike&lt;/button&gt;
+          &lt;span class=&quot;rev-mini rev-reaction-status&quot; id=&quot;rev-article-reaction-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/span&gt;
+        &lt;/footer&gt;
       &lt;/article&gt;
     &lt;/div&gt;
   &lt;/section&gt;
@@ -1314,6 +1324,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;gcse-revision-dashboard&#x27;);
       const storageKey = &#x27;gcse-revision-dashboard-v2&#x27;;
+      const articleReactionStorageKey = &#x27;nathans-revision-article-reaction-v1&#x27;;
       const mathTopics = [
         &#x27;Expand / Factorise&#x27;,&#x27;Prime Factorisation&#x27;,&#x27;Percentage Change / Profit&#x27;,&#x27;Mixed Number Operations&#x27;,&#x27;Changing the Subject&#x27;,&#x27;Inequalities&#x27;,&#x27;Reciprocals + Error Intervals&#x27;,&#x27;Averages from Tables&#x27;,&#x27;Using a Calculator&#x27;,&#x27;Angle Bisectors&#x27;,&#x27;Straight Line Graphs&#x27;,&#x27;Estimation&#x27;,&#x27;Area / Circumference of Circles&#x27;,&#x27;Diagram Sequences&#x27;,&#x27;Reverse Percentages&#x27;,&#x27;Index Laws&#x27;,&#x27;Quadratics: expand, factorise and solve&#x27;,&#x27;Inverse Proportion&#x27;,&#x27;Speed, Distance, Time&#x27;,&#x27;Scatter Diagrams&#x27;,&#x27;Transformations&#x27;,&#x27;Pythagoras&#x27;,&#x27;Interpreting Pie Charts&#x27;,&#x27;Column Vectors&#x27;,&#x27;Recipes&#x27;,&#x27;Standard Form: ordering&#x27;,&#x27;Frequency Polygons&#x27;,&#x27;Venn Diagrams&#x27;,&#x27;Standard Form: conversion and calculation&#x27;,&#x27;Best Buys + Exchange Rate&#x27;,&#x27;Plans and Elevations + Volume of a Prism&#x27;,&#x27;Simultaneous Equations&#x27;,&#x27;Surface Area of a Pyramid&#x27;,&#x27;Distance-Time Graphs&#x27;,&#x27;Angles in Regular Polygons&#x27;,&#x27;Compound Interest&#x27;,&#x27;Trigonometry: SOHCAHTOA&#x27;,&#x27;Trigonometry: SOHCAHTOA practice&#x27;,&#x27;Probability in Tables&#x27;,&#x27;More Angles in Regular Polygons&#x27;,&#x27;Drawing Quadratic Graphs&#x27;,&#x27;Loci + Perpendicular Bisectors&#x27;,&#x27;HCF / LCM&#x27;,&#x27;Volume of a Cone / Sphere&#x27;,&#x27;Similar Triangles + Angles in Parallel Lines&#x27;,&#x27;Equation of a Straight Line&#x27;,&#x27;Forming and Solving Equations + Trapezium Area&#x27;,&#x27;Probability Tree Diagrams&#x27;,&#x27;Midpoints + Congruent Shapes&#x27;,&#x27;Features of Quadratic Graphs&#x27;,&#x27;Direct / Inverse Proportion&#x27;,&#x27;Types of Graphs&#x27;,&#x27;Density, Mass, Volume&#x27;,&#x27;Pressure, Force, Area&#x27;,&#x27;Equations of Parallel Lines&#x27;,&#x27;Fibonacci Sequences + Simultaneous Equations&#x27;,&#x27;Angles in Irregular Polygons&#x27;,&#x27;Pythagoras + Arc Length&#x27;,&#x27;Stem-and-Leaf + Box Plots + Comparing Distributions&#x27;,&#x27;Surface Area of Spheres / Cones&#x27;,&#x27;Expand Triple Brackets&#x27;,&#x27;More Index Laws&#x27;,&#x27;Negative Scale-Factor Enlargements&#x27;,&#x27;Inequality Regions&#x27;,&#x27;Capture-Recapture&#x27;,&#x27;Estimating Powers and Roots&#x27;,&#x27;Product Rule for Counting&#x27;,&#x27;Graphs of Trigonometric Functions&#x27;,&#x27;Cumulative Frequency&#x27;,&#x27;Geometric Sequences + Surds&#x27;,&#x27;Exponential Graphs&#x27;,&#x27;Equation of a Circle + Graphical Simultaneous Equations&#x27;,&#x27;Quadratic Formula&#x27;,&#x27;Quadratic nth Term&#x27;,&#x27;Functions&#x27;,&#x27;Drawing Histograms&#x27;,&#x27;Recurring Decimals to Fractions&#x27;,&#x27;Completing the Square&#x27;,&#x27;Conditional Probability&#x27;,&#x27;Sector Area + Triangle Area using Trig&#x27;,&#x27;Exact Trig Values + Surds and Brackets&#x27;,&#x27;Proportionality&#x27;,&#x27;Equations of Perpendicular Lines&#x27;,&#x27;Iteration&#x27;,&#x27;Interpreting Histograms&#x27;,&#x27;Cosine Rule + Sine Rule for sides&#x27;,&#x27;3D Trigonometry + Pythagoras&#x27;,&#x27;Bounds&#x27;,&#x27;Algebraic Proof&#x27;,&#x27;Solving Quadratic Inequalities&#x27;,&#x27;Similar Areas / Volumes&#x27;,&#x27;Cosine Rule for angles&#x27;,&#x27;Circle Theorems&#x27;,&#x27;Invariant Points&#x27;,&#x27;Equations with Algebraic Fractions&#x27;,&#x27;Bearings + Sine Rule for angles&#x27;,&#x27;Velocity-Time Graphs&#x27;,&#x27;Rationalising the Denominator&#x27;,&#x27;Completing the Square: harder&#x27;,&#x27;Simplifying Algebraic Fractions&#x27;,&#x27;Non-Linear Simultaneous Equations&#x27;,&#x27;Transformations of Graphs&#x27;,&#x27;Equation of a Tangent to a Circle&#x27;,&#x27;Geometric Proof&#x27;,&#x27;General Iterative Processes&#x27;,&#x27;Vectors&#x27;
       ];
@@ -1979,6 +1990,18 @@ html&gt;body{padding:0}&lt;/style&gt;
         root.querySelectorAll(&#x27;[data-section]&#x27;).forEach(s=&gt;s.classList.toggle(&#x27;is-active&#x27;,s.dataset.section===name));
         state.activeView=name; if(shouldSave)save();
       }
+      function readArticleReaction(){try{const value=localStorage.getItem(articleReactionStorageKey);return [&#x27;like&#x27;,&#x27;dislike&#x27;].includes(value)?value:null;}catch(_){return null;}}
+      let articleReaction=readArticleReaction();
+      function renderArticleReaction(){
+        const like=root.querySelector(&#x27;#rev-article-like&#x27;),dislike=root.querySelector(&#x27;#rev-article-dislike&#x27;),status=root.querySelector(&#x27;#rev-article-reaction-status&#x27;);
+        like.setAttribute(&#x27;aria-pressed&#x27;,articleReaction===&#x27;like&#x27;);dislike.setAttribute(&#x27;aria-pressed&#x27;,articleReaction===&#x27;dislike&#x27;);
+        status.textContent=articleReaction?&#x27;Thanks for the feedback.&#x27;:&#x27;&#x27;;
+      }
+      function chooseArticleReaction(value){
+        articleReaction=articleReaction===value?null:value;
+        try{if(articleReaction)localStorage.setItem(articleReactionStorageKey,articleReaction);else localStorage.removeItem(articleReactionStorageKey);}catch(_){}
+        renderArticleReaction();
+      }
       let renderedDateKey=iso(new Date()),renderedRevisionDayKey=revisionDayKey(new Date());
       function updateDateLabel(now=new Date()){root.querySelector(&#x27;#rev-date-label&#x27;).textContent=new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;long&#x27;,day:&#x27;numeric&#x27;,month:&#x27;long&#x27;,year:&#x27;numeric&#x27;}).format(now);}
       function refreshForDateRollover(){
@@ -1989,6 +2012,8 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       updateDateLabel();
       root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;showView(btn.dataset.view,false)));
+      root.querySelector(&#x27;#rev-article-like&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;chooseArticleReaction(&#x27;like&#x27;));
+      root.querySelector(&#x27;#rev-article-dislike&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;chooseArticleReaction(&#x27;dislike&#x27;));
       root.querySelector(&#x27;#rev-daily-minutes&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.dailyMinutes=Number(e.target.value);clearFuturePlans();save();renderAll();});
       root.querySelector(&#x27;#rev-catch-up&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.catchUpEnabled=e.target.checked;clearFuturePlans();save();renderAll();});
       root.querySelector(&#x27;#rev-maths-filter&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.mathFilter=e.target.value;save();renderMath();});
@@ -2027,7 +2052,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       window.addEventListener(&#x27;storage&#x27;,event=&gt;{if(event.key!==storageKey||!event.newValue)return;try{resumeFromSavedState(JSON.parse(event.newValue));}catch(_){}});
       document.addEventListener(&#x27;visibilitychange&#x27;,()=&gt;{checkForNewerSavedState();if(!document.hidden)refreshForDateRollover();});
       if(navigator.storage&amp;&amp;typeof navigator.storage.persist===&#x27;function&#x27;)navigator.storage.persist().catch(()=&gt;{});
-      renderAll(); showView(state.activeView||&#x27;today&#x27;,false);
+      renderArticleReaction(); renderAll(); showView(state.activeView||&#x27;today&#x27;,false);
       if(window.parent&amp;&amp;window.parent!==window)window.parent.postMessage({type:&#x27;REVISION_READY&#x27;},&#x27;*&#x27;);
       window.setInterval(()=&gt;{updateTimerDisplay();refreshForDateRollover();},1000);
     })();
