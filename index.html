@@ -1941,7 +1941,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         renderAll();showView(state.activeView||&#x27;today&#x27;,false);save();return true;
       }
       updateDateLabel();
-      root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;showView(btn.dataset.view)));
+      root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;showView(btn.dataset.view,false)));
       root.querySelector(&#x27;#rev-daily-minutes&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.dailyMinutes=Number(e.target.value);clearFuturePlans();save();renderAll();});
       root.querySelector(&#x27;#rev-catch-up&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.catchUpEnabled=e.target.checked;clearFuturePlans();save();renderAll();});
       root.querySelector(&#x27;#rev-maths-filter&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.mathFilter=e.target.value;save();renderMath();});
