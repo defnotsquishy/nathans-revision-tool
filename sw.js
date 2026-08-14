@@ -1,4 +1,4 @@
-const CACHE = "nathans-revision-v5";
+const CACHE = "nathans-revision-v6";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./favicon.svg"];
 
 self.addEventListener("install", event => {

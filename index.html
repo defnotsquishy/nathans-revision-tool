@@ -1229,7 +1229,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;/section&gt;
         &lt;section class=&quot;rev-panel&quot;&gt;&lt;h3&gt;Backup &amp; restore&lt;/h3&gt;
           &lt;p class=&quot;rev-mini&quot;&gt;Download everything saved in this app, or restore it on this device later.&lt;/p&gt;
-          &lt;div class=&quot;viz-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-backup-download&quot;&gt;Download backup&lt;/button&gt;&lt;label class=&quot;btn&quot; for=&quot;rev-backup-file&quot;&gt;Choose backup&lt;input class=&quot;rev-hidden&quot; type=&quot;file&quot; id=&quot;rev-backup-file&quot; accept=&quot;application/json,.json&quot;&gt;&lt;/label&gt;&lt;button type=&quot;button&quot; class=&quot;btn rev-hidden&quot; id=&quot;rev-transfer-progress&quot;&gt;Move old progress to website&lt;/button&gt;&lt;/div&gt;
+          &lt;div class=&quot;viz-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;rev-backup-download&quot;&gt;Download backup&lt;/button&gt;&lt;label class=&quot;btn&quot; for=&quot;rev-backup-file&quot;&gt;Choose backup&lt;input class=&quot;rev-hidden&quot; type=&quot;file&quot; id=&quot;rev-backup-file&quot; accept=&quot;application/json,.json&quot;&gt;&lt;/label&gt;&lt;button type=&quot;button&quot; class=&quot;btn rev-hidden&quot; id=&quot;rev-restore-before-import&quot;&gt;Undo last import&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;btn rev-hidden&quot; id=&quot;rev-transfer-progress&quot;&gt;Move old progress to website&lt;/button&gt;&lt;/div&gt;
           &lt;p class=&quot;rev-mini&quot; id=&quot;rev-transfer-help&quot;&gt;Used the old downloaded file? Open it, go to Progress &amp;amp; tools, then press “Move old progress to website”. Your ticks, colours, notes and history will be merged safely.&lt;/p&gt;
           &lt;p class=&quot;rev-mini&quot; id=&quot;rev-backup-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
         &lt;/section&gt;
@@ -1316,8 +1316,67 @@ html&gt;body{padding:0}&lt;/style&gt;
       const mathStartIso = &#x27;2026-08-11&#x27;;
       const defaultState = { schemaVersion:5, done:{}, confidence:{}, notes:{}, completedAt:{}, deferred:{}, reviews:{}, reviewHistory:[], sessionHistory:[], activeSession:{active:false,startedAt:null,currentKey:null,currentReview:false,completed:0,reviews:0}, holidayStart:&#x27;2026-08-17&#x27;, holidayEnd:&#x27;2026-08-23&#x27;, holidayPace:1, mathFinishTarget:&#x27;2026-09-19&#x27;, subjectStartDate:&#x27;2026-09-01&#x27;, dailyMinutes:60, catchUpEnabled:false, dayPlans:{}, paperScores:[], mistakes:[], examDates:{}, targetGrade:&#x27;7&#x27;, lastBackupAt:null, backupReminderDismissedUntil:null, recoveryMath7ReviewFixed:false, math7RecoveryReviewCompleted:false, activeView:&#x27;today&#x27;, mathFilter:&#x27;all&#x27;, mathSearch:&#x27;&#x27;, subjectId:&#x27;math&#x27;, subjectSearch:&#x27;&#x27;, randomPick:null, timer:{mode:&#x27;focus&#x27;,remainingSeconds:1500,running:false,endAt:null}, savedAt:null };
       const safetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-ai-removal&#x27;;
+      const cloudSafetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-cloud-import&#x27;;
+      const backupSafetyStorageKey = &#x27;gcse-revision-dashboard-v2-before-backup-merge&#x27;;
+      const backupAfterStorageKey = &#x27;gcse-revision-dashboard-v2-after-backup-merge&#x27;;
+      const revisionSessionStorageKey = &#x27;gcse-revision-dashboard-v2-current-study-session&#x27;;
       const removeRetiredAiState = target =&gt; { delete target.chat; delete target.activeQuiz; delete target.gptMode; return target; };
       let state = Object.assign({},defaultState);
+      const cloneStateValue=value=&gt;value===undefined?undefined:JSON.parse(JSON.stringify(value));
+      const sameStateValue=(left,right)=&gt;JSON.stringify(left)===JSON.stringify(right);
+      const isStateObject=value=&gt;value&amp;&amp;typeof value===&#x27;object&#x27;&amp;&amp;!Array.isArray(value);
+      const stateRecordMarker=value=&gt;value&amp;&amp;value.id?`id:${value.id}`:JSON.stringify(value);
+      function mergeConcurrentArray(base=[],latest=[],current=[]){
+        const baseMap=new Map(base.map(item=&gt;[stateRecordMarker(item),item])),latestMap=new Map(latest.map(item=&gt;[stateRecordMarker(item),item])),currentMap=new Map(current.map(item=&gt;[stateRecordMarker(item),item]));
+        const markers=[...new Set([...baseMap.keys(),...latestMap.keys(),...currentMap.keys()])],output=[];
+        markers.forEach(marker=&gt;{
+          const baseHas=baseMap.has(marker),latestHas=latestMap.has(marker),currentHas=currentMap.has(marker),baseValue=baseMap.get(marker),latestValue=latestMap.get(marker),currentValue=currentMap.get(marker);
+          const currentMatchesBase=currentHas===baseHas&amp;&amp;(!currentHas||sameStateValue(currentValue,baseValue)),latestMatchesBase=latestHas===baseHas&amp;&amp;(!latestHas||sameStateValue(latestValue,baseValue));
+          if(currentMatchesBase){if(latestHas)output.push(cloneStateValue(latestValue));return;}
+          if(latestMatchesBase){if(currentHas)output.push(cloneStateValue(currentValue));return;}
+          if(currentHas)output.push(cloneStateValue(currentValue));
+        });
+        return output;
+      }
+      function mergeConcurrentObject(base={},latest={},current={}){
+        const output={},keys=new Set([...Object.keys(base||{}),...Object.keys(latest||{}),...Object.keys(current||{})]);
+        keys.forEach(key=&gt;{
+          const baseHas=Object.prototype.hasOwnProperty.call(base,key),latestHas=Object.prototype.hasOwnProperty.call(latest,key),currentHas=Object.prototype.hasOwnProperty.call(current,key);
+          const currentMatchesBase=currentHas===baseHas&amp;&amp;(!currentHas||sameStateValue(current[key],base[key]));
+          const latestMatchesBase=latestHas===baseHas&amp;&amp;(!latestHas||sameStateValue(latest[key],base[key]));
+          if(currentMatchesBase){if(latestHas)output[key]=cloneStateValue(latest[key]);return;}
+          if(latestMatchesBase){if(currentHas)output[key]=cloneStateValue(current[key]);return;}
+          if(currentHas&amp;&amp;latestHas&amp;&amp;Array.isArray(current[key])&amp;&amp;Array.isArray(latest[key])){output[key]=mergeConcurrentArray(baseHas&amp;&amp;Array.isArray(base[key])?base[key]:[],latest[key],current[key]);return;}
+          if(currentHas&amp;&amp;latestHas&amp;&amp;isStateObject(current[key])&amp;&amp;isStateObject(latest[key])){output[key]=mergeConcurrentObject(baseHas&amp;&amp;isStateObject(base[key])?base[key]:{},latest[key],current[key]);return;}
+          if(currentHas)output[key]=cloneStateValue(current[key]);
+        });
+        return output;
+      }
+      function applyInverseArray(target=[],before=[],after=[]){
+        const beforeMap=new Map(before.map(item=&gt;[stateRecordMarker(item),item])),afterMap=new Map(after.map(item=&gt;[stateRecordMarker(item),item])),targetMap=new Map(target.map(item=&gt;[stateRecordMarker(item),item]));
+        for(const [marker,afterValue] of afterMap){if(!beforeMap.has(marker)&amp;&amp;targetMap.has(marker)&amp;&amp;sameStateValue(targetMap.get(marker),afterValue))targetMap.delete(marker);}
+        for(const [marker,beforeValue] of beforeMap){if(!afterMap.has(marker)&amp;&amp;!targetMap.has(marker))targetMap.set(marker,cloneStateValue(beforeValue));}
+        for(const [marker,beforeValue] of beforeMap){const afterValue=afterMap.get(marker);if(afterMap.has(marker)&amp;&amp;!sameStateValue(beforeValue,afterValue)&amp;&amp;targetMap.has(marker)&amp;&amp;sameStateValue(targetMap.get(marker),afterValue))targetMap.set(marker,cloneStateValue(beforeValue));}
+        return [...targetMap.values()];
+      }
+      function applyInverseState(target={},before={},after={}){
+        const output=cloneStateValue(target)||{},keys=new Set([...Object.keys(before||{}),...Object.keys(after||{})]);
+        keys.forEach(key=&gt;{
+          const beforeHas=Object.prototype.hasOwnProperty.call(before,key),afterHas=Object.prototype.hasOwnProperty.call(after,key);if(beforeHas===afterHas&amp;&amp;(!beforeHas||sameStateValue(before[key],after[key])))return;
+          const targetHas=Object.prototype.hasOwnProperty.call(output,key);
+          if(beforeHas&amp;&amp;afterHas&amp;&amp;isStateObject(before[key])&amp;&amp;isStateObject(after[key])){output[key]=applyInverseState(targetHas&amp;&amp;isStateObject(output[key])?output[key]:{},before[key],after[key]);return;}
+          if(beforeHas&amp;&amp;afterHas&amp;&amp;Array.isArray(before[key])&amp;&amp;Array.isArray(after[key])){output[key]=applyInverseArray(targetHas&amp;&amp;Array.isArray(output[key])?output[key]:[],before[key],after[key]);return;}
+          if(afterHas&amp;&amp;targetHas&amp;&amp;sameStateValue(output[key],after[key])){if(beforeHas)output[key]=cloneStateValue(before[key]);else delete output[key];return;}
+          if(!afterHas&amp;&amp;!targetHas&amp;&amp;beforeHas)output[key]=cloneStateValue(before[key]);
+        });
+        return output;
+      }
+      const revisionDayKey=value=&gt;{const day=new Date(value);if(Number.isNaN(day.getTime()))return null;if(day.getHours()&lt;4)day.setDate(day.getDate()-1);return `${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,&#x27;0&#x27;)}-${String(day.getDate()).padStart(2,&#x27;0&#x27;)}`;};
+      let completedSessionDay=revisionDayKey(new Date()),completedThisSession=new Set();
+      try{const session=JSON.parse(sessionStorage.getItem(revisionSessionStorageKey)||&#x27;null&#x27;);if(session&amp;&amp;session.day===completedSessionDay&amp;&amp;Array.isArray(session.keys))completedThisSession=new Set(session.keys);}catch(_){}
+      const persistCompletedSession=()=&gt;{try{sessionStorage.setItem(revisionSessionStorageKey,JSON.stringify({day:completedSessionDay,keys:[...completedThisSession]}));}catch(_){}};
+      const rememberSessionCompletion=key=&gt;{completedThisSession.add(key);persistCompletedSession();};
+      const forgetSessionCompletion=key=&gt;{completedThisSession.delete(key);persistCompletedSession();};
       let storageWorks = true;
       try {
         const savedText=localStorage.getItem(storageKey), safetyText=localStorage.getItem(safetyStorageKey);
@@ -1345,7 +1404,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       state.dailyMinutes = [20,30,45,60,90].includes(Number(state.dailyMinutes)) ? Number(state.dailyMinutes) : 60;
       state.schemaVersion=5;
       state.targetGrade=/^[4-9]$/.test(String(state.targetGrade||&#x27;&#x27;))?String(state.targetGrade):&#x27;7&#x27;;
-      state.catchUpEnabled = false;
+      state.catchUpEnabled = !!state.catchUpEnabled;
       state.activeView=[&#x27;subjects&#x27;,&#x27;coach&#x27;].includes(state.activeView)?&#x27;today&#x27;:state.activeView;
       const initialToday=new Date();
       const initialTodayIso=`${initialToday.getFullYear()}-${String(initialToday.getMonth()+1).padStart(2,&#x27;0&#x27;)}-${String(initialToday.getDate()).padStart(2,&#x27;0&#x27;)}`;
@@ -1355,20 +1414,29 @@ html&gt;body{padding:0}&lt;/style&gt;
       if(![&#x27;focus&#x27;,&#x27;break&#x27;].includes(state.timer.mode)) state.timer.mode=&#x27;focus&#x27;;
       if(!Number.isFinite(Number(state.timer.remainingSeconds))||Number(state.timer.remainingSeconds)&lt;0) state.timer.remainingSeconds=state.timer.mode===&#x27;focus&#x27;?1500:300;
       if(state.timer.running &amp;&amp; (!state.timer.endAt || Number.isNaN(new Date(state.timer.endAt).getTime()))) { state.timer.running=false; state.timer.endAt=null; }
+      let lastSyncedState=cloneStateValue(state);
       const updateSaveStatus = () =&gt; {
         const el=root.querySelector(&#x27;#rev-save-status&#x27;); if(!el)return;
         if(!storageWorks){ el.textContent=&#x27;Save unavailable&#x27;; return; }
         if(!state.savedAt){ el.textContent=&#x27;Auto-save on this device&#x27;; return; }
         const when=new Date(state.savedAt); el.textContent=`Saved on this device · ${when.toLocaleTimeString(&#x27;en-GB&#x27;,{hour:&#x27;2-digit&#x27;,minute:&#x27;2-digit&#x27;})}`;
       };
-      const save = () =&gt; {
+      const save = (force=false) =&gt; {
+        if(undoSnapshot&amp;&amp;!undoAfterSnapshot){undoAfterSnapshot={};undoFields.forEach(key=&gt;undoAfterSnapshot[key]=cloneStateValue(state[key]));}
+        try {
+          const stored=JSON.parse(localStorage.getItem(storageKey)||&#x27;null&#x27;);
+          if(!force&amp;&amp;stored&amp;&amp;stored.savedAt&amp;&amp;String(stored.savedAt)&gt;String(state.savedAt||&#x27;&#x27;))state=removeRetiredAiState(mergeConcurrentObject(lastSyncedState,stored,state));
+        } catch (_) {}
         state.savedAt=new Date().toISOString();
         try { localStorage.setItem(storageKey, JSON.stringify(state)); storageWorks=true; } catch (_) { storageWorks=false; }
+        if(storageWorks)lastSyncedState=cloneStateValue(state);
+        if(window.parent&amp;&amp;window.parent!==window)window.parent.postMessage({type:&#x27;REVISION_STATE_CHANGED&#x27;,state},&#x27;*&#x27;);
         updateSaveStatus(); return storageWorks;
       };
-      const resumeFromSavedState = raw =&gt; {
-        if(!raw||typeof raw!==&#x27;object&#x27;||!raw.savedAt||String(raw.savedAt)&lt;=String(state.savedAt||&#x27;&#x27;))return false;
-        state=removeRetiredAiState(Object.assign({},defaultState,state,raw));state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
+      const resumeFromSavedState = (raw,forceCloud=false) =&gt; {
+        if(!raw||typeof raw!==&#x27;object&#x27;||(!forceCloud&amp;&amp;(!raw.savedAt||String(raw.savedAt)&lt;=String(state.savedAt||&#x27;&#x27;))))return false;
+        if(forceCloud){try{localStorage.setItem(cloudSafetyStorageKey,JSON.stringify(state));}catch(_){}}
+        state=removeRetiredAiState(Object.assign({},defaultState,state,raw));state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;lastSyncedState=cloneStateValue(state);if(forceCloud)save(true);renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
       };
       const checkForNewerSavedState = () =&gt; {try{return resumeFromSavedState(JSON.parse(localStorage.getItem(storageKey)||&#x27;null&#x27;));}catch(_){return false;}};
       const iso = d =&gt; {
@@ -1382,18 +1450,22 @@ html&gt;body{padding:0}&lt;/style&gt;
       const taskKey = (type,id) =&gt; `${type}:${id}`;
       let taskRowSerial = 0;
       let undoSnapshot = null;
+      let undoAfterSnapshot = null;
       let undoLabel = &#x27;&#x27;;
       let undoTimer = null;
       const undoFields=[&#x27;done&#x27;,&#x27;confidence&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;,&#x27;reviewHistory&#x27;,&#x27;sessionHistory&#x27;,&#x27;activeSession&#x27;,&#x27;paperScores&#x27;,&#x27;mistakes&#x27;,&#x27;examDates&#x27;,&#x27;targetGrade&#x27;,&#x27;mathFinishTarget&#x27;,&#x27;dayPlans&#x27;,&#x27;math7RecoveryReviewCompleted&#x27;];
       const copyValue=value=&gt;JSON.parse(JSON.stringify(value));
-      function captureUndo(label){undoSnapshot={};undoFields.forEach(key=&gt;undoSnapshot[key]=copyValue(state[key]));undoLabel=label;showUndo(label);}
+      function captureUndo(label){undoSnapshot={};undoAfterSnapshot=null;undoFields.forEach(key=&gt;undoSnapshot[key]=copyValue(state[key]));undoLabel=label;showUndo(label);}
       function showUndo(label){
         const toast=root.querySelector(&#x27;#rev-toast&#x27;),copy=root.querySelector(&#x27;#rev-toast-copy&#x27;),main=root.querySelector(&#x27;#rev-undo-main&#x27;);
         if(copy)copy.textContent=label; if(toast)toast.classList.add(&#x27;is-visible&#x27;); if(main){main.disabled=false;main.title=label;}
         if(undoTimer)window.clearTimeout(undoTimer);undoTimer=window.setTimeout(()=&gt;{if(toast)toast.classList.remove(&#x27;is-visible&#x27;);},7000);
       }
+      function discardUndo(){undoSnapshot=null;undoAfterSnapshot=null;undoLabel=&#x27;&#x27;;const toast=root.querySelector(&#x27;#rev-toast&#x27;),main=root.querySelector(&#x27;#rev-undo-main&#x27;);if(toast)toast.classList.remove(&#x27;is-visible&#x27;);if(main){main.disabled=true;main.title=&#x27;&#x27;;}}
       function performUndo(){
-        if(!undoSnapshot)return; undoFields.forEach(key=&gt;state[key]=copyValue(undoSnapshot[key])); const label=undoLabel; undoSnapshot=null; undoLabel=&#x27;&#x27;;
+        if(!undoSnapshot)return;checkForNewerSavedState();const before=undoSnapshot,after=undoAfterSnapshot||(()=&gt;{const value={};undoFields.forEach(key=&gt;value[key]=cloneStateValue(state[key]));return value;})(),current={};undoFields.forEach(key=&gt;current[key]=cloneStateValue(state[key]));const reverted=applyInverseState(current,before,after);undoFields.forEach(key=&gt;state[key]=cloneStateValue(reverted[key]));
+        const doneKeys=new Set([...Object.keys(before.done||{}),...Object.keys(after.done||{})]);doneKeys.forEach(key=&gt;{const wasDone=!!before.done?.[key],becameDone=!!after.done?.[key];if(!wasDone&amp;&amp;becameDone)forgetSessionCompletion(key);else if(wasDone&amp;&amp;!becameDone)rememberSessionCompletion(key);});
+        const label=undoLabel; undoSnapshot=null; undoAfterSnapshot=null; undoLabel=&#x27;&#x27;;
         const toast=root.querySelector(&#x27;#rev-toast&#x27;),main=root.querySelector(&#x27;#rev-undo-main&#x27;);if(toast)toast.classList.remove(&#x27;is-visible&#x27;);if(main){main.disabled=true;main.title=&#x27;&#x27;;}
         save();renderAll();renderSession();
         const copy=root.querySelector(&#x27;#rev-toast-copy&#x27;);if(copy)copy.textContent=`Undid: ${label}`;if(toast){toast.classList.add(&#x27;is-visible&#x27;);window.setTimeout(()=&gt;toast.classList.remove(&#x27;is-visible&#x27;),2200);}
@@ -1404,10 +1476,10 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       const setDone = (key,value) =&gt; {
         captureUndo(value?&#x27;Topic completed&#x27;:&#x27;Completion changed&#x27;);
-        state.done[key]=value;
+        if(value){state.done[key]=true;rememberSessionCompletion(key);}else{delete state.done[key];forgetSessionCompletion(key);}
         if(value &amp;&amp; !state.completedAt[key]) state.completedAt[key]=new Date().toISOString();
         if(value){delete state.deferred[key];if(state.confidence[key])scheduleReview(key,state.confidence[key]);}
-        if(!value){delete state.completedAt[key];delete state.reviews[key];}
+        if(!value){delete state.completedAt[key];delete state.reviews[key];clearFuturePlans();}
         save(); renderAll();
       };
       const setConfidence = (key,value) =&gt; { captureUndo(&#x27;Confidence changed&#x27;);if(value){state.confidence[key]=value;if(state.done[key])scheduleReview(key,value);}else{delete state.confidence[key];delete state.reviews[key];}save();renderAll(); };
@@ -1423,7 +1495,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       const topicCatalogue=makeTopicCatalogue();
       const topicLookup=new Map(topicCatalogue.all.map(task=&gt;[task.key,task]));
       function repairRecoveredMathsSevenReview(){
-        if(state.math7RecoveryReviewCompleted)return false;
+        if(state.recoveryMath7ReviewFixed||state.math7RecoveryReviewCompleted)return false;
         const expected=[&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;,&#x27;green&#x27;],completed=Object.keys(state.done).filter(key=&gt;state.done[key]&amp;&amp;topicLookup.has(key));
         if(completed.length!==7||!expected.every((confidence,index)=&gt;state.done[`math:${index}`]&amp;&amp;state.confidence[`math:${index}`]===confidence))return false;
         const today=new Date(),tomorrow=new Date(today);tomorrow.setDate(tomorrow.getDate()+1);
@@ -1443,7 +1515,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       function dueReviewTasks(d=new Date()){
         const dateKey=iso(d);
-        return Object.entries(state.reviews).filter(([key,review])=&gt;state.done[key]&amp;&amp;review&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(review.due||&#x27;&#x27;)&amp;&amp;review.due&lt;=dateKey).sort((a,b)=&gt;a[1].due.localeCompare(b[1].due)).slice(0,2).map(([key,review])=&gt;{
+        return Object.entries(state.reviews).filter(([key,review])=&gt;topicLookup.has(key)&amp;&amp;state.done[key]&amp;&amp;review&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(review.due||&#x27;&#x27;)&amp;&amp;review.due&lt;=dateKey).sort((a,b)=&gt;a[1].due.localeCompare(b[1].due)).slice(0,2).map(([key,review])=&gt;{
           const base=resolveTask(key);if(!base)return null;
           return Object.assign({},base,{key:`review|${key}|${review.due}`,baseKey:key,reviewMode:true,title:`Review · ${base.title}`,meta:`Quick spaced review · ${review.confidence===&#x27;red&#x27;?&#x27;needed help&#x27;:review.confidence===&#x27;amber&#x27;?&#x27;nearly there&#x27;:&#x27;keep it strong&#x27;}`,minutes:10});
         }).filter(Boolean);
@@ -1534,20 +1606,33 @@ html&gt;body{padding:0}&lt;/style&gt;
         const earliest=fromIso(mathStartIso)&lt;fromIso(state.subjectStartDate)?fromIso(mathStartIso):fromIso(state.subjectStartDate);
         const cutoff=fromIso(iso(beforeDate)); const output=[], seen=new Set(); const cursor=new Date(earliest); let guard=0;
         while(cursor&lt;cutoff&amp;&amp;guard&lt;500){
-          baseTasksForDate(cursor).forEach(task=&gt;{
+          const dateKey=iso(cursor),savedPlan=state.dayPlans[dateKey],savedTasks=savedPlan&amp;&amp;Array.isArray(savedPlan.items)?savedPlan.items.map(item=&gt;resolveTask(item.key)).filter(Boolean):[];
+          const candidates=savedTasks.length?savedTasks:baseTasksForDate(cursor);
+          candidates.forEach(task=&gt;{
             if(task&amp;&amp;task.trackable!==false&amp;&amp;!state.done[task.key]&amp;&amp;!seen.has(task.key)){seen.add(task.key);output.push({task,sourceDate:iso(cursor)});}
           });
           cursor.setDate(cursor.getDate()+1); guard++;
         }
         return output;
       }
-      function planSignature(){return `maths-calm-v5|${state.mathFinishTarget}|${state.dailyMinutes}`;}
+      function planSignature(){return `maths-calm-v6|${state.mathFinishTarget}|${state.dailyMinutes}|${state.catchUpEnabled?&#x27;catch-up&#x27;:&#x27;normal&#x27;}`;}
       function clearFuturePlans(){const today=iso(new Date());Object.keys(state.dayPlans).forEach(key=&gt;{if(key&gt;=today)delete state.dayPlans[key];});}
+      function revisionDayForTimestamp(stamp){
+        return revisionDayKey(stamp);
+      }
+      function completedBeforePlannerDate(key,dateKey){
+        if(!state.done[key]||completedThisSession.has(key))return false;
+        const completedDate=state.completedAt[key]?revisionDayForTimestamp(state.completedAt[key]):null;
+        return !completedDate||completedDate&lt;dateKey;
+      }
+      function dayPlanNeedsRefresh(plan,dateKey,signature){
+        return !plan||plan.signature!==signature||!Array.isArray(plan.items)||plan.items.some(item=&gt;completedBeforePlannerDate(item.key,dateKey));
+      }
       function todayTasks(d) {
         const dateKey=iso(d), actualToday=iso(new Date());
         if(dateKey!==actualToday)return addDeferredAndReviews(baseTasksForDate(d),d);
         let plan=state.dayPlans[dateKey]; const signature=planSignature();
-        if(!plan||plan.signature!==signature||!Array.isArray(plan.items)){
+        if(dayPlanNeedsRefresh(plan,dateKey,signature)){
           const base=baseTasksForDate(d).filter(Boolean), items=base.map(task=&gt;({key:task.key,sourceDate:dateKey,catchUp:false}));
           if(state.catchUpEnabled){
             let remaining=Math.max(0,state.dailyMinutes-base.reduce((sum,task)=&gt;sum+(task.minutes||15),0)); let added=0;
@@ -1593,7 +1678,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         if(options.allowReviewToday&amp;&amp;!task.reviewMode&amp;&amp;state.done[stateKey]){
           const review=document.createElement(&#x27;button&#x27;);review.type=&#x27;button&#x27;;review.className=&#x27;btn btn-primary&#x27;;review.textContent=&#x27;Review today&#x27;;review.addEventListener(&#x27;click&#x27;,()=&gt;reviewTopicToday(stateKey));actions.append(review);
         }
-        if(options.allowDefer&amp;&amp;(task.reviewMode||task.trackable!==false)){
+        if(options.allowDefer&amp;&amp;(task.reviewMode||(task.trackable!==false&amp;&amp;!state.done[stateKey]))){
           const later=document.createElement(&#x27;button&#x27;);later.type=&#x27;button&#x27;;later.className=&#x27;btn btn-ghost&#x27;;later.textContent=&#x27;Tomorrow&#x27;;later.addEventListener(&#x27;click&#x27;,()=&gt;moveTaskToTomorrow(task));actions.append(later);
         }
         if(task.trackable!==false &amp;&amp; topicLookup.has(stateKey)){
@@ -1605,11 +1690,13 @@ html&gt;body{padding:0}&lt;/style&gt;
         const now=new Date(); const tasks=todayTasks(now); const list=root.querySelector(&#x27;#rev-today-list&#x27;); list.innerHTML=&#x27;&#x27;;
         root.querySelector(&#x27;#rev-today-heading&#x27;).textContent=`Today · ${fmt(now)}`;
         if(!tasks.length){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-empty&#x27;;p.textContent=&#x27;Today is clear. Rest, practise a weak topic, or do one past-paper question if you feel like it.&#x27;;list.append(p);} else tasks.forEach(t=&gt;list.append(taskRow(t,{allowDefer:true})));
-        const estimated=tasks.reduce((sum,task)=&gt;sum+(task.minutes||15),0), overdue=overdueTasks(now), catchUps=tasks.filter(task=&gt;task.meta?.startsWith(&#x27;Catch-up&#x27;)).length;
+        const remainingTasks=tasks.filter(task=&gt;task.reviewMode||task.trackable===false||!state.done[task.baseKey||task.key]);
+        const estimated=remainingTasks.reduce((sum,task)=&gt;sum+(task.minutes||15),0), requiredEstimated=remainingTasks.filter(task=&gt;task.trackable!==false).reduce((sum,task)=&gt;sum+(task.minutes||15),0), overdue=overdueTasks(now), catchUps=remainingTasks.filter(task=&gt;task.meta?.startsWith(&#x27;Catch-up&#x27;)).length;
         root.querySelector(&#x27;#rev-daily-minutes&#x27;).value=String(state.dailyMinutes); root.querySelector(&#x27;#rev-catch-up&#x27;).checked=state.catchUpEnabled;
-        root.querySelector(&#x27;#rev-today-time&#x27;).textContent=`${tasks.filter(task=&gt;task.subjectId===&#x27;math&#x27;&amp;&amp;task.trackable!==false).length} Maths section${tasks.filter(task=&gt;task.subjectId===&#x27;math&#x27;&amp;&amp;task.trackable!==false).length===1?&#x27;&#x27;:&#x27;s&#x27;} today · about ${estimated} minutes planned · your limit is ${state.dailyMinutes} minutes`;
+        const mathSections=remainingTasks.filter(task=&gt;task.subjectId===&#x27;math&#x27;&amp;&amp;task.trackable!==false).length;
+        root.querySelector(&#x27;#rev-today-time&#x27;).textContent=`${mathSections} Maths section${mathSections===1?&#x27;&#x27;:&#x27;s&#x27;} left today · about ${estimated} minutes remaining · your limit is ${state.dailyMinutes} minutes`;
         const alert=root.querySelector(&#x27;#rev-schedule-alert&#x27;); alert.innerHTML=&#x27;&#x27;;
-        if(estimated&gt;state.dailyMinutes){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert rev-danger&#x27;;p.textContent=`Today needs about ${estimated} minutes because required Maths work stays in the plan. Extend the Maths finish date or raise the daily limit if this is too much.`;alert.append(p);}
+        if(requiredEstimated&gt;state.dailyMinutes){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert rev-danger&#x27;;p.textContent=`Today needs about ${requiredEstimated} minutes because required Maths work stays in the plan. Extend the Maths finish date or raise the daily limit if this is too much.`;alert.append(p);}
         else if(overdue.length){const p=document.createElement(&#x27;p&#x27;);p.className=&#x27;rev-alert&#x27;;p.textContent=state.catchUpEnabled?(catchUps?`${catchUps} catch-up task${catchUps===1?&#x27; is&#x27;:&#x27;s are&#x27;} included today. ${Math.max(0,overdue.length-catchUps)} still waiting.`:`${overdue.length} overdue task${overdue.length===1?&#x27; is&#x27;:&#x27;s are&#x27;} waiting for space in your daily limit.`):`${overdue.length} overdue task${overdue.length===1?&#x27;&#x27;:&#x27;s&#x27;} saved. Turn on Catch-up mode when you want them added to Today.`;alert.append(p);}
         const h=isHoliday(now); root.querySelector(&#x27;#rev-holiday-badge&#x27;).textContent=h?&#x27;Holiday light mode&#x27;:&#x27;Normal plan&#x27;;
         const random=state.randomPick?resolveTask(state.randomPick):null; root.querySelector(&#x27;#rev-random-result&#x27;).textContent=random?random.title:&#x27;Pick a red or amber topic first, then any unfinished topic.&#x27;;
@@ -1648,7 +1735,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         const task=currentSessionTask();if(!task)return;captureUndo(task.reviewMode?&#x27;Review completed&#x27;:&#x27;Topic completed&#x27;);const key=task.baseKey||task.key;
         state.confidence[key]=confidence;
         if(task.reviewMode){scheduleReview(key,confidence);state.reviewHistory.push({key,confidence,completedAt:new Date().toISOString()});if(key===&#x27;math:6&#x27;)state.math7RecoveryReviewCompleted=true;state.activeSession.reviews=Number(state.activeSession.reviews||0)+1;}
-        else {state.done[key]=true;if(!state.completedAt[key])state.completedAt[key]=new Date().toISOString();delete state.deferred[key];scheduleReview(key,confidence);state.activeSession.completed=Number(state.activeSession.completed||0)+1;}
+        else {state.done[key]=true;rememberSessionCompletion(key);if(!state.completedAt[key])state.completedAt[key]=new Date().toISOString();delete state.deferred[key];scheduleReview(key,confidence);state.activeSession.completed=Number(state.activeSession.completed||0)+1;}
         state.activeSession.currentKey=null;state.activeSession.currentReview=false;save();renderAll();renderSession();
       }
       function endSession(finished=false){
@@ -1793,7 +1880,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         const button=root.querySelector(&#x27;#rev-transfer-progress&#x27;),help=root.querySelector(&#x27;#rev-transfer-help&#x27;);if(!button||!help)return;const oldCopy=isOldDownloadedCopy();button.classList.toggle(&#x27;rev-hidden&#x27;,!oldCopy);
         help.textContent=oldCopy?&#x27;Your old ticks and amber/green ratings are still in this downloaded copy. Press the button to merge them into the public website.&#x27;:&#x27;Used the old downloaded file? Open it, go to Progress &amp; tools, then press “Move old progress to website”. Your ticks, colours, notes and history will be merged safely.&#x27;;
       }
-      function renderBackupStatus(){const status=root.querySelector(&#x27;#rev-backup-status&#x27;);if(status&amp;&amp;!status.textContent)status.textContent=state.lastBackupAt?`Last backup ${fmt(new Date(state.lastBackupAt))}.`:&#x27;Auto-save is on for this browser.&#x27;;renderTransferOption();}
+      function renderBackupStatus(){const status=root.querySelector(&#x27;#rev-backup-status&#x27;),restore=root.querySelector(&#x27;#rev-restore-before-import&#x27;);if(status&amp;&amp;!status.textContent)status.textContent=state.lastBackupAt?`Last backup ${fmt(new Date(state.lastBackupAt))}.`:&#x27;Auto-save is on for this browser.&#x27;;if(restore){let available=false;try{available=!!localStorage.getItem(backupSafetyStorageKey)&amp;&amp;!!localStorage.getItem(backupAfterStorageKey);}catch(_){}restore.classList.toggle(&#x27;rev-hidden&#x27;,!available);}renderTransferOption();}
       function downloadBackup(){state.lastBackupAt=new Date().toISOString();state.backupReminderDismissedUntil=null;save();const payload={app:&#x27;Nathan Math Revision Tool&#x27;,schemaVersion:5,exportedAt:new Date().toISOString(),state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:&#x27;application/json&#x27;}),url=URL.createObjectURL(blob),a=document.createElement(&#x27;a&#x27;);a.href=url;a.download=`maths-revision-backup-${iso(new Date())}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=&gt;URL.revokeObjectURL(url),1000);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup downloaded and progress protected.&#x27;;renderBackupReminder();}
       function encodeTransferPayload(value){const bytes=new TextEncoder().encode(JSON.stringify(value));let binary=&#x27;&#x27;;for(let i=0;i&lt;bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(binary).replace(/\+/g,&#x27;-&#x27;).replace(/\//g,&#x27;_&#x27;).replace(/=+$/,&#x27;&#x27;);}
       function decodeTransferPayload(token){const normal=String(token||&#x27;&#x27;).replace(/-/g,&#x27;+&#x27;).replace(/_/g,&#x27;/&#x27;),padded=normal+&#x27;=&#x27;.repeat((4-normal.length%4)%4),binary=atob(padded),bytes=Uint8Array.from(binary,char=&gt;char.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
@@ -1802,21 +1889,27 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       function mergeUniqueRecords(current,imported){const seen=new Set();return [...(Array.isArray(current)?current:[]),...(Array.isArray(imported)?imported:[])].filter(item=&gt;{const marker=item&amp;&amp;item.id?`id:${item.id}`:JSON.stringify(item);if(seen.has(marker))return false;seen.add(marker);return true;});}
       function mergeTransferredProgress(raw){
-        if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);const beforeDone=Object.values(state.done).filter(Boolean).length,beforeColours=Object.keys(state.confidence).length;
+        if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);checkForNewerSavedState();discardUndo();try{localStorage.setItem(backupSafetyStorageKey,JSON.stringify(state));}catch(_){}const validMathKeys=new Set(topicCatalogue.maths.map(task=&gt;task.key)),beforeDone=[...validMathKeys].filter(key=&gt;state.done[key]).length,beforeColours=[...validMathKeys].filter(key=&gt;[&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;red&#x27;].includes(state.confidence[key])).length;
         Object.entries(raw.done).forEach(([key,value])=&gt;{if(value)state.done[key]=true;});
         if(raw.confidence&amp;&amp;typeof raw.confidence===&#x27;object&#x27;)Object.entries(raw.confidence).forEach(([key,value])=&gt;{if(!state.confidence[key]&amp;&amp;[&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;red&#x27;].includes(value))state.confidence[key]=value;});
         for(const field of [&#x27;notes&#x27;,&#x27;completedAt&#x27;,&#x27;deferred&#x27;,&#x27;reviews&#x27;])if(raw[field]&amp;&amp;typeof raw[field]===&#x27;object&#x27;)state[field]=Object.assign({},raw[field],state[field]);
         state.reviewHistory=mergeUniqueRecords(state.reviewHistory,raw.reviewHistory);state.sessionHistory=mergeUniqueRecords(state.sessionHistory,raw.sessionHistory);state.paperScores=mergeUniqueRecords(state.paperScores,raw.paperScores);state.mistakes=mergeUniqueRecords(state.mistakes,raw.mistakes);
         if(raw.examDates&amp;&amp;typeof raw.examDates===&#x27;object&#x27;)state.examDates=Object.assign({},raw.examDates,state.examDates);if(state.targetGrade===&#x27;7&#x27;&amp;&amp;/^[4-9]$/.test(String(raw.targetGrade||&#x27;&#x27;)))state.targetGrade=String(raw.targetGrade);
-        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;repairRecoveredMathsSevenReview();clearFuturePlans();save();renderAll();showView(&#x27;progress&#x27;,false);
-        return {topics:Object.values(state.done).filter(Boolean).length-beforeDone,colours:Object.keys(state.confidence).length-beforeColours};
+        if(typeof raw.mathFinishTarget===&#x27;string&#x27;&amp;&amp;/^\d{4}-\d{2}-\d{2}$/.test(raw.mathFinishTarget))state.mathFinishTarget=raw.mathFinishTarget;
+        if([20,30,45,60,90].includes(Number(raw.dailyMinutes)))state.dailyMinutes=Number(raw.dailyMinutes);
+        if(typeof raw.catchUpEnabled===&#x27;boolean&#x27;)state.catchUpEnabled=raw.catchUpEnabled;
+        if(raw.math7RecoveryReviewCompleted)state.math7RecoveryReviewCompleted=true;
+        Object.keys(state.done).forEach(key=&gt;{if(state.done[key]&amp;&amp;state.confidence[key]&amp;&amp;!state.reviews[key]&amp;&amp;topicLookup.has(key)){const anchor=state.completedAt[key]?new Date(state.completedAt[key]):new Date();scheduleReview(key,state.confidence[key],Number.isNaN(anchor.getTime())?new Date():anchor);}});
+        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum)state.mathFinishTarget=minimum;repairRecoveredMathsSevenReview();clearFuturePlans();save();try{localStorage.setItem(backupAfterStorageKey,JSON.stringify(state));}catch(_){}renderAll();showView(&#x27;progress&#x27;,false);
+        return {topics:[...validMathKeys].filter(key=&gt;state.done[key]).length-beforeDone,colours:[...validMathKeys].filter(key=&gt;[&#x27;green&#x27;,&#x27;amber&#x27;,&#x27;red&#x27;].includes(state.confidence[key])).length-beforeColours};
       }
       function importTransferredProgress(token){
-        const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{const parsed=decodeTransferPayload(token),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);if(!window.confirm(&#x27;We found progress from your old downloaded revision file. Merge its ticks, colours, notes and history into this website?&#x27;)){status.textContent=&#x27;Old progress was not imported. Nothing was changed.&#x27;;return;}const added=mergeTransferredProgress(raw);status.textContent=`Old progress restored — ${added.topics} topic${added.topics===1?&#x27;&#x27;:&#x27;s&#x27;} and ${added.colours} confidence rating${added.colours===1?&#x27;&#x27;:&#x27;s&#x27;} added. Everything is now auto-saved on this website.`;}catch(_){status.textContent=&#x27;That old-progress transfer was not valid. Nothing was changed.&#x27;;}
+        const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{const parsed=decodeTransferPayload(token),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;)throw new Error(&#x27;Invalid transfer&#x27;);if(!window.confirm(&#x27;We found progress from your old downloaded revision file. Merge its ticks, colours, notes and history, and restore its finish date and daily limit?&#x27;)){status.textContent=&#x27;Old progress was not imported. Nothing was changed.&#x27;;return;}const added=mergeTransferredProgress(raw);status.textContent=`Old progress restored — ${added.topics} topic${added.topics===1?&#x27;&#x27;:&#x27;s&#x27;} and ${added.colours} confidence rating${added.colours===1?&#x27;&#x27;:&#x27;s&#x27;} added. Everything is now auto-saved on this website.`;}catch(_){status.textContent=&#x27;That old-progress transfer was not valid. Nothing was changed.&#x27;;}
       }
       function restoreBackup(file){
-        const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Merge this backup with the progress already on this device? Your current ticks, colours and Today reviews will be kept.&#x27;))return;mergeTransferredProgress(raw);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup merged safely — your existing ticks, colours and Today reviews were kept.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
+        const reader=new FileReader();reader.onload=()=&gt;{try{const parsed=JSON.parse(String(reader.result)),raw=parsed&amp;&amp;parsed.state;if(!raw||typeof raw!==&#x27;object&#x27;||!raw.done||typeof raw.done!==&#x27;object&#x27;)throw new Error(&#x27;Invalid backup&#x27;);if(!window.confirm(&#x27;Merge this backup with the progress already on this device? Your current ticks and colours will be kept; the backup finish date and daily limit will be restored.&#x27;))return;mergeTransferredProgress(raw);root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;Backup merged safely — your existing ticks and colours were kept. You can undo this import below if needed.&#x27;;}catch(_){root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;That file is not a valid Revision Dashboard backup. Nothing was changed.&#x27;;}finally{root.querySelector(&#x27;#rev-backup-file&#x27;).value=&#x27;&#x27;;}};reader.onerror=()=&gt;{root.querySelector(&#x27;#rev-backup-status&#x27;).textContent=&#x27;The backup could not be read.&#x27;;};reader.readAsText(file);
       }
+      function restoreBeforeImport(){const status=root.querySelector(&#x27;#rev-backup-status&#x27;);try{const before=JSON.parse(localStorage.getItem(backupSafetyStorageKey)||&#x27;null&#x27;),after=JSON.parse(localStorage.getItem(backupAfterStorageKey)||&#x27;null&#x27;);if(!before||!after||typeof before!==&#x27;object&#x27;||typeof after!==&#x27;object&#x27;)throw new Error(&#x27;Missing safety save&#x27;);if(!window.confirm(&#x27;Undo only the changes from the last import? Anything you completed afterwards will stay.&#x27;))return;checkForNewerSavedState();state=removeRetiredAiState(applyInverseState(state,before,after));discardUndo();localStorage.removeItem(backupSafetyStorageKey);localStorage.removeItem(backupAfterStorageKey);save();status.textContent=&#x27;Last import undone. Anything you completed afterwards was kept.&#x27;;renderAll();showView(&#x27;progress&#x27;,false);}catch(_){status.textContent=&#x27;The pre-import safety save is not available.&#x27;;}}
       function requestInstall(){
         const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=&#x27;Opening the install option…&#x27;;
         if(window.parent&amp;&amp;window.parent!==window)window.parent.postMessage({type:&#x27;REVISION_INSTALL&#x27;},&#x27;*&#x27;);
@@ -1828,7 +1921,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         root.querySelector(&#x27;#rev-today-stat&#x27;).textContent=`${doneToday} / ${today.length}`; root.querySelector(&#x27;#rev-today-bar&#x27;).style.width=`${today.length?doneToday/today.length*100:100}%`;
         const keys=topicCatalogue.all.map(task=&gt;task.key);
         const complete=keys.filter(k=&gt;state.done[k]).length, pct=Math.round(complete/keys.length*100); root.querySelector(&#x27;#rev-overall-stat&#x27;).textContent=`${pct}%`; root.querySelector(&#x27;#rev-overall-bar&#x27;).style.width=`${pct}%`;
-        const confidenceValues=Object.values(state.confidence); const greens=confidenceValues.filter(v=&gt;v===&#x27;green&#x27;).length, ambers=confidenceValues.filter(v=&gt;v===&#x27;amber&#x27;).length, reds=confidenceValues.filter(v=&gt;v===&#x27;red&#x27;).length;
+        const confidenceValues=topicCatalogue.maths.map(task=&gt;state.confidence[task.key]).filter(Boolean); const greens=confidenceValues.filter(v=&gt;v===&#x27;green&#x27;).length, ambers=confidenceValues.filter(v=&gt;v===&#x27;amber&#x27;).length, reds=confidenceValues.filter(v=&gt;v===&#x27;red&#x27;).length;
         root.querySelector(&#x27;#rev-confidence-summary&#x27;).textContent=`${greens} green · ${ambers} amber · ${reds} red`;
         updateSaveStatus();
       }
@@ -1839,7 +1932,15 @@ html&gt;body{padding:0}&lt;/style&gt;
         root.querySelectorAll(&#x27;[data-section]&#x27;).forEach(s=&gt;s.classList.toggle(&#x27;is-active&#x27;,s.dataset.section===name));
         state.activeView=name; if(shouldSave)save();
       }
-      root.querySelector(&#x27;#rev-date-label&#x27;).textContent=new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;long&#x27;,day:&#x27;numeric&#x27;,month:&#x27;long&#x27;,year:&#x27;numeric&#x27;}).format(new Date());
+      let renderedDateKey=iso(new Date()),renderedRevisionDayKey=revisionDayKey(new Date());
+      function updateDateLabel(now=new Date()){root.querySelector(&#x27;#rev-date-label&#x27;).textContent=new Intl.DateTimeFormat(&#x27;en-GB&#x27;,{weekday:&#x27;long&#x27;,day:&#x27;numeric&#x27;,month:&#x27;long&#x27;,year:&#x27;numeric&#x27;}).format(now);}
+      function refreshForDateRollover(){
+        const now=new Date(),dateKey=iso(now),studyDayKey=revisionDayKey(now);if(dateKey===renderedDateKey&amp;&amp;studyDayKey===renderedRevisionDayKey)return false;renderedDateKey=dateKey;updateDateLabel(now);
+        if(studyDayKey!==renderedRevisionDayKey){renderedRevisionDayKey=studyDayKey;completedSessionDay=studyDayKey;completedThisSession.clear();persistCompletedSession();}
+        const minimum=minimumFinishIso();if(state.mathFinishTarget&lt;minimum){state.mathFinishTarget=minimum;clearFuturePlans();}
+        renderAll();showView(state.activeView||&#x27;today&#x27;,false);save();return true;
+      }
+      updateDateLabel();
       root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(btn=&gt;btn.addEventListener(&#x27;click&#x27;,()=&gt;showView(btn.dataset.view)));
       root.querySelector(&#x27;#rev-daily-minutes&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.dailyMinutes=Number(e.target.value);clearFuturePlans();save();renderAll();});
       root.querySelector(&#x27;#rev-catch-up&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{state.catchUpEnabled=e.target.checked;clearFuturePlans();save();renderAll();});
@@ -1871,16 +1972,17 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#rev-backup-now&#x27;).addEventListener(&#x27;click&#x27;,downloadBackup);
       root.querySelector(&#x27;#rev-backup-later&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{const later=new Date();later.setDate(later.getDate()+7);state.backupReminderDismissedUntil=later.toISOString();save();renderBackupReminder();});
       root.querySelector(&#x27;#rev-backup-file&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const file=e.target.files&amp;&amp;e.target.files[0];if(file)restoreBackup(file);});
+      root.querySelector(&#x27;#rev-restore-before-import&#x27;).addEventListener(&#x27;click&#x27;,restoreBeforeImport);
       root.querySelector(&#x27;#rev-transfer-progress&#x27;).addEventListener(&#x27;click&#x27;,transferProgressToWebsite);
       root.querySelector(&#x27;#rev-install-app&#x27;).addEventListener(&#x27;click&#x27;,requestInstall);
-      window.addEventListener(&#x27;message&#x27;,event=&gt;{if(!event.data||event.source!==window.parent)return;if(event.data.type===&#x27;REVISION_INSTALL_RESULT&#x27;){const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=event.data.message||&#x27;Install option checked.&#x27;;}else if(event.data.type===&#x27;REVISION_IMPORT&#x27;)importTransferredProgress(event.data.payload);});
-      window.addEventListener(&#x27;pagehide&#x27;,save);
-      window.addEventListener(&#x27;pageshow&#x27;,checkForNewerSavedState);
+      window.addEventListener(&#x27;message&#x27;,event=&gt;{if(!event.data||event.source!==window.parent)return;if(event.data.type===&#x27;REVISION_PING&#x27;)window.parent.postMessage({type:&#x27;REVISION_READY&#x27;},&#x27;*&#x27;);else if(event.data.type===&#x27;REVISION_INSTALL_RESULT&#x27;){const status=root.querySelector(&#x27;#rev-install-status&#x27;);if(status)status.textContent=event.data.message||&#x27;Install option checked.&#x27;;}else if(event.data.type===&#x27;REVISION_IMPORT&#x27;)importTransferredProgress(event.data.payload);else if(event.data.type===&#x27;REVISION_CLOUD_EXPORT&#x27;)window.parent.postMessage({type:&#x27;REVISION_CLOUD_STATE&#x27;,requestId:event.data.requestId,state},&#x27;*&#x27;);else if(event.data.type===&#x27;REVISION_CLOUD_IMPORT&#x27;){const imported=resumeFromSavedState(event.data.state,true);window.parent.postMessage({type:&#x27;REVISION_CLOUD_IMPORT_RESULT&#x27;,imported},&#x27;*&#x27;);}});
+      window.addEventListener(&#x27;pageshow&#x27;,()=&gt;{checkForNewerSavedState();refreshForDateRollover();});
       window.addEventListener(&#x27;storage&#x27;,event=&gt;{if(event.key!==storageKey||!event.newValue)return;try{resumeFromSavedState(JSON.parse(event.newValue));}catch(_){}});
-      document.addEventListener(&#x27;visibilitychange&#x27;,()=&gt;{if(document.hidden)save();else checkForNewerSavedState();});
+      document.addEventListener(&#x27;visibilitychange&#x27;,()=&gt;{checkForNewerSavedState();if(!document.hidden)refreshForDateRollover();});
       if(navigator.storage&amp;&amp;typeof navigator.storage.persist===&#x27;function&#x27;)navigator.storage.persist().catch(()=&gt;{});
-      renderAll(); showView(state.activeView||&#x27;today&#x27;,false); save();
-      window.setInterval(updateTimerDisplay,1000);
+      renderAll(); showView(state.activeView||&#x27;today&#x27;,false);
+      if(window.parent&amp;&amp;window.parent!==window)window.parent.postMessage({type:&#x27;REVISION_READY&#x27;},&#x27;*&#x27;);
+      window.setInterval(()=&gt;{updateTimerDisplay();refreshForDateRollover();},1000);
     })();
   &lt;/script&gt;
 &lt;/div&gt;
@@ -1906,12 +2008,59 @@ html&gt;body{padding:0}&lt;/style&gt;
 <script>
 const revisionImportFrame = document.querySelector('iframe');
 const revisionImportToken = new URLSearchParams(location.hash.slice(1)).get('import');
+let revisionImportSent = false;
 if (revisionImportFrame && revisionImportToken) {
-  history.replaceState(null, '', location.pathname + location.search);
-  const sendRevisionImport = () => revisionImportFrame.contentWindow?.postMessage({ type: 'REVISION_IMPORT', payload: revisionImportToken }, '*');
-  revisionImportFrame.addEventListener('load', sendRevisionImport, { once: true });
-  window.setTimeout(sendRevisionImport, 250);
+  window.addEventListener('message', event => {
+    if (revisionImportSent || event.source !== revisionImportFrame.contentWindow || event.data?.type !== 'REVISION_READY') return;
+    revisionImportSent = true;
+    revisionImportFrame.contentWindow?.postMessage({ type: 'REVISION_IMPORT', payload: revisionImportToken }, '*');
+    history.replaceState(null, '', location.pathname + location.search);
+  });
+  let revisionImportPings = 0;
+  const pingRevisionFrame = () => {
+    if (revisionImportSent || revisionImportPings >= 40) return;
+    revisionImportPings += 1;
+    revisionImportFrame.contentWindow?.postMessage({ type: 'REVISION_PING' }, '*');
+    window.setTimeout(pingRevisionFrame, 250);
+  };
+  revisionImportFrame.addEventListener('load', pingRevisionFrame, { once: true });
+  pingRevisionFrame();
 }
+</script>
+<script>
+const REVISION_CLOUD_BRIDGE = true;
+const revisionCloudFrame = document.querySelector('iframe');
+window.addEventListener('message', event => {
+  if (!event.data || !revisionCloudFrame) return;
+  const inward = ['REVISION_CLOUD_EXPORT', 'REVISION_CLOUD_IMPORT'];
+  const outward = ['REVISION_CLOUD_STATE', 'REVISION_STATE_CHANGED', 'REVISION_CLOUD_IMPORT_RESULT'];
+  if (event.source === window.parent && inward.includes(event.data.type)) {
+    revisionCloudFrame.contentWindow?.postMessage(event.data, '*');
+  } else if (event.source === revisionCloudFrame.contentWindow && outward.includes(event.data.type) && window.parent !== window) {
+    window.parent.postMessage(event.data, '*');
+  }
+});
+</script>
+<script>
+let revisionInstallPrompt = null;
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').then(registration => registration.update()).catch(() => {}));
+}
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  revisionInstallPrompt = event;
+});
+window.addEventListener('message', async event => {
+  if (!event.data || event.data.type !== 'REVISION_INSTALL') return;
+  let message = 'On iPhone: tap Share, then Add to Home Screen. On Android or computer: open the browser menu and choose Install app.';
+  if (revisionInstallPrompt) {
+    revisionInstallPrompt.prompt();
+    const choice = await revisionInstallPrompt.userChoice;
+    message = choice.outcome === 'accepted' ? 'Installed — you can now open it from your Home Screen.' : 'Install cancelled. You can try again whenever you want.';
+    revisionInstallPrompt = null;
+  }
+  if (event.source) event.source.postMessage({ type: 'REVISION_INSTALL_RESULT', message }, '*');
+});
 </script>
 </body>
 </html>
