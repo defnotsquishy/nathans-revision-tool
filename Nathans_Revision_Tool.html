@@ -1042,6 +1042,17 @@ html&gt;body{padding:0}&lt;/style&gt;
     #gcse-revision-dashboard .rev-toast { display: none; position: fixed; left: 50%; bottom: 22px; z-index: 1100; transform: translateX(-50%); align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 28px); padding: 10px 12px 10px 16px; border-radius: 999px; color: white; background: rgb(28 28 30 / 94%); box-shadow: 0 12px 40px rgb(0 0 0 / 28%); }
     #gcse-revision-dashboard .rev-toast.is-visible { display: flex; }
     #gcse-revision-dashboard .rev-install-status { margin-top: 7px; }
+    #gcse-revision-dashboard .rev-updates-shell { max-width: 860px; margin: 18px auto 0; }
+    #gcse-revision-dashboard .rev-article { padding: clamp(24px, 5vw, 46px); }
+    #gcse-revision-dashboard .rev-article-header { padding-bottom: 24px; border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent); }
+    #gcse-revision-dashboard .rev-article-kicker { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-bottom: 14px; color: var(--muted-foreground); font-size: 0.82rem; }
+    #gcse-revision-dashboard .rev-article h3 { max-width: 720px; margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.08; letter-spacing: -0.035em; }
+    #gcse-revision-dashboard .rev-article-lede { max-width: 700px; margin: 18px 0 0; color: var(--muted-foreground); font-size: 1.08rem; line-height: 1.65; }
+    #gcse-revision-dashboard .rev-article-body { display: grid; gap: 22px; max-width: 700px; margin-top: 30px; }
+    #gcse-revision-dashboard .rev-article-body section { margin: 0; }
+    #gcse-revision-dashboard .rev-article-body h4 { margin: 0 0 7px; font-size: 1.05rem; }
+    #gcse-revision-dashboard .rev-article-body p { margin: 0; color: var(--muted-foreground); line-height: 1.72; }
+    #gcse-revision-dashboard .rev-article-note { padding: 18px; border-radius: 18px; background: color-mix(in srgb, var(--primary) 9%, transparent); }
     #gcse-revision-dashboard .rev-footer { margin-top: 20px; text-align: center; font-size: 0.72rem; color: var(--muted-foreground); }
     @media (max-width: 900px) {
       #gcse-revision-dashboard .rev-topbar { display: block; }
@@ -1103,6 +1114,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;today&quot; aria-pressed=&quot;true&quot;&gt;&lt;i data-lucide=&quot;calendar-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Today&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;maths&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;calculator&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Maths 106&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;progress&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;chart-no-axes-column-increasing&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Progress &amp; tools&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;updates&quot; aria-pressed=&quot;false&quot;&gt;&lt;i data-lucide=&quot;newspaper&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Updates&lt;/button&gt;
   &lt;/nav&gt;
 
   &lt;section class=&quot;rev-section is-active&quot; data-section=&quot;today&quot;&gt;
@@ -1235,6 +1247,39 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;p class=&quot;rev-mini&quot; id=&quot;rev-backup-status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
         &lt;/section&gt;
       &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rev-section&quot; data-section=&quot;updates&quot;&gt;
+    &lt;div class=&quot;rev-section-head&quot;&gt;
+      &lt;div&gt;&lt;h2&gt;Updates&lt;/h2&gt;&lt;p class=&quot;rev-mini&quot;&gt;News, improvements and notes from Nathan’s Revision Tool.&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rev-updates-shell&quot;&gt;
+      &lt;article class=&quot;card rev-article&quot;&gt;
+        &lt;header class=&quot;rev-article-header&quot;&gt;
+          &lt;div class=&quot;rev-article-kicker&quot;&gt;&lt;span class=&quot;rev-pill&quot;&gt;Project note&lt;/span&gt;&lt;time datetime=&quot;2026-08-14&quot;&gt;14 August 2026&lt;/time&gt;&lt;/div&gt;
+          &lt;h3&gt;A free education organiser, without the AI clutter&lt;/h3&gt;
+          &lt;p class=&quot;rev-article-lede&quot;&gt;Nathan’s Revision Tool is a free, open-source GCSE Maths organiser made to answer one simple question: what should I revise next?&lt;/p&gt;
+        &lt;/header&gt;
+        &lt;div class=&quot;rev-article-body&quot;&gt;
+          &lt;section&gt;
+            &lt;h4&gt;Why I made it&lt;/h4&gt;
+            &lt;p&gt;Revision can feel harder when plans, videos, topic lists and progress are spread across different places. I wanted one calm tool that turns the GCSE Higher Maths course into clear daily steps and makes it easy to see what is finished.&lt;/p&gt;
+          &lt;/section&gt;
+          &lt;section&gt;
+            &lt;h4&gt;Useful organisation, not AI-generated filler&lt;/h4&gt;
+            &lt;p&gt;This tool does not pretend to replace a teacher, mark work automatically or fill the screen with AI answers. It organises the work. Learning still comes from trusted lessons, practice questions, feedback and your own effort.&lt;/p&gt;
+          &lt;/section&gt;
+          &lt;section&gt;
+            &lt;h4&gt;Free, private and practical&lt;/h4&gt;
+            &lt;p&gt;There is no subscription and no account is required. You can work through 106 Maths topics, adjust your finish date, use confidence colours, open credited 1st Class Maths videos and keep a backup. Progress stays on the device unless you choose to move it.&lt;/p&gt;
+          &lt;/section&gt;
+          &lt;section class=&quot;rev-article-note&quot;&gt;
+            &lt;h4&gt;What comes next&lt;/h4&gt;
+            &lt;p&gt;I will keep improving the tool with small, useful updates. New features, important fixes and project news will be explained here so everyone can see what changed and why.&lt;/p&gt;
+          &lt;/section&gt;
+        &lt;/div&gt;
+      &lt;/article&gt;
     &lt;/div&gt;
   &lt;/section&gt;
 
@@ -1438,7 +1483,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       const resumeFromSavedState = (raw,forceCloud=false) =&gt; {
         if(!raw||typeof raw!==&#x27;object&#x27;||(!forceCloud&amp;&amp;(!raw.savedAt||String(raw.savedAt)&lt;=String(state.savedAt||&#x27;&#x27;))))return false;
         if(forceCloud){try{localStorage.setItem(cloudSafetyStorageKey,JSON.stringify(state));}catch(_){}}
-        state=removeRetiredAiState(Object.assign({},defaultState,state,raw));state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;lastSyncedState=cloneStateValue(state);if(forceCloud)save(true);renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
+        state=removeRetiredAiState(Object.assign({},defaultState,state,raw));state.done=state.done&amp;&amp;typeof state.done===&#x27;object&#x27;?state.done:{};state.confidence=state.confidence&amp;&amp;typeof state.confidence===&#x27;object&#x27;?state.confidence:{};state.notes=state.notes&amp;&amp;typeof state.notes===&#x27;object&#x27;?state.notes:{};state.completedAt=state.completedAt&amp;&amp;typeof state.completedAt===&#x27;object&#x27;?state.completedAt:{};state.deferred=state.deferred&amp;&amp;typeof state.deferred===&#x27;object&#x27;?state.deferred:{};state.reviews=state.reviews&amp;&amp;typeof state.reviews===&#x27;object&#x27;?state.reviews:{};state.reviewHistory=Array.isArray(state.reviewHistory)?state.reviewHistory:[];state.sessionHistory=Array.isArray(state.sessionHistory)?state.sessionHistory:[];state.activeSession=state.activeSession&amp;&amp;typeof state.activeSession===&#x27;object&#x27;?Object.assign({},defaultState.activeSession,state.activeSession):Object.assign({},defaultState.activeSession);state.dayPlans=state.dayPlans&amp;&amp;typeof state.dayPlans===&#x27;object&#x27;?state.dayPlans:{};state.paperScores=Array.isArray(state.paperScores)?state.paperScores:[];state.mistakes=Array.isArray(state.mistakes)?state.mistakes:[];state.examDates=state.examDates&amp;&amp;typeof state.examDates===&#x27;object&#x27;?state.examDates:{};state.timer=state.timer&amp;&amp;typeof state.timer===&#x27;object&#x27;?Object.assign({},defaultState.timer,state.timer):Object.assign({},defaultState.timer);state.activeView=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;updates&#x27;].includes(state.activeView)?state.activeView:&#x27;today&#x27;;lastSyncedState=cloneStateValue(state);if(forceCloud)save(true);renderAll();showView(state.activeView,false);updateTimerDisplay();return true;
       };
       const checkForNewerSavedState = () =&gt; {try{return resumeFromSavedState(JSON.parse(localStorage.getItem(storageKey)||&#x27;null&#x27;));}catch(_){return false;}};
       const iso = d =&gt; {
@@ -1929,7 +1974,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
       function renderAll(){ renderToday(); renderMath(); renderProgress(); updateProgress(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
       function showView(name,shouldSave=true){
-        const valid=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;]; if(!valid.includes(name))name=&#x27;today&#x27;;
+        const valid=[&#x27;today&#x27;,&#x27;maths&#x27;,&#x27;progress&#x27;,&#x27;updates&#x27;]; if(!valid.includes(name))name=&#x27;today&#x27;;
         root.querySelectorAll(&#x27;[data-view]&#x27;).forEach(b=&gt;{const active=b.dataset.view===name;b.setAttribute(&#x27;aria-pressed&#x27;,active);b.classList.toggle(&#x27;btn-primary&#x27;,active);});
         root.querySelectorAll(&#x27;[data-section]&#x27;).forEach(s=&gt;s.classList.toggle(&#x27;is-active&#x27;,s.dataset.section===name));
         state.activeView=name; if(shouldSave)save();
