@@ -1,6 +1,6 @@
 # Nathan's Revision Tool
 
-An open-source, auto-saving GCSE Higher Maths revision planner built around 106 linked 1st Class Maths topics.
+An open-source, auto-saving GCSE Higher Maths revision planner built around 106 linked 1st Class Maths topics. YES I KNOW IT CAN BE OPTIMIZED
 
 ## Features
 
